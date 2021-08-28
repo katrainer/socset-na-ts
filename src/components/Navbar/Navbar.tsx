@@ -6,19 +6,19 @@ export const Navbar = () => {
         <nav className={classes.navbar}>
             <div className={classes.item}>
                 <div>
-                    <a>Profile</a>
+                    <a href='/profile'>Profile</a>
                 </div>
                 <div>
-                    <a>Message</a>
+                    <a href='/dialogs'>Message</a>
                 </div>
                 <div>
-                    <a>News</a>
+                    <a href='/news'>News</a>
                 </div>
                 <div>
-                    <a>Music</a>
+                    <a href='/music'>Music</a>
                 </div>
                 <div>
-                    <a>Settings</a>
+                    <a href='/settings'>Settings</a>
                 </div>
             </div>
         </nav>
