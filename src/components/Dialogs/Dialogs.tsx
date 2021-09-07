@@ -1,29 +1,23 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
+import {Dialog} from './Dialog/Dialog';
 import classes from "./Dialogs.module.css";
+import {Message} from "./Message/Message";
 
 export const Dialogs = () => {
     return (
         <div className={classes.dialogs}>
             <div className={classes.dialogsItem}>
-                <div className={classes.dialog + ' ' + classes.active}>
-                    <NavLink to='/dialogs/1'> Nikita </NavLink>
-                </div>
-                <div className={classes.dialog}>
-                    <NavLink to='/dialogs/2'> Jana </NavLink>
-                </div>
-                <div className={classes.dialog}>
-                    <NavLink to='/dialogs/3'> Daniil </NavLink>
-                </div>
-                <div className={classes.dialog}>
-                    <NavLink to='/dialogs/4'> Lecha </NavLink>
-                </div>
+                <Dialog name='Nikiat' id={1}/>
+                <Dialog name='Jana' id={2}/>
+                <Dialog name='Daniil' id={3}/>
+                <Dialog name='Lecha' id={4}/>
             </div>
             <div className={classes.messages}>
-                <div className={classes.message}>yo</div>
-                <div className={classes.message}>yoyo</div>
-                <div className={classes.message}>yoyoyo</div>
-                <div className={classes.message}>yoyoyoyo</div>
+                <Message message='yop'/>
+                <Message message='yoyo'/>
+                <Message message='yoyoyo'/>
+                <Message message='yoyoyoyo'/>
             </div>
         </div>
     )
