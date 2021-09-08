@@ -4,6 +4,7 @@ import React from "react";
 type propsType={
     message: string
     likeCount: number
+    id: string
 }
 
 export const Post=(props: propsType)=>{

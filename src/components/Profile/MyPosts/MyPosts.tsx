@@ -10,7 +10,10 @@ export const MyPosts = (props: postType) => {
     let postsData=[
         {id:v1(), message: 'yo', likeCount:12},
         {id:v1(), message: 'yoyo', likeCount: 212},
+        {id:v1(), message: 'yoyo', likeCount: 212},
       ]
+
+    let post = postsData.map(p=><Post id={p.id} message={p.message} likeCount={p.likeCount}/>)
 
     return (
         <div className={s.postBlock}>
@@ -20,8 +23,7 @@ export const MyPosts = (props: postType) => {
                 <div><button>Add post</button></div>
             </div>
             <div className={s.posts}>
-            <Post message='yyoyo' likeCount={12}/>
-            <Post message='AAAAyyoyo' likeCount={212}/>
+                {post}
             </div>
         </div>
     )
