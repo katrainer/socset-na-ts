@@ -3,17 +3,18 @@ import {Post} from "./Post/Post";
 import s from "./MyPost.module.css"
 import {v1} from "uuid";
 
-type postType = {}
+type postType = {
+    postsData: Array<postsDataOb>
+}
+type postsDataOb={
+    message: string
+    likeCount: number
+    id: string
+}
 
 export const MyPosts = (props: postType) => {
 
-    let postsData=[
-        {id:v1(), message: 'yo', likeCount:12},
-        {id:v1(), message: 'yoyo', likeCount: 212},
-        {id:v1(), message: 'yoyo', likeCount: 212},
-      ]
-
-    let post = postsData.map(p=><Post id={p.id} message={p.message} likeCount={p.likeCount}/>)
+    let post = props.postsData.map(p=><Post id={p.id} message={p.message} likeCount={p.likeCount}/>)
 
     return (
         <div className={s.postBlock}>
