@@ -8,25 +8,32 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import {News} from './components/News/News';
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {v1} from "uuid";
 
 type postType = {
+    appState: appStateOb
+}
+type appStateOb = {
+    profilePage: profilePageOb
+    messagesPage: messagesPageOb
+}
+type profilePageOb = {
     postsData: Array<postsDataOb>
+}
+type messagesPageOb = {
     dialogsData: Array<dialogsDataOb>
     messagesData: Array<messagesDataOb>
 }
-type postsDataOb={
+
+type postsDataOb = {
     message: string
     likeCount: number
     id: string
 }
-
-type dialogsDataOb={
+type dialogsDataOb = {
     id: string
     name: string
 }
-
-type messagesDataOb={
+type messagesDataOb = {
     id: string
     message: string
 }
@@ -34,14 +41,21 @@ type messagesDataOb={
 function App(props: postType) {
 
 
-        return (
+    return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/dialogs' render={()=><Dialogs dialogsData={props.dialogsData} messagesData={props.messagesData}/>}/>
-                    <Route path='/profile' render={()=><Profile postsData={props.postsData}/>}/>
+                    <Route path='/dialogs'
+                           render={() => <Dialogs
+                               dialogsData={props.appState.messagesPage.dialogsData}
+                               messagesData={props.appState.messagesPage.messagesData}
+                           />}/>
+                    <Route path='/profile'
+                           render={() => <Profile
+                               postsData={props.appState.profilePage.postsData}
+                           />}/>
                     <Route path='/news' render={News}/>
                     <Route path='/music' render={Music}/>
                     <Route path='/settings' render={Settings}/>
