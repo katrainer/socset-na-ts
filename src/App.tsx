@@ -9,12 +9,13 @@ import {News} from './components/News/News';
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 
-type postType = {
+type propsType = {
     appState: appStateOb
 }
 type appStateOb = {
     profilePage: profilePageOb
     messagesPage: messagesPageOb
+    sitebar: Array<sitebarOb>
 }
 type profilePageOb = {
     postsData: Array<postsDataOb>
@@ -23,7 +24,6 @@ type messagesPageOb = {
     dialogsData: Array<dialogsDataOb>
     messagesData: Array<messagesDataOb>
 }
-
 type postsDataOb = {
     message: string
     likeCount: number
@@ -37,15 +37,20 @@ type messagesDataOb = {
     id: string
     message: string
 }
+type sitebarOb={
+    id: string
+    img: string
+    name: string
+}
 
-function App(props: postType) {
+function App(props: propsType) {
 
 
     return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
-                <Navbar/>
+                <Navbar sitebar={props.appState.sitebar}/>
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs'
                            render={() => <Dialogs

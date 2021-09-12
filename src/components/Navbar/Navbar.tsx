@@ -1,8 +1,18 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import s from "./Navbar.module.css";
+import {Sitebar} from "../Sitebar/Sitebar";
 
-export const Navbar = () => {
+type propsType={
+    sitebar: Array<sitebarOb>
+}
+type sitebarOb={
+    id: string
+    img: string
+    name: string
+}
+
+export const Navbar = (props: propsType) => {
     return (
         <nav className={s.navbar}>
             <div className={s.item}>
@@ -21,6 +31,7 @@ export const Navbar = () => {
                 <div>
                     <NavLink to='/settings' activeClassName={s.active}>Settings</NavLink>
                 </div>
+                <Sitebar sitebar={props.sitebar}/>
             </div>
         </nav>
     )
