@@ -12,6 +12,7 @@ type propsType={
 type dialogsDataOb={
     id: string
     name: string
+    img: string
 }
 
 type messagesDataOb={
@@ -23,7 +24,7 @@ export const Dialogs = (props: propsType) => {
 
 
 
-    let dialog = props.dialogsData.map(d=><DialogItem name={d.name} id={d.id}/>)
+    let dialog = props.dialogsData.map(d=><DialogItem img={d.img} name={d.name} id={d.id}/>)
     let message = props.messagesData.map(m=><Message message={m.message} id={m.id}/>)
 
     return (

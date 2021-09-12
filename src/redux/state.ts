@@ -10,12 +10,12 @@ export let state = {
     },
     messagesPage: {
         dialogsData: [
-            {id: v1(), name: 'Nikita'},
-            {id: v1(), name: 'Jana'},
-            {id: v1(), name: 'Daniil'},
-            {id: v1(), name: 'Lecha'},
-            {id: v1(), name: 'Lecha'},
-            {id: v1(), name: 'Lecha'},
+            {id: v1(), name: 'Nikita', img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png'},
+            {id: v1(), name: 'Jana', img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png'},
+            {id: v1(), name: 'Daniil', img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png'},
+            {id: v1(), name: 'Lecha', img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png'},
+            {id: v1(), name: 'Lecha', img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png'},
+            {id: v1(), name: 'Lecha', img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png'},
         ],
         messagesData: [
             {id: v1(), message: 'yo'},
@@ -26,7 +26,7 @@ export let state = {
             {id: v1(), message: 'yoyoyoyo'},
         ]
     },
-    sitebar:[
+    sitebar: [
         {id: v1(), img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png', name: 'Nikita'},
         {id: v1(), img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png', name: 'NNikita'},
         {id: v1(), img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png', name: 'NNNikita'},

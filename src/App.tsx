@@ -32,6 +32,7 @@ type postsDataOb = {
 type dialogsDataOb = {
     id: string
     name: string
+    img: string
 }
 type messagesDataOb = {
     id: string
