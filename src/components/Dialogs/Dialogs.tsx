@@ -22,10 +22,14 @@ type messagesDataOb={
 
 export const Dialogs = (props: propsType) => {
 
-
-
     let dialog = props.dialogsData.map(d=><DialogItem img={d.img} name={d.name} id={d.id}/>)
     let message = props.messagesData.map(m=><Message message={m.message} id={m.id}/>)
+
+    let textAddMessage = React.createRef<HTMLTextAreaElement>()
+    let addMessage=()=>{
+        let text = textAddMessage.current?.value
+        alert(text)
+    }
 
     return (
         <div className={classes.dialogs}>
@@ -34,6 +38,8 @@ export const Dialogs = (props: propsType) => {
             </div>
             <div className={classes.messages}>
                 {message}
+                <textarea ref={textAddMessage}></textarea>
+                <button onClick={addMessage}>add message</button>
             </div>
         </div>
     )
