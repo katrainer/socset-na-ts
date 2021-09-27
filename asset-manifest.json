@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/socset-na-ts/static/css/main.8eac94c4.chunk.css",
+    "main.js": "/socset-na-ts/static/js/main.9f810de4.chunk.js",
+    "main.js.map": "/socset-na-ts/static/js/main.9f810de4.chunk.js.map",
+    "runtime-main.js": "/socset-na-ts/static/js/runtime-main.53876a6f.js",
+    "runtime-main.js.map": "/socset-na-ts/static/js/runtime-main.53876a6f.js.map",
+    "static/js/2.a007e335.chunk.js": "/socset-na-ts/static/js/2.a007e335.chunk.js",
+    "static/js/2.a007e335.chunk.js.map": "/socset-na-ts/static/js/2.a007e335.chunk.js.map",
+    "static/js/3.8db8c6c7.chunk.js": "/socset-na-ts/static/js/3.8db8c6c7.chunk.js",
+    "static/js/3.8db8c6c7.chunk.js.map": "/socset-na-ts/static/js/3.8db8c6c7.chunk.js.map",
+    "index.html": "/socset-na-ts/index.html",
+    "static/css/main.8eac94c4.chunk.css.map": "/socset-na-ts/static/css/main.8eac94c4.chunk.css.map",
+    "static/js/2.a007e335.chunk.js.LICENSE.txt": "/socset-na-ts/static/js/2.a007e335.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.53876a6f.js",
+    "static/js/2.a007e335.chunk.js",
+    "static/css/main.8eac94c4.chunk.css",
+    "static/js/main.9f810de4.chunk.js"
+  ]
+}
