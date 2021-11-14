@@ -1,5 +1,9 @@
+import React from "react";
 import {v1} from "uuid";
-import {rerenderApp} from "../rerenderApp";
+
+let rerenderApp = () =>{
+    console.log('aaa')
+}
 
 export type StateType = {
     profilePage: {
@@ -12,8 +16,6 @@ export type StateType = {
     }
     sidebar: SidebarProps[]
 }
-
-
 type PostDataProps = {
     id: string
     message: string
@@ -68,16 +70,34 @@ export let state: StateType = {
     ]
 }
 
-export const addNewPost = () => {
-    const post = {id: v1(),
+export const addNewPostClick = () => {
+    const post = {
+        id: v1(),
         message: state.messagesPage.postText,
-        likeCount: 0}
-    state.profilePage.postsData.push(post)
+        likeCount: 0
+    }
+    state.profilePage.postsData.unshift(post)
     state.messagesPage.postText = ''
-    rerenderApp(state)
+    rerenderApp()
 }
+export const addNewPostEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter') {
+        const post = {
+            id: v1(),
+            message: state.messagesPage.postText,
+            likeCount: 0
+        }
+        state.profilePage.postsData.unshift(post)
+        state.messagesPage.postText = ''
+        rerenderApp()
+    }
 
+}
 export const changePostText = (text: string) => {
     state.messagesPage.postText = text
-    rerenderApp(state)
+    rerenderApp()
+}
+
+export const subscribe = (observer: ()=>void) =>{
+    rerenderApp = observer
 }
