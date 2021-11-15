@@ -1,7 +1,7 @@
-import React, { ChangeEvent } from "react";
+import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
 import s from "./MyPost.module.css"
-import {addNewPostClick, addNewPostEnter, changePostText} from "../../../redux/state";
+import {store} from "../../../redux/state";
 
 type postType = {
     postsData: Array<postsDataOb>
@@ -26,7 +26,7 @@ export const MyPosts = (props: postType) => {
 
     const newPostText = (e: ChangeEvent<HTMLTextAreaElement>) =>{
         // let text = e.currentTarget.value
-        changePostText(e.currentTarget.value)
+        store.setPostText(e.currentTarget.value)
     }
 
     return (
@@ -38,11 +38,11 @@ export const MyPosts = (props: postType) => {
                         // ref={newPostElement}
                         onChange={newPostText}
                         value={props.postText}
-                        onKeyPress={addNewPostEnter}
+                        onKeyPress={store.setNewPostEnter.bind(store)}
                         />
                 </div>
                 <div>
-                    <button onClick={addNewPostClick}>Add post</button>
+                    <button onClick={store.setNewPostClick.bind(store)}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>
