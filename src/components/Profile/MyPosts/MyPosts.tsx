@@ -26,7 +26,15 @@ export const MyPosts = (props: postType) => {
 
     const newPostText = (e: ChangeEvent<HTMLTextAreaElement>) =>{
         // let text = e.currentTarget.value
-        store.setPostText(e.currentTarget.value)
+        // store.setPostText(e.currentTarget.value)
+        store.dispatch({type: "SET-POST-TEXT", text: e.currentTarget.value})
+    }
+
+    const onKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>)=>{
+        store.dispatch({type: "SET-NEW-POST-ENTER", eventKey: e.key})
+    }
+    const onClickHandler = ()=>{
+        store.dispatch({type: "SET-NEW-POST-CLICK"})
     }
 
     return (
@@ -38,11 +46,13 @@ export const MyPosts = (props: postType) => {
                         // ref={newPostElement}
                         onChange={newPostText}
                         value={props.postText}
-                        onKeyPress={store.setNewPostEnter.bind(store)}
+                        // onKeyPress={store.dispatch.bind(store)}
+                        onKeyPress={onKeyPressHandler}
                         />
                 </div>
                 <div>
-                    <button onClick={store.setNewPostClick.bind(store)}>Add post</button>
+                    {/*<button onClick={store.setNewPostClick.bind(store)}>Add post</button>*/}
+                    <button onClick={onClickHandler}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>

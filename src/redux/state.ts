@@ -9,6 +9,7 @@ type StoreType = {
     subscribe: (observer: () => void) => void
     callSubscriber: () => void
     _getState: () => StateType
+    dispatch: (action: ActionsTypes) => void
 }
 export type StateType = {
     profilePage: {
@@ -40,6 +41,22 @@ type SidebarProps = {
     img: string
     name: string
 }
+
+export type ActionsTypes = SetNewPostClickActionType
+    | SetNewPostEnterActionType
+    | SetPostTextActiontype
+type SetNewPostClickActionType = {
+    type: 'SET-NEW-POST-CLICK'
+}
+type SetNewPostEnterActionType = {
+    type: 'SET-NEW-POST-ENTER'
+    eventKey: string
+}
+type SetPostTextActiontype = {
+    type: 'SET-POST-TEXT'
+    text: string
+}
+
 
 export let store: StoreType = {
     _state: {
@@ -78,9 +95,14 @@ export let store: StoreType = {
     _getState() {
         return this._state
     },
+
     callSubscriber() {
         console.log('aaa')
     },
+    subscribe: function (observer: () => void) {
+        this.callSubscriber = observer
+    },
+
     setNewPostClick() {
         const post = {
             id: v1(),
@@ -107,7 +129,31 @@ export let store: StoreType = {
         this._state.messagesPage.postText = text
         this.callSubscriber()
     },
-    subscribe: function (observer: () => void) {
-        this.callSubscriber = observer
+    dispatch(action: ActionsTypes) {
+        if (action.type === 'SET-NEW-POST-CLICK') {
+            const post = {
+                id: v1(),
+                message: this._state.messagesPage.postText,
+                likeCount: 0
+            }
+            this._state.profilePage.postsData.unshift(post)
+            this._state.messagesPage.postText = ''
+            this.callSubscriber()
+
+        } else if (action.type === 'SET-NEW-POST-ENTER') {
+            if (action.eventKey === 'Enter') {
+                const post = {
+                    id: v1(),
+                    message: this._state.messagesPage.postText,
+                    likeCount: 0
+                }
+                this._state.profilePage.postsData.unshift(post)
+                this._state.messagesPage.postText = ''
+                this.callSubscriber()
+            }
+        } else if (action.type === 'SET-POST-TEXT') {
+            this._state.messagesPage.postText = action.text
+            this.callSubscriber()
+        }
     }
 }
