@@ -10,16 +10,17 @@ type StoreType = {
     subscribe: (observer: () => void) => void
     callSubscriber: () => void
     _getState: () => StateType
-    dispatch: (action: ActionsTypes) => void
+    dispatch: (action: generalType) => void
 }
 export type StateType = {
     profilePage: {
         postsData: PostDataProps[]
+        newPostText: string
     }
     messagesPage: {
         dialogsData: DialogsDataProps[]
         messagesData: MessagesDataProps[]
-        postText: string
+        newMessageText: string
     }
     sidebar: SidebarProps[]
 }
@@ -43,22 +44,6 @@ type SidebarProps = {
     name: string
 }
 
-export type ActionsTypes = SetNewPostClickActionType
-    | SetNewPostEnterActionType
-    | SetPostTextActiontype
-type SetNewPostClickActionType = {
-    type: 'SET-NEW-POST-CLICK'
-}
-type SetNewPostEnterActionType = {
-    type: 'SET-NEW-POST-ENTER'
-    eventKey: string
-}
-type SetPostTextActiontype = {
-    type: 'SET-POST-TEXT'
-    text: string
-}
-
-
 export let store: StoreType = {
     _state: {
         profilePage: {
@@ -66,7 +51,8 @@ export let store: StoreType = {
                 {id: v1(), message: 'yo', likeCount: 12},
                 {id: v1(), message: 'yoyo', likeCount: 212},
                 {id: v1(), message: 'yoyo', likeCount: 212},
-            ]
+            ],
+            newPostText: ''
         },
         messagesPage: {
             dialogsData: [
@@ -85,7 +71,7 @@ export let store: StoreType = {
                 {id: v1(), message: 'yoyoyoyo'},
                 {id: v1(), message: 'yoyoyoyo'},
             ],
-            postText: '',
+            newMessageText: '',
         },
         sidebar: [
             {id: v1(), img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png', name: 'Nikita'},
@@ -107,53 +93,64 @@ export let store: StoreType = {
     setNewPostClick() {
         const post = {
             id: v1(),
-            message: this._state.messagesPage.postText,
+            message: this._state.profilePage.newPostText,
             likeCount: 0
         }
         this._state.profilePage.postsData.unshift(post)
-        this._state.messagesPage.postText = ''
+        this._state.profilePage.newPostText = ''
         this.callSubscriber()
     },
     setNewPostEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {
         if (e.key === 'Enter') {
             const post = {
                 id: v1(),
-                message: this._state.messagesPage.postText,
+                message: this._state.profilePage.newPostText,
                 likeCount: 0
             }
             this._state.profilePage.postsData.unshift(post)
-            this._state.messagesPage.postText = ''
+            this._state.profilePage.newPostText = ''
             this.callSubscriber()
         }
     },
     setPostText(text: string) {
-        this._state.messagesPage.postText = text
+        this._state.profilePage.newPostText = text
         this.callSubscriber()
     },
     dispatch(action: generalType) {
         if (action.type === 'SET-NEW-POST-CLICK') {
             const post = {
                 id: v1(),
-                message: this._state.messagesPage.postText,
+                message: this._state.profilePage.newPostText,
                 likeCount: 0
             }
             this._state.profilePage.postsData.unshift(post)
-            this._state.messagesPage.postText = ''
+            this._state.profilePage.newPostText = ''
             this.callSubscriber()
 
         } else if (action.type === 'SET-NEW-POST-ENTER') {
             if (action.eventKey === 'Enter') {
                 const post = {
                     id: v1(),
-                    message: this._state.messagesPage.postText,
+                    message: this._state.profilePage.newPostText,
                     likeCount: 0
                 }
                 this._state.profilePage.postsData.unshift(post)
-                this._state.messagesPage.postText = ''
+                this._state.profilePage.newPostText = ''
                 this.callSubscriber()
             }
         } else if (action.type === 'SET-POST-TEXT') {
-            this._state.messagesPage.postText = action.text
+            this._state.profilePage.newPostText = action.text
+            this.callSubscriber()
+        } else if (action.type === 'SET-MESSAGE-TEXT') {
+            this._state.messagesPage.newMessageText = action.text
+            this.callSubscriber()
+        } else if (action.type === 'SET-NEW-MESSAGE-CLICK') {
+            const message = {
+                id: v1(),
+                message: this._state.messagesPage.newMessageText,
+            }
+            this._state.messagesPage.messagesData.unshift(message)
+            this._state.messagesPage.newMessageText = ''
             this.callSubscriber()
         }
     }
