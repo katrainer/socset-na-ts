@@ -2,6 +2,7 @@ import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
 import s from "./MyPost.module.css"
 import {store} from "../../../redux/state";
+import {setNewPostClickAC, setNewPostEnterAC, setPostTextAC } from "../../../redux/ac";
 
 type postType = {
     postsData: Array<postsDataOb>
@@ -27,14 +28,17 @@ export const MyPosts = (props: postType) => {
     const newPostText = (e: ChangeEvent<HTMLTextAreaElement>) =>{
         // let text = e.currentTarget.value
         // store.setPostText(e.currentTarget.value)
-        store.dispatch({type: "SET-POST-TEXT", text: e.currentTarget.value})
+        // store.dispatch({type: "SET-POST-TEXT", text: e.currentTarget.value})
+        store.dispatch(setPostTextAC(e.currentTarget.value))
     }
 
     const onKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>)=>{
-        store.dispatch({type: "SET-NEW-POST-ENTER", eventKey: e.key})
+        // store.dispatch({type: "SET-NEW-POST-ENTER", eventKey: e.key})
+        store.dispatch(setNewPostEnterAC(e.key))
     }
     const onClickHandler = ()=>{
-        store.dispatch({type: "SET-NEW-POST-CLICK"})
+        // store.dispatch({type: "SET-NEW-POST-CLICK"})
+        store.dispatch(setNewPostClickAC())
     }
 
     return (
@@ -61,3 +65,7 @@ export const MyPosts = (props: postType) => {
         </div>
     )
 }
+// function setPostTextAC(value: string): import("../../../redux/state").ActionsTypes {
+//     throw new Error("Function not implemented.");
+// }
+

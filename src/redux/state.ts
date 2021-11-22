@@ -1,5 +1,6 @@
 import React from "react";
 import {v1} from "uuid";
+import {generalType} from "./ac";
 
 type StoreType = {
     _state: StateType
@@ -129,7 +130,7 @@ export let store: StoreType = {
         this._state.messagesPage.postText = text
         this.callSubscriber()
     },
-    dispatch(action: ActionsTypes) {
+    dispatch(action: generalType) {
         if (action.type === 'SET-NEW-POST-CLICK') {
             const post = {
                 id: v1(),
