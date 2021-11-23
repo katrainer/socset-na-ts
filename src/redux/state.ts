@@ -1,28 +1,29 @@
 import React from "react";
 import {v1} from "uuid";
 import {generalType} from "./ac";
+import { messagesPageReducer } from "./reducer/messagesPageReducer";
+import {profilePageReducer} from "./reducer/profilePageReducer";
 
 type StoreType = {
     _state: StateType
-    setNewPostClick: () => void
-    setNewPostEnter: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void
-    setPostText: (text: string) => void
     subscribe: (observer: () => void) => void
     callSubscriber: () => void
     _getState: () => StateType
     dispatch: (action: generalType) => void
 }
 export type StateType = {
-    profilePage: {
-        postsData: PostDataProps[]
-        newPostText: string
-    }
-    messagesPage: {
-        dialogsData: DialogsDataProps[]
-        messagesData: MessagesDataProps[]
-        newMessageText: string
-    }
+    profilePage: profilePageType
+    messagesPage: messagesPageType
     sidebar: SidebarProps[]
+}
+export type profilePageType = {
+    postsData: PostDataProps[]
+    newPostText: string
+}
+export type messagesPageType = {
+    dialogsData: DialogsDataProps[]
+    messagesData: MessagesDataProps[]
+    newMessageText: string
 }
 type PostDataProps = {
     id: string
@@ -90,68 +91,9 @@ export let store: StoreType = {
         this.callSubscriber = observer
     },
 
-    setNewPostClick() {
-        const post = {
-            id: v1(),
-            message: this._state.profilePage.newPostText,
-            likeCount: 0
-        }
-        this._state.profilePage.postsData.unshift(post)
-        this._state.profilePage.newPostText = ''
-        this.callSubscriber()
-    },
-    setNewPostEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-        if (e.key === 'Enter') {
-            const post = {
-                id: v1(),
-                message: this._state.profilePage.newPostText,
-                likeCount: 0
-            }
-            this._state.profilePage.postsData.unshift(post)
-            this._state.profilePage.newPostText = ''
-            this.callSubscriber()
-        }
-    },
-    setPostText(text: string) {
-        this._state.profilePage.newPostText = text
-        this.callSubscriber()
-    },
     dispatch(action: generalType) {
-        if (action.type === 'SET-NEW-POST-CLICK') {
-            const post = {
-                id: v1(),
-                message: this._state.profilePage.newPostText,
-                likeCount: 0
-            }
-            this._state.profilePage.postsData.unshift(post)
-            this._state.profilePage.newPostText = ''
-            this.callSubscriber()
-
-        } else if (action.type === 'SET-NEW-POST-ENTER') {
-            if (action.eventKey === 'Enter') {
-                const post = {
-                    id: v1(),
-                    message: this._state.profilePage.newPostText,
-                    likeCount: 0
-                }
-                this._state.profilePage.postsData.unshift(post)
-                this._state.profilePage.newPostText = ''
-                this.callSubscriber()
-            }
-        } else if (action.type === 'SET-POST-TEXT') {
-            this._state.profilePage.newPostText = action.text
-            this.callSubscriber()
-        } else if (action.type === 'SET-MESSAGE-TEXT') {
-            this._state.messagesPage.newMessageText = action.text
-            this.callSubscriber()
-        } else if (action.type === 'SET-NEW-MESSAGE-CLICK') {
-            const message = {
-                id: v1(),
-                message: this._state.messagesPage.newMessageText,
-            }
-            this._state.messagesPage.messagesData.unshift(message)
-            this._state.messagesPage.newMessageText = ''
-            this.callSubscriber()
-        }
+        profilePageReducer(this._state.profilePage, action)
+        messagesPageReducer(this._state.messagesPage, action)
+        this.callSubscriber()
     }
 }
