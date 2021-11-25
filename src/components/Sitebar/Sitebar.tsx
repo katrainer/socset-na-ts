@@ -11,8 +11,9 @@ type sitebarOb={
 }
 
 export const Sitebar=(props: propsType)=>{
-
+    debugger
     let sitebarBlock = props.sitebar.map((t)=>{
+
         return (
             <div key={t.id} className={s.SitebarBlock}>
             <div><img src={t.img}/></div>

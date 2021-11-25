@@ -1,8 +1,8 @@
 import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
 import s from "./MyPost.module.css"
-import {store} from "../../../redux/state";
 import {setNewPostClickAC, setNewPostEnterAC, setPostTextAC } from "../../../redux/ac";
+import { store } from "../../../redux/storeRedux";
 
 type postType = {
     postsData: Array<postsDataOb>

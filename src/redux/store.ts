@@ -3,6 +3,7 @@ import {v1} from "uuid";
 import {generalType} from "./ac";
 import { messagesPageReducer } from "./reducer/messagesPageReducer";
 import {profilePageReducer} from "./reducer/profilePageReducer";
+import { sidebarPageReducer } from "./reducer/sidebarPageReducer";
 
 type StoreType = {
     _state: StateType
@@ -14,7 +15,7 @@ type StoreType = {
 export type StateType = {
     profilePage: profilePageType
     messagesPage: messagesPageType
-    sidebar: SidebarProps[]
+    sidebarPage: SidebarProps[]
 }
 export type profilePageType = {
     postsData: PostDataProps[]
@@ -39,7 +40,7 @@ type MessagesDataProps = {
     id: string
     message: string
 }
-type SidebarProps = {
+export type SidebarProps = {
     id: string
     img: string
     name: string
@@ -74,7 +75,7 @@ export let store: StoreType = {
             ],
             newMessageText: '',
         },
-        sidebar: [
+        sidebarPage: [
             {id: v1(), img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png', name: 'Nikita'},
             {id: v1(), img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png', name: 'NNikita'},
             {id: v1(), img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png', name: 'NNNikita'},
@@ -92,8 +93,12 @@ export let store: StoreType = {
     },
 
     dispatch(action: generalType) {
+        // profilePageReducer(this._state.profilePage, action)
+        // messagesPageReducer(this._state.messagesPage, action)
+        // sidebarPageReducer(this._state.sidebarPage, action)
         profilePageReducer(this._state.profilePage, action)
         messagesPageReducer(this._state.messagesPage, action)
+        sidebarPageReducer(this._state.sidebarPage, action)
         this.callSubscriber()
     }
 }

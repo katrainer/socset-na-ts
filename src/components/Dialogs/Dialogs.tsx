@@ -3,21 +3,19 @@ import {DialogItem} from './DialogItem/DialogItem';
 import classes from "./Dialogs.module.css";
 import {Message} from "./Message/Message";
 import {v1} from "uuid";
-import { store } from '../../redux/state';
 import {setMessageTextAC, setNewMessageTextAC} from "../../redux/ac";
+import {store} from "../../redux/storeRedux";
 
 type propsType={
     dialogsData: Array<dialogsDataOb>
     messagesData: Array<messagesDataOb>
     newMessageText: string
 }
-
 type dialogsDataOb={
     id: string
     name: string
     img: string
 }
-
 type messagesDataOb={
     id: string
     message: string
