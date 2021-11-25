@@ -11,8 +11,9 @@ type propsType = {
 export const DialogItem = (props: propsType) => {
     return (
         <div className={s.dialog}>
-
-            <NavLink to={'/dialogs/' + props.id}> <img src={props.img}/> {props.name} </NavLink>
+            <NavLink to={'/dialogs/' + props.id}>
+                <img src={props.img}/> {props.name}
+            </NavLink>
         </div>
     )
 }
