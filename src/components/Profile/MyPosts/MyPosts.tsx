@@ -1,20 +1,11 @@
 import React, {ChangeEvent} from "react";
-import {Post} from "./Post/Post";
 import s from "./MyPost.module.css"
-import {setNewPostClickAC, setNewPostEnterAC, setPostTextAC} from "../../../redux/ac";
-import {store} from "../../../redux/storeRedux";
+import {MyPostsType} from "./MyPostsConteiner";
+import {Post} from "./Post/Post";
 
-type postType = {
-    newPostText: (e: string) => void
-    onKeyPressHandler: (e: string) => void
-    onClickHandler: () => void
-    postText: string
-    posts:any
-}
+export const MyPosts = (props: MyPostsType) => {
 
-export const MyPosts = (props: postType) => {
-
-    // const posts = props.postsData.map(p => <Post id={p.id} message={p.message} likeCount={p.likeCount}/>)
+    const posts = props.postsData.map(p => <Post id={p.id} message={p.message} likeCount={p.likeCount}/>)
 
     const newPostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.newPostText(e.currentTarget.value)
@@ -43,7 +34,7 @@ export const MyPosts = (props: postType) => {
                 </div>
             </div>
             <div className={s.posts}>
-                {props.posts}
+                {posts}
             </div>
         </div>
     )

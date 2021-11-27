@@ -1,42 +1,34 @@
-import React, {ChangeEvent} from "react";
-import {Post} from "./Post/Post";
-import s from "./MyPost.module.css"
-import {setNewPostClickAC, setNewPostEnterAC, setPostTextAC } from "../../../redux/ac";
-import { store } from "../../../redux/storeRedux";
+import React from "react";
+import {setNewPostClickAC, setNewPostEnterAC, setPostTextAC} from "../../../redux/ac";
+import {AppStateType} from "../../../redux/storeRedux";
 import {MyPosts} from "./MyPosts";
+import {connect} from "react-redux";
+import {PostDataProps} from "../../../redux/reducer/profilePageReducer";
+import {Dispatch} from "redux";
 
-type postType = {
-    postsData: Array<postsDataOb>
+type MapStateToPropsType = {
     postText: string
+    postsData: PostDataProps[]
 }
-type postsDataOb = {
-    message: string
-    likeCount: number
-    id: string
+type MapDispatchToPropsType = {
+    newPostText: (e: string) => void
+    onKeyPressHandler: (e: string) => void
+    onClickHandler: () => void
+}
+export type MyPostsType = MapStateToPropsType & MapDispatchToPropsType
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+    return {
+        postText: state.profilePageReducer.newPostText,
+        postsData: state.profilePageReducer.postsData,
+    }
 }
 
-export const MyPostsConteiner = (props: postType) => {
-
-    const posts = props.postsData.map(p => <Post id={p.id} message={p.message} likeCount={p.likeCount}/>)
-
-    const newPostText = (e: string) =>{
-        store.dispatch(setPostTextAC(e))
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
+    return {
+        newPostText: (e: string) => dispatch(setPostTextAC(e)),
+        onKeyPressHandler: (e: string) => dispatch(setNewPostEnterAC(e)),
+        onClickHandler: () => dispatch(setNewPostClickAC()),
     }
-
-    const onKeyPressHandler = (e: string)=>{
-        store.dispatch(setNewPostEnterAC(e))
-    }
-    const onClickHandler = ()=>{
-        store.dispatch(setNewPostClickAC())
-    }
-
-    return (
-        <MyPosts
-            newPostText={newPostText}
-            onKeyPressHandler={onKeyPressHandler}
-            onClickHandler={onClickHandler}
-            postText={props.postText}
-            posts={posts}
-        />
-    )
 }
+
+export const MyPostsConteiner = connect(mapStateToProps, mapDispatchToProps)(MyPosts)

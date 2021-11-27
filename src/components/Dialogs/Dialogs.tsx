@@ -1,21 +1,13 @@
 import React, {ChangeEvent} from 'react';
-import {DialogItem} from './DialogItem/DialogItem';
+import { DialogItem } from './DialogItem/DialogItem';
 import classes from "./Dialogs.module.css";
-import {Message} from "./Message/Message";
-import {v1} from "uuid";
-import {setMessageTextAC, setNewMessageTextAC} from "../../redux/ac";
-import {store} from "../../redux/storeRedux";
-import { dialogsDataType } from './DialogsConteiner';
+import { DialogsType } from './DialogsConteiner';
+import { Message } from './Message/Message';
 
-type propsType = {
-    dialogs: any
-    messages: any
-    newMessageText: string
-    onChangeHandler: (e: string) => void
-    onClickhandler: () => void
-}
+export const Dialogs = (props: DialogsType) => {
 
-export const Dialogs = (props: propsType) => {
+    const dialogs = props.dialogsData.map(d => <DialogItem img={d.img} name={d.name} id={d.id}/>)
+    const messages = props.messagesData.map(m => <Message message={m.message} id={m.id}/>)
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.onChangeHandler(e.currentTarget.value)
@@ -28,10 +20,10 @@ export const Dialogs = (props: propsType) => {
     return (
         <div className={classes.dialogs}>
             <div className={classes.dialogsItem}>
-                {props.dialogs}
+                {dialogs}
             </div>
             <div className={classes.messages}>
-                {props.messages}
+                {messages}
                 <textarea onChange={onChangeHandler} value={props.newMessageText}/>
                 <button onClick={onClickhandler}>add message</button>
             </div>

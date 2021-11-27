@@ -1,8 +1,17 @@
 import {generalType} from "../ac"
-import {profilePageType, StateType} from "../store"
 import {v1} from "uuid";
 
-const initialState = {
+export type profilePageType = {
+    postsData: PostDataProps[]
+    newPostText: string
+}
+export type PostDataProps = {
+    id: string
+    message: string
+    likeCount: number
+}
+
+const initialState: profilePageType = {
     postsData: [
         {id: v1(), message: 'yo', likeCount: 12},
         {id: v1(), message: 'yoyo', likeCount: 212},

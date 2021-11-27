@@ -1,8 +1,22 @@
 import {generalType} from "../ac";
-import {messagesPageType, StateType} from "../store";
 import {v1} from "uuid";
 
-const initialState = {
+export type messagesPageType = {
+    dialogsData: DialogsDataProps[]
+    messagesData: MessagesDataProps[]
+    newMessageText: string
+}
+export type DialogsDataProps = {
+    id: string
+    name: string
+    img: string
+}
+export type MessagesDataProps = {
+    id: string
+    message: string
+}
+
+const initialState: messagesPageType = {
     dialogsData: [
         {id: v1(), name: 'Nikita', img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png'},
         {id: v1(), name: 'Jana', img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png'},
