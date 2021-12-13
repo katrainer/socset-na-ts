@@ -9,6 +9,7 @@ import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {AppStateType} from "./redux/storeRedux";
 import {DialogsConteiner} from "./components/Dialogs/DialogsConteiner";
+import {UsersConteiner} from './components/Users/UsersConteiner';
 
 type AppPropsType = {
     storeData: AppStateType
@@ -32,6 +33,7 @@ function App(props: AppPropsType) {
                     <Route path='/news' render={News}/>
                     <Route path='/music' render={Music}/>
                     <Route path='/settings' render={Settings}/>
+                    <Route path='/users' render={()=><UsersConteiner/>}/>
                 </div>
             </div>
         </BrowserRouter>

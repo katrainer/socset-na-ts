@@ -20,33 +20,21 @@ const initialState: profilePageType = {
     newPostText: ''
 }
 
-export const profilePageReducer = (state:profilePageType  = initialState, action: generalType):profilePageType => {
-    switch (action.type) {
+export const profilePageReducer = (state: profilePageType = initialState, action: generalType): profilePageType => {
+        switch (action.type) {
         case "SET-NEW-POST-CLICK": {
-            const post = {
-                id: v1(),
-                message: state.newPostText,
-                likeCount: 0
-            }
-            state.postsData.unshift(post)
-            state.newPostText = ''
-            return {...state}
+            const post = {id: v1(), message: state.newPostText, likeCount: 0}
+            return {...state, postsData: [post, ...state.postsData], newPostText: ''}
         }
         case "SET-NEW-POST-ENTER": {
             if (action.eventKey === 'Enter') {
-                const post = {
-                    id: v1(),
-                    message: state.newPostText,
-                    likeCount: 0
-                }
-                state.postsData.unshift(post)
-                state.newPostText = ''
+                const post = {id: v1(), message: state.newPostText, likeCount: 0}
+                return {...state, postsData: [post, ...state.postsData], newPostText: ''}
             }
             return {...state}
         }
         case "SET-POST-TEXT": {
-            state.newPostText = action.text
-            return {...state}
+            return {...state, newPostText: action.text}
         }
         default : {
             return {...state}

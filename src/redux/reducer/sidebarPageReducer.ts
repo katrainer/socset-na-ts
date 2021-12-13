@@ -16,6 +16,7 @@ const initialState = [
 type SidebarPageType = typeof initialState
 
 export const sidebarPageReducer = (state: SidebarPageType=initialState, action: generalType): SidebarPageType =>{
+
     switch (action.type) {
         default: return [...state]
     }

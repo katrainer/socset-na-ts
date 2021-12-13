@@ -6,19 +6,12 @@ import {store} from "./redux/storeRedux";
 import {Provider} from "react-redux";
 import ReactDOM from 'react-dom';
 
-
-// const rerenderApp=(state: StateType)=>{
-const rerenderEntireTree = () => {
-    ReactDOM.render(
-        <Provider store={store}>
-            <App storeData={store.getState()} store={store}/>
-        </Provider>,
-        document.getElementById('root')
-    )
-}
-// rerenderApp(state);
-rerenderEntireTree();
-store.subscribe(rerenderEntireTree)
+ReactDOM.render(
+    <Provider store={store}>
+        <App storeData={store.getState()} store={store}/>
+    </Provider>,
+    document.getElementById('root')
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -11,7 +11,6 @@ type sitebarOb={
 }
 
 export const Sitebar=(props: propsType)=>{
-    debugger
     let sitebarBlock = props.sitebar.map((t)=>{
 
         return (

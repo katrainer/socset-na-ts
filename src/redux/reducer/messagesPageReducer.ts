@@ -36,21 +36,16 @@ const initialState: messagesPageType = {
     newMessageText: '',
 }
 
-export const messagesPageReducer = (state: messagesPageType = initialState, action:generalType):messagesPageType =>{
+export const messagesPageReducer = (state: messagesPageType = initialState, action: generalType): messagesPageType => {
     switch (action.type) {
         case "SET-MESSAGE-TEXT": {
-            state.newMessageText = action.text
-            return {...state}
+            return {...state, newMessageText: action.text}
         }
         case "SET-NEW-MESSAGE-CLICK": {
-            const message = {
-                id: v1(),
-                message: state.newMessageText,
-            }
-            state.messagesData.unshift(message)
-            state.newMessageText = ''
-            return {...state}
+            const message = {id: v1(), message: state.newMessageText,}
+            return {...state, messagesData: [message, ...state.messagesData], newMessageText:''}
         }
-        default: return {...state}
+        default:
+            return {...state}
     }
 }
