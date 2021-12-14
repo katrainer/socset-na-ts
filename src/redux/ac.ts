@@ -1,14 +1,17 @@
 import React from 'react';
 import {UsersType, UserType} from './reducer/usersPageReducer';
 
-export type generalType = setNewPostClickACType
+export type generalType =
+    setNewPostClickACType
     | setNewPostEnterACType
     | setPostTextACType
     | setMessageTextACType
     | setNewMessageTextACType
     | subscribeACType
     | unsubscribeACType
-    | getSunscribersACType
+    | setSunscribersACType
+    | setTotalUsersCountACType
+    | changeCurrentPageACType
 
 type setNewPostClickACType = ReturnType<typeof setNewPostClickAC>
 export const setNewPostClickAC = () => {
@@ -63,11 +66,27 @@ export const unsubscribeAC = (id: string) => {
     } as const
 }
 
-type getSunscribersACType = ReturnType<typeof setSunscribersAC>
-export const setSunscribersAC = (state: UsersType) => {
+type setSunscribersACType = ReturnType<typeof setSunscribersAC>
+export const setSunscribersAC = (users: Array<UserType>) => {
     return {
         type: 'SET-SUBSCRIBERS',
-        state
+        users
+    } as const
+}
+
+type setTotalUsersCountACType = ReturnType<typeof setTotalUsersCountAC>
+export const setTotalUsersCountAC = (totalUsersCount: number) => {
+    return {
+        type: 'SET-TOTAL-USERS-COUNT',
+        totalUsersCount,
+    } as const
+}
+
+type changeCurrentPageACType = ReturnType<typeof changeCurrentPageAC>
+export const changeCurrentPageAC = (currentPage: number) => {
+    return {
+        type: 'CHANGE-CURRENT-PAGE',
+        currentPage
     } as const
 }
 

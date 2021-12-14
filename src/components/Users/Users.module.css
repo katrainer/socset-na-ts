@@ -1,3 +1,7 @@
 .conteiner img{
     width: 30px;
 }
+
+.selectedPage{
+    font-weight: bold;
+}
