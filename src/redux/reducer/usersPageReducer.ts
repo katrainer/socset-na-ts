@@ -6,6 +6,7 @@ export type UsersType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    preloader: boolean
 }
 export type UserType = {
     name: string
@@ -24,6 +25,7 @@ const initialState: UsersType = {
     pageSize: 20,
     totalUsersCount: 0,
     currentPage: 1,
+    preloader: false
 }
 
 export const usersPageReducer = (state: UsersType = initialState, action: generalType): UsersType => {
@@ -43,6 +45,9 @@ export const usersPageReducer = (state: UsersType = initialState, action: genera
         }
         case "CHANGE-CURRENT-PAGE":{
             return {...state, currentPage: action.currentPage}
+        }
+        case "PRELOADER":{
+            return {...state, preloader:action.preloader}
         }
         default:
             return {...state}

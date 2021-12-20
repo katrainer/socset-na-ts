@@ -12,6 +12,7 @@ export type generalType =
     | setSunscribersACType
     | setTotalUsersCountACType
     | changeCurrentPageACType
+    | preloaderACType
 
 type setNewPostClickACType = ReturnType<typeof setNewPostClickAC>
 export const setNewPostClickAC = () => {
@@ -87,6 +88,14 @@ export const changeCurrentPageAC = (currentPage: number) => {
     return {
         type: 'CHANGE-CURRENT-PAGE',
         currentPage
+    } as const
+}
+
+type preloaderACType = ReturnType<typeof preloaderAC>
+export const preloaderAC = (preloader: boolean) => {
+    return {
+        type: "PRELOADER",
+        preloader
     } as const
 }
 
