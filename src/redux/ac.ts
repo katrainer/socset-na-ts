@@ -1,5 +1,5 @@
-import React from 'react';
-import {UsersType, UserType} from './reducer/usersPageReducer';
+import {userProfilePageType} from './reducer/profilePageReducer';
+import {UserType} from './reducer/usersPageReducer';
 
 export type generalType =
     setNewPostClickACType
@@ -13,24 +13,26 @@ export type generalType =
     | setTotalUsersCountACType
     | changeCurrentPageACType
     | preloaderACType
+    | setProfileUserDataACType
+    | setUserIdNumberACType
 
-type setNewPostClickACType = ReturnType<typeof setNewPostClickAC>
-export const setNewPostClickAC = () => {
+type setNewPostClickACType = ReturnType<typeof setNewPostClick>
+export const setNewPostClick = () => {
     return {
         type: 'SET-NEW-POST-CLICK'
     } as const
 }
 
-type setNewPostEnterACType = ReturnType<typeof setNewPostEnterAC>
-export const setNewPostEnterAC = (eventKey: string) => {
+type setNewPostEnterACType = ReturnType<typeof setNewPostEnter>
+export const setNewPostEnter = (eventKey: string) => {
     return {
         type: 'SET-NEW-POST-ENTER',
         eventKey
     } as const
 }
 
-type setPostTextACType = ReturnType<typeof setPostTextAC>
-export const setPostTextAC = (text: string) => {
+type setPostTextACType = ReturnType<typeof setPostText>
+export const setPostText = (text: string) => {
     return {
         type: 'SET-POST-TEXT',
         text
@@ -51,51 +53,67 @@ export const setNewMessageTextAC = () => {
     } as const
 }
 
-type subscribeACType = ReturnType<typeof subscribeAC>
-export const subscribeAC = (id: string) => {
+type subscribeACType = ReturnType<typeof subscribe>
+export const subscribe = (id: string) => {
     return {
         type: 'SUBSCRIBE',
         id,
     } as const
 }
 
-type unsubscribeACType = ReturnType<typeof unsubscribeAC>
-export const unsubscribeAC = (id: string) => {
+type unsubscribeACType = ReturnType<typeof unsubscribe>
+export const unsubscribe = (id: string) => {
     return {
         type: 'UNSUBSCRIBE',
         id,
     } as const
 }
 
-type setSunscribersACType = ReturnType<typeof setSunscribersAC>
-export const setSunscribersAC = (users: Array<UserType>) => {
+type setSunscribersACType = ReturnType<typeof setSubscribers>
+export const setSubscribers = (users: Array<UserType>) => {
     return {
         type: 'SET-SUBSCRIBERS',
         users
     } as const
 }
 
-type setTotalUsersCountACType = ReturnType<typeof setTotalUsersCountAC>
-export const setTotalUsersCountAC = (totalUsersCount: number) => {
+type setTotalUsersCountACType = ReturnType<typeof setTotalUsersCount>
+export const setTotalUsersCount = (totalUsersCount: number) => {
     return {
         type: 'SET-TOTAL-USERS-COUNT',
         totalUsersCount,
     } as const
 }
 
-type changeCurrentPageACType = ReturnType<typeof changeCurrentPageAC>
-export const changeCurrentPageAC = (currentPage: number) => {
+type changeCurrentPageACType = ReturnType<typeof changeCurrentPage>
+export const changeCurrentPage = (currentPage: number) => {
     return {
         type: 'CHANGE-CURRENT-PAGE',
         currentPage
     } as const
 }
 
-type preloaderACType = ReturnType<typeof preloaderAC>
-export const preloaderAC = (preloader: boolean) => {
+type preloaderACType = ReturnType<typeof changePreloader>
+export const changePreloader = (preloader: boolean) => {
     return {
         type: "PRELOADER",
         preloader
+    } as const
+}
+
+type setProfileUserDataACType = ReturnType<typeof setProfileUserData>
+export const setProfileUserData = (data: userProfilePageType) => {
+    return {
+        type: 'SET-PROFILE-USER-DATA',
+        data
+    } as const
+}
+
+type setUserIdNumberACType = ReturnType<typeof setUserIdNumber>
+export const setUserIdNumber = (id: number) => {
+    return {
+        type: 'SET-USER-ID-NUMBER',
+        id
     } as const
 }
 

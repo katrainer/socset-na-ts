@@ -1,7 +1,16 @@
 import classes from "./ProfileInfo.module.css";
 import React from "react";
+import {userProfilePageType} from "../../../redux/reducer/profilePageReducer";
 
-export const ProfileInfo = () => {
+
+type PropsType =
+    {
+        profileUserData: userProfilePageType | null
+    }
+export const ProfileInfo: React.FC<PropsType> = ({profileUserData}) => {
+// type PropsType = userProfilePageType
+// export const ProfileInfo= (props: PropsType) => {
+
     return (
         <div>
             <div>
@@ -11,6 +20,10 @@ export const ProfileInfo = () => {
             <div className={classes.descriptionBlock}>
                 avatar-description
             </div>
+            <div>
+            </div>
+            {profileUserData && (<><img src={profileUserData.photos.small}/>
+                <span>{profileUserData.fullName}</span></>)}
         </div>
     )
 }

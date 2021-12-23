@@ -3,5 +3,6 @@ import React from "react";
 
 
 export const Preloader = () =>{
-    return <img src={preloaderImg}/>
+    return <img src={preloaderImg}
+    style={{width: 100}}/>
 }
