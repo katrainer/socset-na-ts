@@ -1,9 +1,8 @@
 import React from "react";
-import {setNewPostEnter, setPostText, setNewPostClick} from "../../../redux/ac";
 import {AppStateType} from "../../../redux/storeRedux";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
-import {PostDataProps} from "../../../redux/reducer/profilePageReducer";
+import {PostDataProps, setNewPostEnter, setPostText, setNewPostClick} from "../../../redux/reducer/profilePageReducer";
 
 type MapStateToPropsType = {
     postText: string

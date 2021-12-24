@@ -1,16 +1,14 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/storeRedux";
-import {UsersType, UserType} from "../../redux/reducer/usersPageReducer";
 import {
-    changeCurrentPage,
+    UsersType, UserType, changeCurrentPage,
     changePreloader,
     setSubscribers,
     setTotalUsersCount,
     subscribe,
     unsubscribe,
-    setUserIdNumber
-} from "../../redux/ac";
+} from "../../redux/reducer/usersPageReducer";
 import {Users} from './Users';
 import axios from 'axios';
 import {Preloader} from '../../common/Preloader';
@@ -48,8 +46,7 @@ export class UsersAPIComponent extends React.Component<UserPropsType> {
                 users={this.props.users}
                 unsubscribe={this.props.unsubscribe}
                 subscribe={this.props.subscribe}
-                changeCurrentPage={this.changeCurrentPage}
-                setUserIdNumber={this.props.setUserIdNumber}/>
+                changeCurrentPage={this.changeCurrentPage}/>
         </>
     }
 }
@@ -63,7 +60,6 @@ type MapDispatchToPropsType = {
     setTotalUsersCount: (totalUsersCount: number) => void
     changeCurrentPage: (currentPage: number) => void
     changePreloader: (preloader: boolean) => void
-    setUserIdNumber: (id: number)=>void
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
@@ -79,5 +75,5 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 export type UserPropsType = MapStateToPropsType & MapDispatchToPropsType
 export const UsersConteiner = connect(mapStateToProps, {
     subscribe, unsubscribe, setSubscribers, setTotalUsersCount,
-    changeCurrentPage, changePreloader, setUserIdNumber
+    changeCurrentPage, changePreloader
 })(UsersAPIComponent)

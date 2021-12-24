@@ -1,4 +1,3 @@
-import {generalType} from "../ac";
 import {v1} from "uuid";
 
 export type messagesPageType = {
@@ -48,4 +47,20 @@ export const messagesPageReducer = (state: messagesPageType = initialState, acti
         default:
             return {...state}
     }
+}
+
+type generalType = setMessageTextACType|setNewMessageTextACType
+type setMessageTextACType = ReturnType<typeof setMessageText>
+export const setMessageText = (text: string) => {
+    return {
+        type: 'SET-MESSAGE-TEXT',
+        text
+    } as const
+}
+
+type setNewMessageTextACType = ReturnType<typeof setNewMessageText>
+export const setNewMessageText = () => {
+    return {
+        type: 'SET-NEW-MESSAGE-CLICK'
+    } as const
 }

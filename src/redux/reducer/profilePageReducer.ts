@@ -1,14 +1,37 @@
-import {generalType} from "../ac"
 import {v1} from "uuid";
+import { preloaderACType } from "./usersPageReducer";
 
 export type profilePageType = {
     postsData: PostDataProps[]
     newPostText: string
+    userProfilePage: userProfilePageType | null
+    preloader: boolean
 }
 export type PostDataProps = {
     id: string
     message: string
     likeCount: number
+}
+export type userProfilePageType = {
+    aboutMe: string | null
+    contacts: {
+        facebook: string | null
+        website: string | null
+        vk: string | null
+        twitter: string | null
+        instagram: string | null
+        youtube: string | null
+        github: string | null
+        mainLink: string | null
+    }
+    lookingForAJob: boolean
+    lookingForAJobDescription: string | null
+    fullName: string
+    userId: number
+    photos: {
+        small: string | undefined
+        large: string | undefined
+    }
 }
 
 const initialState: profilePageType = {
@@ -17,11 +40,14 @@ const initialState: profilePageType = {
         {id: v1(), message: 'yoyo', likeCount: 212},
         {id: v1(), message: 'yoyo', likeCount: 212},
     ],
-    newPostText: ''
+    newPostText: '',
+    userProfilePage: null,
+    preloader: false
 }
 
+
 export const profilePageReducer = (state: profilePageType = initialState, action: generalType): profilePageType => {
-        switch (action.type) {
+    switch (action.type) {
         case "SET-NEW-POST-CLICK": {
             const post = {id: v1(), message: state.newPostText, likeCount: 0}
             return {...state, postsData: [post, ...state.postsData], newPostText: ''}
@@ -36,8 +62,47 @@ export const profilePageReducer = (state: profilePageType = initialState, action
         case "SET-POST-TEXT": {
             return {...state, newPostText: action.text}
         }
+        case "SET-PROFILE-USER-DATA": {
+            return {...state, userProfilePage: action.data}
+        }
+        case "PRELOADER":{
+                return {...state, preloader:action.preloader}
+        }
         default : {
             return {...state}
         }
     }
+}
+type generalType = setNewPostClickACType
+    | setNewPostEnterACType
+    | setPostTextACType
+    | setProfileUserDataACType
+    | preloaderACType
+
+type setNewPostClickACType = ReturnType<typeof setNewPostClick>
+export const setNewPostClick = () => {
+    return {
+        type: 'SET-NEW-POST-CLICK'
+    } as const
+}
+type setNewPostEnterACType = ReturnType<typeof setNewPostEnter>
+export const setNewPostEnter = (eventKey: string) => {
+    return {
+        type: 'SET-NEW-POST-ENTER',
+        eventKey
+    } as const
+}
+type setPostTextACType = ReturnType<typeof setPostText>
+export const setPostText = (text: string) => {
+    return {
+        type: 'SET-POST-TEXT',
+        text
+    } as const
+}
+type setProfileUserDataACType = ReturnType<typeof setProfileUserData>
+export const setProfileUserData = (data: userProfilePageType) => {
+    return {
+        type: 'SET-PROFILE-USER-DATA',
+        data
+    } as const
 }

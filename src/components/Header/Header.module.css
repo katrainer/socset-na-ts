@@ -2,3 +2,8 @@
     grid-area: header;
     background-color: red;
 }
+.login{
+    float: right;
+    color: white;
+    font-weight: bold;
+}

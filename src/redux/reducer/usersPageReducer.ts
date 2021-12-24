@@ -1,6 +1,3 @@
-import {generalType} from "../ac";
-import {v1} from "uuid";
-
 export type UsersType = {
     users: Array<UserType>
     pageSize: number
@@ -39,17 +36,72 @@ export const usersPageReducer = (state: UsersType = initialState, action: genera
         case "SET-SUBSCRIBERS": {
             return {...state, users: action.users}
         }
-        case "SET-TOTAL-USERS-COUNT":{
+        case "SET-TOTAL-USERS-COUNT": {
             return {...state, totalUsersCount: action.totalUsersCount}
 
         }
-        case "CHANGE-CURRENT-PAGE":{
+        case "CHANGE-CURRENT-PAGE": {
             return {...state, currentPage: action.currentPage}
         }
-        case "PRELOADER":{
-            return {...state, preloader:action.preloader}
+        case "PRELOADER": {
+            return {...state, preloader: action.preloader}
         }
         default:
             return {...state}
     }
+}
+
+type generalType = subscribeACType
+    | unsubscribeACType
+    | setSunscribersACType
+    | setTotalUsersCountACType
+    | changeCurrentPageACType
+    | preloaderACType
+
+type subscribeACType = ReturnType<typeof subscribe>
+export const subscribe = (id: string) => {
+    return {
+        type: 'SUBSCRIBE',
+        id,
+    } as const
+}
+
+type unsubscribeACType = ReturnType<typeof unsubscribe>
+export const unsubscribe = (id: string) => {
+    return {
+        type: 'UNSUBSCRIBE',
+        id,
+    } as const
+}
+
+type setSunscribersACType = ReturnType<typeof setSubscribers>
+export const setSubscribers = (users: Array<UserType>) => {
+    return {
+        type: 'SET-SUBSCRIBERS',
+        users
+    } as const
+}
+
+type setTotalUsersCountACType = ReturnType<typeof setTotalUsersCount>
+export const setTotalUsersCount = (totalUsersCount: number) => {
+    return {
+        type: 'SET-TOTAL-USERS-COUNT',
+        totalUsersCount,
+    } as const
+}
+
+type changeCurrentPageACType = ReturnType<typeof changeCurrentPage>
+export const changeCurrentPage = (currentPage: number) => {
+    return {
+        type: 'CHANGE-CURRENT-PAGE',
+        currentPage
+    } as const
+}
+
+export type preloaderACType = ReturnType<typeof changePreloader>
+export const changePreloader = (preloader: boolean) => {
+    return {
+        type: "PRELOADER",
+        preloader
+    } as const
 }

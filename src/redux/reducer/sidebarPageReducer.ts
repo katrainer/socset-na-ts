@@ -1,4 +1,3 @@
-import {generalType} from "../ac";
 import {v1} from "uuid";
 
 type SiderBarData = {
@@ -15,7 +14,7 @@ const initialState = [
 
 type SidebarPageType = typeof initialState
 
-export const sidebarPageReducer = (state: SidebarPageType=initialState, action: generalType): SidebarPageType =>{
+export const sidebarPageReducer = (state: SidebarPageType=initialState, action: any): SidebarPageType =>{
 
     switch (action.type) {
         default: return [...state]
