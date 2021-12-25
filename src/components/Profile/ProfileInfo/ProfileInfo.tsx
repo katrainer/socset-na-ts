@@ -8,9 +8,6 @@ type PropsType =
         profileUserData: userProfilePageType | null
     }
 export const ProfileInfo: React.FC<PropsType> = ({profileUserData}) => {
-// type PropsType = userProfilePageType
-// export const ProfileInfo= (props: PropsType) => {
-
     return (
         <div>
             <div>

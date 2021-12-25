@@ -33,7 +33,7 @@ export const usersPageReducer = (state: UsersType = initialState, action: genera
         case "UNSUBSCRIBE": {
             return {...state, users: state.users.map(t => t.id === action.id ? {...t, followed: false} : {...t})}
         }
-        case "SET-SUBSCRIBERS": {
+        case "SET-USERS": {
             return {...state, users: action.users}
         }
         case "SET-TOTAL-USERS-COUNT": {
@@ -74,10 +74,10 @@ export const unsubscribe = (id: string) => {
     } as const
 }
 
-type setSunscribersACType = ReturnType<typeof setSubscribers>
-export const setSubscribers = (users: Array<UserType>) => {
+type setSunscribersACType = ReturnType<typeof setUsers>
+export const setUsers = (users: Array<UserType>) => {
     return {
-        type: 'SET-SUBSCRIBERS',
+        type: 'SET-USERS',
         users
     } as const
 }

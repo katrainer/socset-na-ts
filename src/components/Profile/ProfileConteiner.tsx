@@ -3,10 +3,10 @@ import {connect} from "react-redux";
 import {Profile} from "./Profile";
 import {Preloader} from "../../common/Preloader";
 import {AppStateType} from "../../redux/storeRedux";
-import axios from "axios";
-import {userProfilePageType, setProfileUserData} from "../../redux/reducer/profilePageReducer";
+import {setProfileUserData, userProfilePageType} from "../../redux/reducer/profilePageReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {changePreloader} from "../../redux/reducer/usersPageReducer";
+import {profileAPI} from "../../API";
 
 class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
@@ -15,10 +15,10 @@ class ProfileContainer extends React.Component<PropsType> {
         if (!userId) {
             userId = '2'
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then(response => {
-                this.props.changePreloader(false)
-                this.props.setProfileUserData(response.data)
-            })
+        profileAPI.setProfileUserData(userId).then(data => {
+            this.props.changePreloader(false)
+            this.props.setProfileUserData(data)
+        })
     }
     render() {
         return <>

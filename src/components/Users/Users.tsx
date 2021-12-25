@@ -3,6 +3,7 @@ import userAvatar from "../../assets/img/null_avatar.png";
 import React from "react";
 import {UserType} from "../../redux/reducer/usersPageReducer";
 import {NavLink} from "react-router-dom";
+import {usersAPI} from "../../API";
 
 type UsersFnType = {
     changeCurrentPage: (currentPage: number) => void
@@ -10,7 +11,7 @@ type UsersFnType = {
     pageSize: number
     currentPage: number
     users: Array<UserType>
-    unsubscribe: (id: string) => void
+    unSubscribe: (id: string) => void
     subscribe: (id: string) => void
 }
 
@@ -21,7 +22,7 @@ export const Users: React.FC<UsersFnType> = (
         pageSize,
         currentPage,
         users,
-        unsubscribe,
+        unSubscribe,
         subscribe,
     }) => {
     const pagesCount = Math.ceil
@@ -31,10 +32,18 @@ export const Users: React.FC<UsersFnType> = (
         pages.push(i)
     }
     const onClickUnSubHandler = (id: string) => {
-        unsubscribe(id)
+        usersAPI.unSubscribeAPI(id).then(data => {
+            if (data.resultCode === 0) {
+                unSubscribe(id)
+            }
+        })
     }
     const onClickSubHandler = (id: string) => {
-        subscribe(id)
+        usersAPI.subscribe(id).then(data => {
+            if (data.resultCode === 0) {
+                subscribe(id)
+            }
+        })
     }
     return <>
         {pages.map(t => <span onClick={() => changeCurrentPage(+t)}
