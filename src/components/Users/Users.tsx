@@ -13,6 +13,8 @@ type UsersFnType = {
     users: Array<UserType>
     unSubscribe: (id: string) => void
     subscribe: (id: string) => void
+    toggleFollowingInProgress: (isFetching: boolean, userId: string) => void
+    followingInProgress: Array<null | string>
 }
 
 export const Users: React.FC<UsersFnType> = (
@@ -24,6 +26,7 @@ export const Users: React.FC<UsersFnType> = (
         users,
         unSubscribe,
         subscribe,
+        toggleFollowingInProgress, followingInProgress,
     }) => {
     const pagesCount = Math.ceil
     (totalUsersCount / pageSize)
@@ -32,17 +35,21 @@ export const Users: React.FC<UsersFnType> = (
         pages.push(i)
     }
     const onClickUnSubHandler = (id: string) => {
+        toggleFollowingInProgress(true, id)
         usersAPI.unSubscribeAPI(id).then(data => {
             if (data.resultCode === 0) {
                 unSubscribe(id)
             }
+            toggleFollowingInProgress(false, id)
         })
     }
     const onClickSubHandler = (id: string) => {
+        toggleFollowingInProgress(true, id)
         usersAPI.subscribe(id).then(data => {
             if (data.resultCode === 0) {
                 subscribe(id)
             }
+            toggleFollowingInProgress(false, id)
         })
     }
     return <>
@@ -61,8 +68,15 @@ export const Users: React.FC<UsersFnType> = (
                             />
                             </NavLink>
                         </div>
-                            {t.followed ? <button onClick={() => onClickUnSubHandler(t.id)}>unsubscrib</button> :
-                                <button onClick={() => onClickSubHandler(t.id)}>subscrib</button>}</span>
+                            {t.followed ? <button
+                                    disabled={followingInProgress.some(id => {
+                                        console.log(id, t.id, 'ID')
+                                        return id == t.id
+                                    })}
+                                    onClick={() => onClickUnSubHandler(t.id)}>unsubscrib</button> :
+                                <button
+                                    disabled={followingInProgress.some(id => id == t.id)}
+                                    onClick={() => onClickSubHandler(t.id)}>subscrib</button>}</span>
                     <span>
                             {t.name}
                         </span>

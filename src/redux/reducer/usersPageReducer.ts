@@ -4,6 +4,7 @@ export type UsersType = {
     totalUsersCount: number
     currentPage: number
     preloader: boolean
+    followingInProgress: Array<null | string>
 }
 export type UserType = {
     name: string
@@ -22,16 +23,23 @@ const initialState: UsersType = {
     pageSize: 20,
     totalUsersCount: 0,
     currentPage: 1,
-    preloader: false
+    preloader: false,
+    followingInProgress: [],
 }
 
 export const usersPageReducer = (state: UsersType = initialState, action: generalType): UsersType => {
     switch (action.type) {
         case "SUBSCRIBE": {
-            return {...state, users: state.users.map(t => t.id === action.id ? {...t, followed: true} : {...t})}
+            return {
+                ...state, users: state.users.map(t => t.id === action.id
+                    ? {...t, followed: true} : {...t})
+            }
         }
         case "UNSUBSCRIBE": {
-            return {...state, users: state.users.map(t => t.id === action.id ? {...t, followed: false} : {...t})}
+            return {
+                ...state, users: state.users.map(t => t.id === action.id
+                    ? {...t, followed: false} : {...t})
+            }
         }
         case "SET-USERS": {
             return {...state, users: action.users}
@@ -46,6 +54,15 @@ export const usersPageReducer = (state: UsersType = initialState, action: genera
         case "PRELOADER": {
             return {...state, preloader: action.preloader}
         }
+        case "TOGGLE-FOLLOWING-IN-PROGRESS": {
+            return {
+                ...state,
+                followingInProgress: action.isFetching ?
+                    [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(t =>
+                        t !== action.userId)
+            }
+        }
         default:
             return {...state}
     }
@@ -57,6 +74,7 @@ type generalType = subscribeACType
     | setTotalUsersCountACType
     | changeCurrentPageACType
     | preloaderACType
+    | toggleFollowingInProgressACType
 
 type subscribeACType = ReturnType<typeof subscribe>
 export const subscribe = (id: string) => {
@@ -103,5 +121,14 @@ export const changePreloader = (preloader: boolean) => {
     return {
         type: "PRELOADER",
         preloader
+    } as const
+}
+
+export type toggleFollowingInProgressACType = ReturnType<typeof toggleFollowingInProgress>
+export const toggleFollowingInProgress = (isFetching: boolean, userId: string) => {
+    return {
+        type: "TOGGLE-FOLLOWING-IN-PROGRESS",
+        isFetching,
+        userId
     } as const
 }

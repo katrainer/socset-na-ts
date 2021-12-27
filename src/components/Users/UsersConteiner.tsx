@@ -10,6 +10,7 @@ import {
     unsubscribe,
     UsersType,
     UserType,
+    toggleFollowingInProgress
 } from "../../redux/reducer/usersPageReducer";
 import {Users} from './Users';
 import {Preloader} from '../../common/Preloader';
@@ -46,7 +47,9 @@ export class UsersAPIComponent extends React.Component<UserPropsType> {
                 users={this.props.users}
                 unSubscribe={this.props.unsubscribe}
                 subscribe={this.props.subscribe}
-                changeCurrentPage={this.changeCurrentPage}/>
+                changeCurrentPage={this.changeCurrentPage}
+                toggleFollowingInProgress={this.props.toggleFollowingInProgress}
+                followingInProgress={this.props.followingInProgress}/>
         </>
     }
 }
@@ -60,6 +63,7 @@ type MapDispatchToPropsType = {
     setTotalUsersCount: (totalUsersCount: number) => void
     changeCurrentPage: (currentPage: number) => void
     changePreloader: (preloader: boolean) => void
+    toggleFollowingInProgress: (isFetching: boolean, userId: string) =>void
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
@@ -68,12 +72,13 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         pageSize: state.usersPageReducer.pageSize,
         totalUsersCount: state.usersPageReducer.totalUsersCount,
         currentPage: state.usersPageReducer.currentPage,
-        preloader: state.usersPageReducer.preloader
+        preloader: state.usersPageReducer.preloader,
+        followingInProgress: state.usersPageReducer.followingInProgress,
     }
 }
 
 export type UserPropsType = MapStateToPropsType & MapDispatchToPropsType
 export const UsersConteiner = connect(mapStateToProps, {
     subscribe, unsubscribe, setUsers, setTotalUsersCount,
-    changeCurrentPage, changePreloader
+    changeCurrentPage, changePreloader, toggleFollowingInProgress
 })(UsersAPIComponent)
