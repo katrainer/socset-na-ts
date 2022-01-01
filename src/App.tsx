@@ -10,6 +10,7 @@ import {DialogsConteiner} from "./components/Dialogs/DialogsConteiner";
 import {UsersConteiner} from './components/Users/UsersConteiner';
 import ProfileContainer from './components/Profile/ProfileConteiner';
 import HeaderContainer from './components/Header/HeaderContainer';
+import { Login } from './components/Login/Login';
 
 type AppPropsType = {
     storeData: AppStateType
@@ -30,6 +31,7 @@ function App(props: AppPropsType) {
                     <Route path='/music' render={Music}/>
                     <Route path='/settings' render={Settings}/>
                     <Route path='/users' render={() => <UsersConteiner/>}/>
+                    <Route path='/login' render={()=><Login/>}/>
                 </div>
             </div>
         </BrowserRouter>

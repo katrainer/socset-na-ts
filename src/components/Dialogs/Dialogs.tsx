@@ -1,4 +1,5 @@
 import React, {ChangeEvent} from 'react';
+import { Redirect } from 'react-router-dom';
 import {DialogItem} from './DialogItem/DialogItem';
 import classes from "./Dialogs.module.css";
 import {DialogsType} from './DialogsConteiner';
@@ -10,7 +11,8 @@ export const Dialogs: React.FC<DialogsType> = (
         dialogsData,
         messagesData,
         setMessageText,
-        setNewMessageText
+        setNewMessageText,
+        isAuth,
     }) => {
 
     const dialogs = dialogsData.map(d => <DialogItem img={d.img} name={d.name} id={d.id}/>)
@@ -21,6 +23,8 @@ export const Dialogs: React.FC<DialogsType> = (
     }
 
     const onClickhandler = () => setNewMessageText()
+
+    if (!isAuth) return <Redirect to='/login'/>
 
     return (
         <div className={classes.dialogs}>
