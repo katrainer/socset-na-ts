@@ -12,9 +12,12 @@ export const MyPosts: React.FC<MyPostsType> =
          setNewPostClick
      }) => {
         const posts = postsData.map(p => <Post id={p.id} message={p.message} likeCount={p.likeCount}/>)
-        const newPostText = (e: ChangeEvent<HTMLTextAreaElement>) => setPostText(e.currentTarget.value)
-        const onKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => setNewPostEnter(e.key)
-        const onClickHandler = () => setNewPostClick()
+        const newPostText = (e: ChangeEvent<HTMLTextAreaElement>) =>
+            setPostText(e.currentTarget.value)
+        const onKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) =>
+            setNewPostEnter(e.key)
+        const onClickHandler = () =>
+            setNewPostClick()
 
         return (
             <div className={s.postBlock}>

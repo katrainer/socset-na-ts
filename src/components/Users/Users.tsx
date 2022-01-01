@@ -3,30 +3,28 @@ import userAvatar from "../../assets/img/null_avatar.png";
 import React from "react";
 import {UserType} from "../../redux/reducer/usersPageReducer";
 import {NavLink} from "react-router-dom";
-import {usersAPI} from "../../API";
 
 type UsersFnType = {
-    changeCurrentPage: (currentPage: number) => void
+    thunkChangeCurrentPage: (currentPage: number, pageSize: number) => void
     totalUsersCount: number
     pageSize: number
     currentPage: number
     users: Array<UserType>
-    unSubscribe: (id: string) => void
-    subscribe: (id: string) => void
-    toggleFollowingInProgress: (isFetching: boolean, userId: string) => void
+    thunkUnSubscribe: (id: string) => void
+    thunkSubscribe: (id: string) => void
     followingInProgress: Array<null | string>
 }
 
 export const Users: React.FC<UsersFnType> = (
     {
-        changeCurrentPage,
+        thunkChangeCurrentPage,
         totalUsersCount,
         pageSize,
         currentPage,
         users,
-        unSubscribe,
-        subscribe,
-        toggleFollowingInProgress, followingInProgress,
+        thunkUnSubscribe,
+        thunkSubscribe,
+        followingInProgress,
     }) => {
     const pagesCount = Math.ceil
     (totalUsersCount / pageSize)
@@ -35,27 +33,17 @@ export const Users: React.FC<UsersFnType> = (
         pages.push(i)
     }
     const onClickUnSubHandler = (id: string) => {
-        toggleFollowingInProgress(true, id)
-        usersAPI.unSubscribeAPI(id).then(data => {
-            if (data.resultCode === 0) {
-                unSubscribe(id)
-            }
-            toggleFollowingInProgress(false, id)
-        })
+        thunkUnSubscribe(id)
     }
     const onClickSubHandler = (id: string) => {
-        toggleFollowingInProgress(true, id)
-        usersAPI.subscribe(id).then(data => {
-            if (data.resultCode === 0) {
-                subscribe(id)
-            }
-            toggleFollowingInProgress(false, id)
-        })
+        thunkSubscribe(id)
     }
     return <>
-        {pages.map(t => <span onClick={() => changeCurrentPage(+t)}
-                              className={t === currentPage ? s.selectedPage : undefined}
-                              key={t}>{t}</span>)}
+        {pages.map(t => <span
+            onClick={() => thunkChangeCurrentPage(+t, pageSize)}
+            className={t === currentPage ? s.selectedPage : undefined}
+            key={t}>{t}
+        </span>)}
         {users.map(t => {
             return (
                 <div className={s.conteiner} key={t.id}>
@@ -64,22 +52,22 @@ export const Users: React.FC<UsersFnType> = (
                             <img
                                 src={t.photos.small === null
                                     ? userAvatar
-                                    : t.photos.small} alt='аваторки пользователей'
+                                    : t.photos.small} alt='аватарка пользователей'
                             />
                             </NavLink>
                         </div>
                             {t.followed ? <button
-                                    disabled={followingInProgress.some(id => {
-                                        console.log(id, t.id, 'ID')
-                                        return id == t.id
-                                    })}
-                                    onClick={() => onClickUnSubHandler(t.id)}>unsubscrib</button> :
+                                    disabled={followingInProgress.some(id => id === t.id
+                                    )}
+                                    onClick={() => onClickUnSubHandler(t.id)}>
+                                    unsubscrib
+                                </button> :
                                 <button
-                                    disabled={followingInProgress.some(id => id == t.id)}
-                                    onClick={() => onClickSubHandler(t.id)}>subscrib</button>}</span>
-                    <span>
-                            {t.name}
+                                    disabled={followingInProgress.some(id => id === t.id)}
+                                    onClick={() => onClickSubHandler(t.id)}>subscrib
+                                </button>}
                         </span>
+                    <span>{t.name}</span>
                 </div>
             )
         })}

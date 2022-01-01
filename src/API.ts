@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instatce = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-    headers: {'API-KEY': '399acd4d-bc4b-4b16-8bfa-47f301f413d5'},
+    headers: {'API-KEY': '0e594ed1-7baf-462c-8183-6af2d82e7819'},
     withCredentials: true
 })
 
@@ -33,6 +33,6 @@ export const profileAPI = {
 
 export const headerAPI = {
     setAuthData() {
-        return instatce.get('me').then(response => response.data)
+        return instatce.get('auth/me').then(response => response.data)
     }
 }

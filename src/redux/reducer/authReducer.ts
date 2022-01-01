@@ -1,3 +1,7 @@
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "../storeRedux";
+import {headerAPI} from "../../API";
+
 type authReducerType = {
     id: number | null
     email: string | null
@@ -31,3 +35,13 @@ export const setAuthData = (id: number, email: string, login: string)=>{
         data: {id, email, login}
     }
 }
+
+type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, generalType>
+export const thunkSetAuthData = ():ThunkActionType=>
+    async dispatch => {
+    debugger
+        headerAPI.setAuthData().then(data => {
+            const {id, email, login} = data.data
+            dispatch(setAuthData(id, email, login))
+        })
+    }

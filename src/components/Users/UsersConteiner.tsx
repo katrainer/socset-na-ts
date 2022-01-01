@@ -2,40 +2,19 @@ import React from 'react';
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/storeRedux";
 import {
-    changeCurrentPage,
-    changePreloader,
-    setTotalUsersCount,
-    setUsers,
-    subscribe,
-    unsubscribe,
-    UsersType,
-    UserType,
-    toggleFollowingInProgress
+    thunkChangeCurrentPage,
+    thunkSetUsers,
+    thunkSubscribe,
+    thunkUnSubscribe,
+    toggleFollowingInProgress,
+    UsersType
 } from "../../redux/reducer/usersPageReducer";
 import {Users} from './Users';
 import {Preloader} from '../../common/Preloader';
-import {usersAPI} from '../../API';
 
 export class UsersAPIComponent extends React.Component<UserPropsType> {
     componentDidMount() {
-        this.props.changePreloader(true)
-        usersAPI.setUsers(this.props.currentPage, this.props.pageSize).then(data => {
-            this.props.changePreloader(false)
-            this.props.setUsers(data.items)
-        })
-        usersAPI.setTotalUsersCount().then(data => {
-            this.props.changePreloader(false)
-            this.props.setTotalUsersCount(data.totalCount)
-        })
-    }
-
-    changeCurrentPage = (currentPage: number) => {
-        this.props.changePreloader(true)
-        this.props.changeCurrentPage(currentPage)
-        usersAPI.changeCurrentPage(currentPage, this.props.pageSize).then(data => {
-            this.props.changePreloader(false)
-            this.props.setUsers(data.items)
-        })
+        this.props.thunkSetUsers(this.props.currentPage, this.props.pageSize)
     }
     render() {
         return <>
@@ -45,10 +24,9 @@ export class UsersAPIComponent extends React.Component<UserPropsType> {
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
                 users={this.props.users}
-                unSubscribe={this.props.unsubscribe}
-                subscribe={this.props.subscribe}
-                changeCurrentPage={this.changeCurrentPage}
-                toggleFollowingInProgress={this.props.toggleFollowingInProgress}
+                thunkUnSubscribe={this.props.thunkUnSubscribe}
+                thunkSubscribe={this.props.thunkSubscribe}
+                thunkChangeCurrentPage={this.props.thunkChangeCurrentPage}
                 followingInProgress={this.props.followingInProgress}/>
         </>
     }
@@ -57,13 +35,10 @@ export class UsersAPIComponent extends React.Component<UserPropsType> {
 type MapStateToPropsType = UsersType
 
 type MapDispatchToPropsType = {
-    subscribe: (id: string) => void
-    unsubscribe: (id: string) => void
-    setUsers: (users: Array<UserType>) => void
-    setTotalUsersCount: (totalUsersCount: number) => void
-    changeCurrentPage: (currentPage: number) => void
-    changePreloader: (preloader: boolean) => void
-    toggleFollowingInProgress: (isFetching: boolean, userId: string) =>void
+    thunkSubscribe: (id: string) => void
+    thunkUnSubscribe: (id: string) => void
+    thunkSetUsers: (currentPage: number, pageSize: number) => void
+    thunkChangeCurrentPage: (currentPage: number, pageSize: number) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
@@ -79,6 +54,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 export type UserPropsType = MapStateToPropsType & MapDispatchToPropsType
 export const UsersConteiner = connect(mapStateToProps, {
-    subscribe, unsubscribe, setUsers, setTotalUsersCount,
-    changeCurrentPage, changePreloader, toggleFollowingInProgress
+    thunkSetUsers, toggleFollowingInProgress,
+    thunkChangeCurrentPage, thunkUnSubscribe, thunkSubscribe
 })(UsersAPIComponent)

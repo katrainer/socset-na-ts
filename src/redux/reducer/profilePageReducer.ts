@@ -1,5 +1,8 @@
 import {v1} from "uuid";
-import { preloaderACType } from "./usersPageReducer";
+import {changePreloader, preloaderACType } from "./usersPageReducer";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "../storeRedux";
+import {profileAPI} from "../../API";
 
 export type profilePageType = {
     postsData: PostDataProps[]
@@ -106,3 +109,17 @@ export const setProfileUserData = (data: userProfilePageType) => {
         data
     } as const
 }
+
+type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, generalType>
+export const thunkSetProfileUserData = (param: any):ThunkActionType=>
+    async dispatch=>{
+        dispatch(changePreloader(true))
+        let userId = param.match.params.userId
+        if (!userId) {
+            userId = '2'
+        }
+        profileAPI.setProfileUserData(userId).then(data => {
+            dispatch(changePreloader(false))
+            dispatch(setProfileUserData(data))
+        })
+    }

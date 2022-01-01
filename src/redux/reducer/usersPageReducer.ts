@@ -1,3 +1,8 @@
+import {usersAPI} from "../../API";
+import {Dispatch} from "redux";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "../storeRedux";
+
 export type UsersType = {
     users: Array<UserType>
     pageSize: number
@@ -17,7 +22,6 @@ export type UserType = {
     status: string | null
     followed: boolean
 }
-
 const initialState: UsersType = {
     users: [],
     pageSize: 20,
@@ -84,8 +88,8 @@ export const subscribe = (id: string) => {
     } as const
 }
 
-type unsubscribeACType = ReturnType<typeof unsubscribe>
-export const unsubscribe = (id: string) => {
+type unsubscribeACType = ReturnType<typeof unSubscribe>
+export const unSubscribe = (id: string) => {
     return {
         type: 'UNSUBSCRIBE',
         id,
@@ -132,3 +136,50 @@ export const toggleFollowingInProgress = (isFetching: boolean, userId: string) =
         userId
     } as const
 }
+
+type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, generalType>
+export const thunkSetUsers =
+    (currentPage: number, pageSize: number): ThunkActionType =>
+        async dispatch => {
+            dispatch(changePreloader(true))
+            usersAPI.setUsers(currentPage, pageSize).then(data => {
+                dispatch(changePreloader(false))
+                dispatch(setUsers(data.items))
+            })
+            usersAPI.setTotalUsersCount().then(data => {
+                dispatch(changePreloader(false))
+                dispatch(setTotalUsersCount(data.totalCount))
+            })
+        }
+export const thunkChangeCurrentPage =
+    (currentPage: number, pageSize: number): ThunkActionType =>
+        async dispatch => {
+            dispatch(changePreloader(true))
+            dispatch(changeCurrentPage(currentPage))
+            usersAPI.changeCurrentPage(currentPage, pageSize).then(data => {
+                dispatch(changePreloader(false))
+                dispatch(setUsers(data.items))
+            })
+        }
+export const thunkUnSubscribe =
+    (id: string): ThunkActionType =>
+        async dispatch => {
+            dispatch(toggleFollowingInProgress(true, id))
+            usersAPI.unSubscribeAPI(id).then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(unSubscribe(id))
+                }
+                dispatch(toggleFollowingInProgress(false, id))
+            })
+        }
+export const thunkSubscribe =
+    (id: string): ThunkActionType =>
+        async dispatch => {
+            dispatch(toggleFollowingInProgress(true, id))
+            usersAPI.subscribe(id).then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(subscribe(id))
+                }
+                dispatch(toggleFollowingInProgress(false, id))
+            })
+        }
