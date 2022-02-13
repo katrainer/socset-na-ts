@@ -53,7 +53,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 }
 
 export type UserPropsType = MapStateToPropsType & MapDispatchToPropsType
-export const UsersConteiner = connect(mapStateToProps, {
+export const UsersContainer = connect(mapStateToProps, {
     thunkSetUsers, toggleFollowingInProgress,
     thunkChangeCurrentPage, thunkUnSubscribe, thunkSubscribe
 })(UsersAPIComponent)

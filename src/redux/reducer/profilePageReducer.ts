@@ -3,7 +3,6 @@ import {changePreloader, preloaderACType } from "./usersPageReducer";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../storeRedux";
 import {profileAPI} from "../../API";
-
 export type profilePageType = {
     postsData: PostDataProps[]
     newPostText: string
@@ -47,7 +46,6 @@ const initialState: profilePageType = {
     userProfilePage: null,
     preloader: false
 }
-
 
 export const profilePageReducer = (state: profilePageType = initialState, action: generalType): profilePageType => {
     switch (action.type) {

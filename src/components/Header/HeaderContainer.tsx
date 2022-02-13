@@ -1,5 +1,5 @@
 import React from "react";
-import {connect} from "react-redux";
+import {Connect, connect, ConnectedProps} from "react-redux";
 import {Header} from "./Header";
 import {thunkSetAuthData} from "../../redux/reducer/authReducer";
 import {AppStateType} from "../../redux/storeRedux";
@@ -14,19 +14,24 @@ class HeaderContainer extends React.Component<HeaderContainerType> {
     }
 }
 
-type HeaderContainerType = mapDispatchToPropsType & mapStateToProps
-type mapDispatchToPropsType = {
-    thunkSetAuthData: () => void
-}
-type mapStateToProps = {
-    isAuth: boolean
-}
+// type HeaderContainerType = mapDispatchToPropsType & mapStateToProps
+// type mapDispatchToPropsType = {
+//     thunkSetAuthData: () => void
+// }
+// type mapStateToProps = {
+//     isAuth: boolean
+// }
 const mapStateToProps = (state: AppStateType) => {
     return {
         isAuth: state.authReducer.isAuth
     }
 }
 
+const connector = connect(mapStateToProps,
+    {thunkSetAuthData})
+type HeaderContainerType = ConnectedProps<typeof connector>
 
-export default connect(mapStateToProps,
-    {thunkSetAuthData})(HeaderContainer)
+
+// export default connect(mapStateToProps,
+//     {thunkSetAuthData})(HeaderContainer)
+export default connector(HeaderContainer)

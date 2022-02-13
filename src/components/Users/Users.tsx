@@ -26,8 +26,7 @@ export const Users: React.FC<UsersFnType> = (
         thunkSubscribe,
         followingInProgress,
     }) => {
-    const pagesCount = Math.ceil
-    (totalUsersCount / pageSize)
+    const pagesCount = Math.ceil(totalUsersCount / pageSize)
     let pages: Array<number> = []
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
