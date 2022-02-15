@@ -28,6 +28,13 @@ export const usersAPI = {
 export const profileAPI = {
     setProfileUserData(userId: string) {
         return instatce.get(`profile/` + userId).then(response => response.data)
+    },
+    getProfileStatus(userId: string){
+        return instatce.get('profile/status/'+userId).then(response => response.data)
+    },
+    updateProfileStatus(status:string){
+        // debugger
+        return instatce.put('profile/status',{status}).then(response => response.data)
     }
 }
 

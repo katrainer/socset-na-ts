@@ -1,13 +1,15 @@
 import {v1} from "uuid";
-import {changePreloader, preloaderACType } from "./usersPageReducer";
+import {changePreloader, preloaderACType} from "./usersPageReducer";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../storeRedux";
 import {profileAPI} from "../../API";
+
 export type profilePageType = {
     postsData: PostDataProps[]
     newPostText: string
     userProfilePage: userProfilePageType | null
     preloader: boolean
+    status: string
 }
 export type PostDataProps = {
     id: string
@@ -44,7 +46,8 @@ const initialState: profilePageType = {
     ],
     newPostText: '',
     userProfilePage: null,
-    preloader: false
+    preloader: false,
+    status: ''
 }
 
 export const profilePageReducer = (state: profilePageType = initialState, action: generalType): profilePageType => {
@@ -66,8 +69,12 @@ export const profilePageReducer = (state: profilePageType = initialState, action
         case "SET-PROFILE-USER-DATA": {
             return {...state, userProfilePage: action.data}
         }
-        case "PRELOADER":{
-                return {...state, preloader:action.preloader}
+        case "PRELOADER": {
+            return {...state, preloader: action.preloader}
+        }
+        case "GET-STATUS": {
+            console.log(action.status)
+            return {...state, status: action.status}
         }
         default : {
             return {...state}
@@ -79,6 +86,8 @@ type generalType = setNewPostClickACType
     | setPostTextACType
     | setProfileUserDataACType
     | preloaderACType
+    | getStatusType
+    // | changeStatusType
 
 type setNewPostClickACType = ReturnType<typeof setNewPostClick>
 export const setNewPostClick = () => {
@@ -93,6 +102,7 @@ export const setNewPostEnter = (eventKey: string) => {
         eventKey
     } as const
 }
+
 type setPostTextACType = ReturnType<typeof setPostText>
 export const setPostText = (text: string) => {
     return {
@@ -108,16 +118,55 @@ export const setProfileUserData = (data: userProfilePageType) => {
     } as const
 }
 
+type getStatusType = ReturnType<typeof setStatus>
+export const setStatus = (status: string) => {
+    return {
+        type: 'GET-STATUS',
+        status,
+    } as const
+}
+
+// type changeStatusType = ReturnType<typeof changeStatus>
+// export const changeStatus = (status: string) => {
+//     return {
+//         type: 'CHANGE-STATUS',
+//         status,
+//     } as const
+// }
+
+
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, generalType>
-export const thunkSetProfileUserData = (param: any):ThunkActionType=>
-    async dispatch=>{
+export const thunkSetProfileUserData = (param: any): ThunkActionType =>
+    async dispatch => {
         dispatch(changePreloader(true))
         let userId = param.match.params.userId
         if (!userId) {
-            userId = '2'
+            userId = '16550'
         }
         profileAPI.setProfileUserData(userId).then(data => {
             dispatch(changePreloader(false))
             dispatch(setProfileUserData(data))
         })
     }
+export const thunkGETStatus = (param: any): ThunkActionType =>
+    async dispatch => {
+        let userId = param.match.params.userId
+        if (!userId) {
+            userId = '16550'
+        }
+        profileAPI.getProfileStatus(userId).then(data => {
+            dispatch(setStatus(data))
+        })
+    }
+export const thunkUpdateStatus = (status: string): ThunkActionType =>
+    async dispatch => {
+    // debugger
+        profileAPI.updateProfileStatus(status).then(data => {
+            // debugger
+            // console.log(data)
+            if (data.resultCode===0){
+                dispatch(setStatus(status))
+            }
+        })
+    }
+
