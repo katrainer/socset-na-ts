@@ -1,38 +1,25 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import s from "./MyPost.module.css"
 import {MyPostsType} from "./MyPostsConteiner";
 import {Post} from "./Post/Post";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
 export const MyPosts: React.FC<MyPostsType> =
     ({
-         setPostText,
-         postText,
          postsData,
-         setNewPostEnter,
          setNewPostClick
      }) => {
         const posts = postsData.map(p => <Post id={p.id} message={p.message} likeCount={p.likeCount}/>)
-        const newPostText = (e: ChangeEvent<HTMLTextAreaElement>) =>
-            setPostText(e.currentTarget.value)
-        const onKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) =>
-            setNewPostEnter(e.key)
-        const onClickHandler = () =>
-            setNewPostClick()
+        const onSubmit = (dataFrom:SendMessageForm)=>{
+
+            setNewPostClick(dataFrom.message)
+        }
 
         return (
             <div className={s.postBlock}>
                 <h3>My posts</h3>
                 <div>
-                    <div>
-                    <textarea
-                        onChange={newPostText}
-                        value={postText}
-                        onKeyPress={onKeyPressHandler}
-                    />
-                    </div>
-                    <div>
-                        <button onClick={onClickHandler}>Add post</button>
-                    </div>
+                    <ContactForm onSubmit={onSubmit}/>
                 </div>
                 <div className={s.posts}>
                     {posts}
@@ -40,3 +27,13 @@ export const MyPosts: React.FC<MyPostsType> =
             </div>
         )
     }
+export type SendMessageForm = {
+    message: string
+}
+const SendMessage: React.FC<InjectedFormProps<SendMessageForm>> = (props) => {
+    return <form onSubmit={props.handleSubmit}>
+        <Field name='message' component='textarea' placeholder='write message'/>
+        <button>add post</button>
+    </form>
+}
+const ContactForm = reduxForm<SendMessageForm>({form: 'sendMessage'})(SendMessage)

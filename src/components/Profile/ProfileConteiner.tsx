@@ -38,7 +38,6 @@ type MapStateToPropsType = {
     preloader: boolean
     userProfilePage: userProfilePageType | null
     status: string
-    // isAuth: boolean
 }
 type MapDispatchToPropsType = {
     thunkSetProfileUserData: (param: any) => void
@@ -53,7 +52,6 @@ const mapStateToProps = (state: AppStateType) => {
         preloader: state.usersPageReducer.preloader,
         userProfilePage: state.profilePageReducer.userProfilePage,
         status: state.profilePageReducer.status
-        // isAuth: state.authReducer.isAuth,
     }
 }
 // export default withRouter(connect(mapStateToProps,

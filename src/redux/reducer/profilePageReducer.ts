@@ -6,7 +6,6 @@ import {profileAPI} from "../../API";
 
 export type profilePageType = {
     postsData: PostDataProps[]
-    newPostText: string
     userProfilePage: userProfilePageType | null
     preloader: boolean
     status: string
@@ -44,7 +43,6 @@ const initialState: profilePageType = {
         {id: v1(), message: 'yoyo', likeCount: 212},
         {id: v1(), message: 'yoyo', likeCount: 212},
     ],
-    newPostText: '',
     userProfilePage: null,
     preloader: false,
     status: ''
@@ -53,18 +51,8 @@ const initialState: profilePageType = {
 export const profilePageReducer = (state: profilePageType = initialState, action: generalType): profilePageType => {
     switch (action.type) {
         case "SET-NEW-POST-CLICK": {
-            const post = {id: v1(), message: state.newPostText, likeCount: 0}
-            return {...state, postsData: [post, ...state.postsData], newPostText: ''}
-        }
-        case "SET-NEW-POST-ENTER": {
-            if (action.eventKey === 'Enter') {
-                const post = {id: v1(), message: state.newPostText, likeCount: 0}
-                return {...state, postsData: [post, ...state.postsData], newPostText: ''}
-            }
-            return {...state}
-        }
-        case "SET-POST-TEXT": {
-            return {...state, newPostText: action.text}
+            const post = {id: v1(), message: action.message, likeCount: 0}
+            return {...state, postsData: [post, ...state.postsData]}
         }
         case "SET-PROFILE-USER-DATA": {
             return {...state, userProfilePage: action.data}
@@ -82,34 +70,19 @@ export const profilePageReducer = (state: profilePageType = initialState, action
     }
 }
 type generalType = setNewPostClickACType
-    | setNewPostEnterACType
-    | setPostTextACType
     | setProfileUserDataACType
     | preloaderACType
     | getStatusType
     // | changeStatusType
 
 type setNewPostClickACType = ReturnType<typeof setNewPostClick>
-export const setNewPostClick = () => {
+export const setNewPostClick = (message: string) => {
     return {
-        type: 'SET-NEW-POST-CLICK'
-    } as const
-}
-type setNewPostEnterACType = ReturnType<typeof setNewPostEnter>
-export const setNewPostEnter = (eventKey: string) => {
-    return {
-        type: 'SET-NEW-POST-ENTER',
-        eventKey
+        type: 'SET-NEW-POST-CLICK',
+        message,
     } as const
 }
 
-type setPostTextACType = ReturnType<typeof setPostText>
-export const setPostText = (text: string) => {
-    return {
-        type: 'SET-POST-TEXT',
-        text
-    } as const
-}
 type setProfileUserDataACType = ReturnType<typeof setProfileUserData>
 export const setProfileUserData = (data: userProfilePageType) => {
     return {
@@ -125,14 +98,6 @@ export const setStatus = (status: string) => {
         status,
     } as const
 }
-
-// type changeStatusType = ReturnType<typeof changeStatus>
-// export const changeStatus = (status: string) => {
-//     return {
-//         type: 'CHANGE-STATUS',
-//         status,
-//     } as const
-// }
 
 
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, generalType>
@@ -160,10 +125,7 @@ export const thunkGETStatus = (param: any): ThunkActionType =>
     }
 export const thunkUpdateStatus = (status: string): ThunkActionType =>
     async dispatch => {
-    // debugger
         profileAPI.updateProfileStatus(status).then(data => {
-            // debugger
-            // console.log(data)
             if (data.resultCode===0){
                 dispatch(setStatus(status))
             }

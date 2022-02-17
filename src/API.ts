@@ -1,4 +1,5 @@
 import axios from "axios";
+import {LoginFormData} from "./components/Login/Login";
 
 const instatce = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -29,17 +30,27 @@ export const profileAPI = {
     setProfileUserData(userId: string) {
         return instatce.get(`profile/` + userId).then(response => response.data)
     },
-    getProfileStatus(userId: string){
-        return instatce.get('profile/status/'+userId).then(response => response.data)
+    getProfileStatus(userId: string) {
+        return instatce.get('profile/status/' + userId).then(response => response.data)
     },
-    updateProfileStatus(status:string){
+    updateProfileStatus(status: string) {
         // debugger
-        return instatce.put('profile/status',{status}).then(response => response.data)
+        return instatce.put('profile/status', {status}).then(response => response.data)
     }
 }
 
 export const headerAPI = {
     setAuthData() {
         return instatce.get('auth/me').then(response => response.data)
+    }
+}
+
+export const loginAPI = {
+    setLogin(formData: LoginFormData) {
+        return instatce.post('auth/login', {
+            email: formData.email,
+            password: formData.password,
+            rememberMe: formData.rememberMe
+        }).then(response => response.data)
     }
 }

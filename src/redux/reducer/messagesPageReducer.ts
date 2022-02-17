@@ -3,7 +3,6 @@ import {v1} from "uuid";
 export type messagesPageType = {
     dialogsData: DialogsDataProps[]
     messagesData: MessagesDataProps[]
-    newMessageText: string
 }
 export type DialogsDataProps = {
     id: string
@@ -32,35 +31,26 @@ const initialState: messagesPageType = {
         {id: v1(), message: 'yoyoyoyo'},
         {id: v1(), message: 'yoyoyoyo'},
     ],
-    newMessageText: '',
 }
 
 export const messagesPageReducer = (state: messagesPageType = initialState, action: generalType): messagesPageType => {
     switch (action.type) {
-        case "SET-MESSAGE-TEXT": {
-            return {...state, newMessageText: action.text}
-        }
         case "SET-NEW-MESSAGE-CLICK": {
-            const message = {id: v1(), message: state.newMessageText,}
-            return {...state, messagesData: [message, ...state.messagesData], newMessageText:''}
+            const message = {id: v1(), message: action.text,}
+            return {...state, messagesData: [message, ...state.messagesData]}
         }
         default:
             return {...state}
     }
 }
 
-type generalType = setMessageTextACType|setNewMessageTextACType
-type setMessageTextACType = ReturnType<typeof setMessageText>
-export const setMessageText = (text: string) => {
-    return {
-        type: 'SET-MESSAGE-TEXT',
-        text
-    } as const
-}
+type generalType = setNewMessageTextACType
+
 
 type setNewMessageTextACType = ReturnType<typeof setNewMessageText>
-export const setNewMessageText = () => {
+export const setNewMessageText = (text: string) => {
     return {
-        type: 'SET-NEW-MESSAGE-CLICK'
+        type: 'SET-NEW-MESSAGE-CLICK',
+        text,
     } as const
 }
