@@ -1,6 +1,6 @@
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../storeRedux";
-import {headerAPI} from "../../API";
+import {headerAPI, loginAPI} from "../../API";
 
 type authReducerType = {
     id: number | null
@@ -19,7 +19,7 @@ const initialState = {
 export const authReducer = (state: authReducerType = initialState, action: generalType): authReducerType => {
     switch (action.type) {
         case "SET-AUTH-DATA": {
-            return {...state, ...action.data, isAuth: true}
+            return {...state, ...action.data}
         }
         default:
             return {...state}
@@ -29,10 +29,10 @@ export const authReducer = (state: authReducerType = initialState, action: gener
 type generalType = setAuthDataACType
 
 export type setAuthDataACType = ReturnType<typeof setAuthData>
-export const setAuthData = (id: number, email: string, login: string) => {
+export const setAuthData = (id: number | null, email: string | null, login: string | null, isAuth: boolean = true) => {
     return {
         type: 'SET-AUTH-DATA',
-        data: {id, email, login}
+        data: {id, email, login, isAuth}
     }
 }
 
@@ -41,6 +41,23 @@ export const thunkSetAuthData = (): ThunkActionType =>
     async dispatch => {
         headerAPI.setAuthData().then(data => {
             const {id, email, login} = data.data
-            if (id) dispatch(setAuthData(id, email, login))
+            if (id) dispatch(setAuthData(id, email, login,))
+        })
+    }
+export const ThunkLogIn =
+    (email: string, password: string, rememberMe: boolean): ThunkActionType =>
+        async dispatch => {
+            loginAPI.setLogin(email, password, rememberMe).then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(thunkSetAuthData())
+                }
+            })
+        }
+export const ThunkLogOut = (): ThunkActionType =>
+    async dispatch => {
+        loginAPI.outLogin().then(data => {
+            if (data.resultCode === 0) {
+                dispatch(setAuthData(null, null, null, false))
+            }
         })
     }

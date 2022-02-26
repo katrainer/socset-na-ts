@@ -1,6 +1,6 @@
 import React from "react";
 import {AppStateType} from "../../../redux/storeRedux";
-import {MyPosts} from "./MyPosts";
+import {MyPostsFormik} from "./MyPostsFormik";
 import {connect} from "react-redux";
 import {PostDataProps, setNewPostClick} from "../../../redux/reducer/profilePageReducer";
 
@@ -18,4 +18,4 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 }
 export const MyPostsConteiner = connect(mapStateToProps,
     {setNewPostClick}
-)(MyPosts)
+)(MyPostsFormik)

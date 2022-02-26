@@ -6,12 +6,11 @@ import {News} from './components/News/News';
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {AppStateType} from "./redux/storeRedux";
-
 import {UsersContainer} from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileConteiner';
 import HeaderContainer from './components/Header/HeaderContainer';
-import { Login } from './components/Login/Login';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
+import LoginFormik from "./components/Login/LoginFormik";
 
 type AppPropsType = {
     storeData: AppStateType
@@ -32,7 +31,7 @@ function App(props: AppPropsType) {
                     <Route path='/music' render={Music}/>
                     <Route path='/settings' render={Settings}/>
                     <Route path='/users' render={() => <UsersContainer/>}/>
-                    <Route path='/login' render={()=><Login/>}/>
+                    <Route path='/login' render={() => <LoginFormik/>}/>
                 </div>
             </div>
         </BrowserRouter>
