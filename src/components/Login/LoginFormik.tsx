@@ -1,8 +1,8 @@
 import React from "react";
-import {ThunkLogIn} from "../../redux/reducer/authReducer";
+import {logInTC} from "../../redux/reducer/authReducer";
 import {connect, useDispatch} from "react-redux";
 import {Redirect} from "react-router-dom";
-import {AppStateType} from "../../redux/storeRedux";
+import {AppStateType} from "../../redux/store";
 import {useFormik} from "formik";
 
 
@@ -61,4 +61,4 @@ const pstp = (state: AppStateType) => {
         isAuth: state.authReducer.isAuth
     }
 }
-export default connect(pstp, {ThunkLogIn})(LoginFormik)
+export default connect(pstp, {ThunkLogIn: logInTC})(LoginFormik)

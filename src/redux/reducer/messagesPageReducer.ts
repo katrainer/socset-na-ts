@@ -1,20 +1,10 @@
 import {v1} from "uuid";
 
-export type messagesPageType = {
-    dialogsData: DialogsDataProps[]
-    messagesData: MessagesDataProps[]
-}
-export type DialogsDataProps = {
-    id: string
-    name: string
-    img: string
-}
-export type MessagesDataProps = {
-    id: string
-    message: string
+export enum enumMessagesActionType {
+    setNewMessageText = 'MESSAGES/SET-NEW-MESSAGE-CLICK'
 }
 
-const initialState: messagesPageType = {
+const initialState: MessagesPageType = {
     dialogsData: [
         {id: v1(), name: 'Nikita', img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png'},
         {id: v1(), name: 'Jana', img: 'https://cs13.pikabu.ru/avatars/3395/x3395805-1845289045.png'},
@@ -32,25 +22,39 @@ const initialState: messagesPageType = {
         {id: v1(), message: 'yoyoyoyo'},
     ],
 }
-
-export const messagesPageReducer = (state: messagesPageType = initialState, action: generalType): messagesPageType => {
+export const messagesPageReducer = (state: MessagesPageType = initialState, action: MessageActionType): MessagesPageType => {
     switch (action.type) {
-        case "SET-NEW-MESSAGE-CLICK": {
-            const message = {id: v1(), message: action.text,}
-            return {...state, messagesData: [message, ...state.messagesData]}
-        }
+        case enumMessagesActionType.setNewMessageText:
+            return {
+                ...state, messagesData: [{...action.payload},
+                    ...state.messagesData]
+            }
         default:
             return {...state}
     }
 }
 
-type generalType = setNewMessageTextACType
-
-
-type setNewMessageTextACType = ReturnType<typeof setNewMessageText>
-export const setNewMessageText = (text: string) => {
+//action
+export const setNewMessageTextAC = (message: string) => {
     return {
-        type: 'SET-NEW-MESSAGE-CLICK',
-        text,
+        type: enumMessagesActionType.setNewMessageText,
+        payload: {message, id: v1()},
     } as const
 }
+
+//type
+export type MessagesPageType = {
+    dialogsData: DialogsDataProps[]
+    messagesData: MessagesDataProps[]
+}
+export type DialogsDataProps = {
+    id: string
+    name: string
+    img: string
+}
+export type MessagesDataProps = {
+    id: string
+    message: string
+}
+
+export type MessageActionType = ReturnType<typeof setNewMessageTextAC>

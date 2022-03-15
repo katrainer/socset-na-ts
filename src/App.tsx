@@ -5,7 +5,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import {News} from './components/News/News';
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {AppStateType} from "./redux/storeRedux";
+import {AppStateType} from "./redux/store";
 import {UsersContainer} from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileConteiner';
 import HeaderContainer from './components/Header/HeaderContainer';

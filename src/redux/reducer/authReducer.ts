@@ -1,63 +1,66 @@
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "../storeRedux";
 import {headerAPI, loginAPI} from "../../API";
+import {AppThunk} from "../store";
 
-type authReducerType = {
-    id: number | null
-    email: string | null
-    login: string | null
-    isAuth: boolean
+export enum enumAuthActionType {
+    setAuthData = 'AUTH/PROFILE/SET-NEW-POST-CLICK',
 }
 
-const initialState = {
+const initialState: authReducerType = {
     id: null,
     email: null,
     login: null,
     isAuth: false,
 }
 
-export const authReducer = (state: authReducerType = initialState, action: generalType): authReducerType => {
+export const authReducer = (state: authReducerType = initialState, action: LoginActionType): authReducerType => {
     switch (action.type) {
-        case "SET-AUTH-DATA": {
-            return {...state, ...action.data}
-        }
+        case enumAuthActionType.setAuthData:
+            return {...state, ...action.payload}
         default:
             return {...state}
     }
 }
 
-type generalType = setAuthDataACType
-
-export type setAuthDataACType = ReturnType<typeof setAuthData>
-export const setAuthData = (id: number | null, email: string | null, login: string | null, isAuth: boolean = true) => {
+//action
+export const setAuthDataAC = (data: authReducerType) => {
     return {
-        type: 'SET-AUTH-DATA',
-        data: {id, email, login, isAuth}
+        type: enumAuthActionType.setAuthData,
+        payload: {...data}
     }
 }
 
-type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, generalType>
-export const thunkSetAuthData = (): ThunkActionType =>
-    async dispatch => {
-        headerAPI.setAuthData().then(data => {
-            const {id, email, login} = data.data
-            if (id) dispatch(setAuthData(id, email, login,))
-        })
-    }
-export const ThunkLogIn =
-    (email: string, password: string, rememberMe: boolean): ThunkActionType =>
-        async dispatch => {
+//thunk
+export const setAuthDataTC = (): AppThunk => dispatch => {
+    headerAPI.setAuthData().then(data => {
+        const {id, email, login} = data.data
+        if (id) dispatch(setAuthDataAC({id, email, login, isAuth: true}))
+    })
+}
+export const logInTC =
+    (email: string, password: string, rememberMe: boolean): AppThunk =>
+        dispatch => {
             loginAPI.setLogin(email, password, rememberMe).then(data => {
                 if (data.resultCode === 0) {
-                    dispatch(thunkSetAuthData())
+                    dispatch(setAuthDataTC())
                 }
             })
         }
-export const ThunkLogOut = (): ThunkActionType =>
-    async dispatch => {
+export const logOutTC = (): AppThunk =>
+    dispatch => {
         loginAPI.outLogin().then(data => {
             if (data.resultCode === 0) {
-                dispatch(setAuthData(null, null, null, false))
+                dispatch(setAuthDataAC({id: null, email: null, login: null, isAuth: false}))
             }
         })
     }
+
+//type
+export type authReducerType = {
+    id: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean
+}
+export type LoginActionType = ReturnType<typeof setAuthDataAC>
+
+

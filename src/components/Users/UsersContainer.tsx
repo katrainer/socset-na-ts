@@ -1,16 +1,16 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {AppStateType} from "../../redux/storeRedux";
+import {AppStateType} from "../../redux/store";
 import {
-    thunkChangeCurrentPage,
-    thunkSetUsers,
-    thunkSubscribe,
-    thunkUnSubscribe,
+    changeCurrentPageTC,
+    setUsersTC,
+    subscribeTC,
+    unSubscribeTC,
     toggleFollowingInProgress,
     UsersType
 } from "../../redux/reducer/usersPageReducer";
 import {Users} from './Users';
-import {Preloader} from '../../common/Preloader';
+import {Preloader} from '../../common/Preloader/Preloader';
 
 export class UsersAPIComponent extends React.Component<UserPropsType> {
     componentDidMount() {
@@ -54,6 +54,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 export type UserPropsType = MapStateToPropsType & MapDispatchToPropsType
 export const UsersContainer = connect(mapStateToProps, {
-    thunkSetUsers, toggleFollowingInProgress,
-    thunkChangeCurrentPage, thunkUnSubscribe, thunkSubscribe
+    thunkSetUsers: setUsersTC, toggleFollowingInProgress,
+    thunkChangeCurrentPage: changeCurrentPageTC, thunkUnSubscribe: unSubscribeTC, thunkSubscribe: subscribeTC
 })(UsersAPIComponent)

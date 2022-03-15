@@ -1,12 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Profile} from "./Profile";
-import {Preloader} from "../../common/Preloader";
-import {AppStateType} from "../../redux/storeRedux";
+import {Preloader} from "../../common/Preloader/Preloader";
+import {AppStateType} from "../../redux/store";
 import {
-    thunkGETStatus,
-    thunkSetProfileUserData,
-    thunkUpdateStatus,
+    getStatusTC,
+    setProfileUserDataTC,
+    updateStatusTC,
     userProfilePageType
 } from "../../redux/reducer/profilePageReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -59,8 +59,8 @@ const mapStateToProps = (state: AppStateType) => {
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps,
-        {thunkSetProfileUserData, thunkGETStatus,
-            thunkUpdateStatus,}),
+        {thunkSetProfileUserData: setProfileUserDataTC, thunkGETStatus: getStatusTC,
+            thunkUpdateStatus: updateStatusTC,}),
     withRouter,
     WithAuthRedirect,
 )(ProfileContainer)

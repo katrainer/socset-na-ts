@@ -2,7 +2,7 @@ import React from "react";
 import s from "./Header.module.css";
 import {NavLink} from "react-router-dom";
 import {loginAPI} from "../../API";
-import {ThunkLogOut} from "../../redux/reducer/authReducer";
+import {logOutTC} from "../../redux/reducer/authReducer";
 
 type PropsType = {
     isAuth: boolean
