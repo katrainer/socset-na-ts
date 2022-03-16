@@ -2,7 +2,7 @@ import React from "react";
 import {logInTC} from "../../redux/reducer/authReducer";
 import {connect, useDispatch} from "react-redux";
 import {Redirect} from "react-router-dom";
-import {AppStateType} from "../../redux/store";
+import {AppRootStateType} from "../../redux/store";
 import {useFormik} from "formik";
 
 
@@ -14,7 +14,7 @@ type LoginType = {
 type valuesType = {
     email: string,
     password: string,
-    check: boolean
+    rememberMe: boolean
 }
 const LoginFormik: React.FC<LoginType> = ({ThunkLogIn, isAuth}) => {
     const dispatch = useDispatch()
@@ -22,10 +22,20 @@ const LoginFormik: React.FC<LoginType> = ({ThunkLogIn, isAuth}) => {
         initialValues: {
             email: '',
             password: '',
-            check: false
+            rememberMe: false
+        },
+        validate: (values) => {
+            const errors: FormikErrorType = {};
+            if (!values.email) {
+                errors.email = 'Required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address';
+            }
+            if (values.password.length < 3) errors.password = 'The password is too short'
+            return errors;
         },
         onSubmit: (values: valuesType) => {
-            dispatch(ThunkLogIn(values.email, values.password, values.check))
+            dispatch(ThunkLogIn(values.email, values.password, values.rememberMe))
         },
     })
     if (isAuth) return <Redirect to='/profile'/>
@@ -33,22 +43,22 @@ const LoginFormik: React.FC<LoginType> = ({ThunkLogIn, isAuth}) => {
         <h1>LOGIN</h1>
         <form onSubmit={formik.handleSubmit}>
             <input id={'email'}
-                   name={'email'}
                    type={'email'}
                    placeholder={'email'}
-                   onChange={formik.handleChange}
-                   value={formik.values.email}/> <br/>
+                   {...formik.getFieldProps('email')}/>
+            {formik.touched.email && formik.errors.email &&
+                <div style={{color: "red"}}>{formik.errors.email}</div>}<br/>
             <input id={'password'}
-                   name={'password'}
                    type={'password'}
                    placeholder={'password'}
-                   onChange={formik.handleChange}
-                   value={formik.values.password}/><br/>
+                   {...formik.getFieldProps('password')}/>
+            {formik.touched.password && formik.errors.password &&
+                <div style={{color: "red"}}>{formik.errors.password}</div>}<br/>
             <input id={'check'}
-                   name={'check'}
                    type={'checkbox'}
-                   onChange={formik.handleChange}
-                   checked={formik.values.check}/> Запомнить<br/>
+                   checked={formik.values.rememberMe}
+                   {...formik.getFieldProps('rememberMe')}
+            /> Запомнить<br/>
             <button type={"submit"}>Войти</button>
         </form>
     </div>
@@ -56,9 +66,16 @@ const LoginFormik: React.FC<LoginType> = ({ThunkLogIn, isAuth}) => {
 
 
 //----------------------------------------connect
-const pstp = (state: AppStateType) => {
+const pstp = (state: AppRootStateType) => {
     return {
-        isAuth: state.authReducer.isAuth
+        isAuth: state.login.isAuth
     }
 }
 export default connect(pstp, {ThunkLogIn: logInTC})(LoginFormik)
+
+//type
+type FormikErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
+}

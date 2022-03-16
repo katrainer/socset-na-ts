@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {Profile} from "./Profile";
 import {Preloader} from "../../common/Preloader/Preloader";
-import {AppStateType} from "../../redux/store";
+import {AppRootStateType} from "../../redux/store";
 import {
     getStatusTC,
     setProfileUserDataTC,
@@ -20,7 +20,6 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 
     render() {
-        // if (!this.props.isAuth) return <Redirect to='/login'/>
         return <>
             {this.props.preloader && <Preloader/>}
             <Profile
@@ -42,25 +41,24 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
     thunkSetProfileUserData: (param: any) => void
     thunkGETStatus: (param: any) => void
-    thunkUpdateStatus: (status:string)=>void
+    thunkUpdateStatus: (status: string) => void
 }
 export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 type PropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
 
-const mapStateToProps = (state: AppStateType) => {
+const mapStateToProps = (state: AppRootStateType) => {
     return {
-        preloader: state.usersPageReducer.preloader,
-        userProfilePage: state.profilePageReducer.userProfilePage,
-        status: state.profilePageReducer.status
+        preloader: state.userPage.preloader,
+        userProfilePage: state.profile.userProfilePage,
+        status: state.profile.status
     }
 }
-// export default withRouter(connect(mapStateToProps,
-//     {thunkSetProfileUserData})(ProfileContainer))
-
 export default compose<React.ComponentType>(
     connect(mapStateToProps,
-        {thunkSetProfileUserData: setProfileUserDataTC, thunkGETStatus: getStatusTC,
-            thunkUpdateStatus: updateStatusTC,}),
+        {
+            thunkSetProfileUserData: setProfileUserDataTC, thunkGETStatus: getStatusTC,
+            thunkUpdateStatus: updateStatusTC,
+        }),
     withRouter,
     WithAuthRedirect,
 )(ProfileContainer)

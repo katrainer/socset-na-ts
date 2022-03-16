@@ -1,4 +1,4 @@
-import {usersAPI} from "../../API";
+import {usersAPI, UserType} from "../../API";
 import {AppThunk} from "../store";
 import {changePreloaderAC, enumCommonActionType, preloaderACType} from "../../common/commonReducer";
 
@@ -89,50 +89,35 @@ export const toggleFollowingInProgressAC = (isFetching: boolean, userId: string)
 }
 
 //thunk
-export const setUsersTC =
-    (currentPage: number, pageSize: number): AppThunk =>
-        dispatch => {
-            dispatch(changePreloaderAC(true))
-            usersAPI.setUsers(currentPage, pageSize).then(data => {
-                dispatch(changePreloaderAC(false))
-                dispatch(setUsersAC(data.items))
-            })
-            usersAPI.setTotalUsersCount().then(data => {
-                dispatch(changePreloaderAC(false))
-                dispatch(setTotalUsersCountAC(data.totalCount))
-            })
-        }
+export const setUsersTC = (currentPage: number, pageSize: number): AppThunk =>
+    async (dispatch) => {
+        dispatch(changePreloaderAC(true))
+        const res = await usersAPI.setUsers(currentPage, pageSize)
+        dispatch(setUsersAC(res.data.items))
+        dispatch(setTotalUsersCountAC(res.data.totalCount))
+        dispatch(changePreloaderAC(false))
+    }
 export const changeCurrentPageTC =
     (currentPage: number, pageSize: number): AppThunk =>
-        dispatch => {
+        async (dispatch) => {
             dispatch(changePreloaderAC(true))
             dispatch(changeCurrentPageAC(currentPage))
-            usersAPI.changeCurrentPage(currentPage, pageSize).then(data => {
-                dispatch(changePreloaderAC(false))
-                dispatch(setUsersAC(data.items))
-            })
+            const res = await usersAPI.setUsers(currentPage, pageSize)
+            dispatch(setUsersAC(res.data.items))
+            dispatch(changePreloaderAC(false))
         }
-export const unSubscribeTC =
-    (id: string): AppThunk =>
-        dispatch => {
-            dispatch(toggleFollowingInProgressAC(true, id))
-            usersAPI.unSubscribeAPI(id).then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(unSubscribeAC(id))
-                }
-                dispatch(toggleFollowingInProgressAC(false, id))
-            })
-        }
-export const subscribeTC = (id: string): AppThunk =>
-    dispatch => {
-        dispatch(toggleFollowingInProgressAC(true, id))
-        usersAPI.subscribe(id).then(data => {
-            if (data.resultCode === 0) {
-                dispatch(subscribeAC(id))
-            }
-            dispatch(toggleFollowingInProgressAC(false, id))
-        })
-    }
+export const unSubscribeTC = (id: string): AppThunk => async (dispatch) => {
+    dispatch(toggleFollowingInProgressAC(true, id))
+    const res = await usersAPI.unSubscribeAPI(id)
+    if (res.data.resultCode === 0) dispatch(unSubscribeAC(id))
+    dispatch(toggleFollowingInProgressAC(false, id))
+}
+export const subscribeTC = (id: string): AppThunk => async (dispatch) => {
+    dispatch(toggleFollowingInProgressAC(true, id))
+    const res = await usersAPI.subscribe(id)
+    if (res.data.resultCode === 0) dispatch(subscribeAC(id))
+    dispatch(toggleFollowingInProgressAC(false, id))
+}
 
 //type
 export type UsersType = {
@@ -142,17 +127,6 @@ export type UsersType = {
     currentPage: number
     preloader: boolean
     followingInProgress: Array<null | string>
-}
-export type UserType = {
-    name: string
-    id: string
-    uniqueUrlName: string | null
-    photos: {
-        small: string | null
-        large: string | null
-    }
-    status: string | null
-    followed: boolean
 }
 export type UserPageActionType = ReturnType<typeof subscribeAC>
     | ReturnType<typeof unSubscribeAC>

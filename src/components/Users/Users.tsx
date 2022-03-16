@@ -1,8 +1,8 @@
 import s from "./Users.module.css";
 import userAvatar from "../../assets/img/null_avatar.png";
 import React from "react";
-import {UserType} from "../../redux/reducer/usersPageReducer";
 import {NavLink} from "react-router-dom";
+import {UserType} from "../../API";
 
 type UsersFnType = {
     thunkChangeCurrentPage: (currentPage: number, pageSize: number) => void

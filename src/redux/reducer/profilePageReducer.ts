@@ -59,34 +59,29 @@ export const setStatusAC = (status: string) => {
 
 //thunk
 export const setProfileUserDataTC = (param: any): AppThunk =>
-    dispatch => {
+    async (dispatch) => {
         dispatch(changePreloaderAC(true))
         let userId = param.match.params.userId
         if (!userId) {
             userId = '16550'
         }
-        profileAPI.setProfileUserData(userId).then(data => {
-            dispatch(changePreloaderAC(false))
-            dispatch(setProfileUserDataAC(data))
-        })
+        const res = await profileAPI.getProfileUserData(userId)
+        dispatch(setProfileUserDataAC(res.data))
+        dispatch(changePreloaderAC(false))
     }
 export const getStatusTC = (param: any): AppThunk =>
-    dispatch => {
+    async (dispatch) => {
         let userId = param.match.params.userId
-        if (!userId) {
+        if (!param.match.params.userId) {
             userId = '16550'
         }
-        profileAPI.getProfileStatus(userId).then(data => {
-            dispatch(setStatusAC(data))
-        })
+        const res = await profileAPI.getProfileStatus(userId)
+        dispatch(setStatusAC(res.data))
     }
 export const updateStatusTC = (status: string): AppThunk =>
-    dispatch => {
-        profileAPI.updateProfileStatus(status).then(data => {
-            if (data.resultCode === 0) {
-                dispatch(setStatusAC(status))
-            }
-        })
+    async (dispatch) => {
+        const res = await profileAPI.updateProfileStatus(status)
+        if (res.data.resultCode === 0) dispatch(setStatusAC(status))
     }
 
 //type
