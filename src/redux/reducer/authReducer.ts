@@ -34,6 +34,7 @@ export const setAuthDataTC = (): AppThunk => async (dispatch) => {
     const res = await headerAPI.setAuthData()
     const {id, email, login} = res.data.data
     if (id) dispatch(setAuthDataAC({id, email, login, isAuth: true}))
+    return 'aaa'
 }
 export const logInTC = (email: string, password: string, rememberMe: boolean): AppThunk =>
     async (dispatch) => {

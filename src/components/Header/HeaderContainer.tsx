@@ -1,18 +1,18 @@
-import React from "react";
-import {Connect, connect, ConnectedProps} from "react-redux";
-import {Header} from "./Header";
-import {logOutTC, setAuthDataTC} from "../../redux/reducer/authReducer";
-import {AppRootStateType} from "../../redux/store";
+import React from 'react';
+import {connect, ConnectedProps} from 'react-redux';
+import {Header} from './Header';
+import {logOutTC} from '../../redux/reducer/authReducer';
+import {AppRootStateType} from '../../redux/store';
 
 class HeaderContainer extends React.Component<HeaderContainerType> {
-    componentDidMount() {
-        this.props.thunkSetAuthData()
-    }
+    // componentDidMount() {
+    //     this.props.thunkSetAuthData()
+    // }
 
     render() {
         return <Header
             isAuth={this.props.isAuth}
-            ThunkLogOut={this.props.ThunkLogOut}/>
+            ThunkLogOut={this.props.logOutTC}/>
     }
 }
 
@@ -23,7 +23,7 @@ const mapStateToProps = (state: AppRootStateType) => {
 }
 
 const connector = connect(mapStateToProps,
-    {thunkSetAuthData: setAuthDataTC, ThunkLogOut: logOutTC})
+    {logOutTC})
 type HeaderContainerType = ConnectedProps<typeof connector>
 
 export default connector(HeaderContainer)

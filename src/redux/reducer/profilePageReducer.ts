@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {AppThunk} from "../store";
-import {profileAPI} from "../../API";
+import {headerAPI, profileAPI} from '../../API';
 import {changePreloaderAC, enumCommonActionType, preloaderACType} from "../../common/commonReducer";
 
 export enum enumProfileActionType {
@@ -63,7 +63,9 @@ export const setProfileUserDataTC = (param: any): AppThunk =>
         dispatch(changePreloaderAC(true))
         let userId = param.match.params.userId
         if (!userId) {
-            userId = '16550'
+            const res = await headerAPI.setAuthData()
+            const {id,} = res.data.data
+            userId = id
         }
         const res = await profileAPI.getProfileUserData(userId)
         dispatch(setProfileUserDataAC(res.data))
@@ -72,8 +74,10 @@ export const setProfileUserDataTC = (param: any): AppThunk =>
 export const getStatusTC = (param: any): AppThunk =>
     async (dispatch) => {
         let userId = param.match.params.userId
-        if (!param.match.params.userId) {
-            userId = '16550'
+        if (!userId) {
+            const res = await headerAPI.setAuthData()
+            const {id,} = res.data.data
+            userId = id
         }
         const res = await profileAPI.getProfileStatus(userId)
         dispatch(setStatusAC(res.data))
