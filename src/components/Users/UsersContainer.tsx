@@ -10,6 +10,13 @@ import {
 } from "../../redux/reducer/usersPageReducer";
 import {Users} from './Users';
 import {Preloader} from '../../common/Preloader/Preloader';
+import {
+    getCurrentPage, getFollowingInProgress,
+    getPageSize,
+    getPreloader,
+    getTotalUsersCount,
+    getUsers
+} from '../../redux/reducer/selectors/user-selector';
 
 export class UsersAPIComponent extends React.Component<UserPropsType> {
     componentDidMount() {
@@ -43,12 +50,12 @@ type MapDispatchToPropsType = {
 
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
-        users: state.userPage.users,
-        pageSize: state.userPage.pageSize,
-        totalUsersCount: state.userPage.totalUsersCount,
-        currentPage: state.userPage.currentPage,
-        preloader: state.userPage.preloader,
-        followingInProgress: state.userPage.followingInProgress,
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        preloader: getPreloader(state),
+        followingInProgress: getFollowingInProgress(state),
     }
 }
 
