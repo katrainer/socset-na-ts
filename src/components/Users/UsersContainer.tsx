@@ -1,13 +1,13 @@
 import React from 'react';
-import {connect} from "react-redux";
-import {AppRootStateType} from "../../redux/store";
+import {connect} from 'react-redux';
+import {AppRootStateType} from '../../redux/store';
 import {
     changeCurrentPageTC,
     setUsersTC,
     subscribeTC,
     unSubscribeTC,
     UsersType
-} from "../../redux/reducer/usersPageReducer";
+} from '../../redux/reducer/usersPageReducer';
 import {Users} from './Users';
 import {Preloader} from '../../common/Preloader/Preloader';
 import {
@@ -18,7 +18,7 @@ import {
     getUsers
 } from '../../redux/reducer/selectors/user-selector';
 
-export class UsersAPIComponent extends React.Component<UserPropsType> {
+export class UsersAPIComponent extends React.PureComponent<UserPropsType> {
     componentDidMount() {
         this.props.setUsersTC(this.props.currentPage, this.props.pageSize)
     }

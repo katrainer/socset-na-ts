@@ -1,27 +1,27 @@
-import React from "react";
-import classes from "./Profile.module.css";
-import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {MyPostsConteiner} from "./MyPosts/MyPostsConteiner";
-import {userProfilePageType} from "../../redux/reducer/profilePageReducer";
+import React from 'react';
+import classes from './Profile.module.css';
+import {ProfileInfo} from './ProfileInfo/ProfileInfo';
+import {MyPostsContainer} from './MyPosts/MyPostsConteiner';
+import {userProfilePageType} from '../../redux/reducer/profilePageReducer';
 
 type PropsType = {
     profileUserData: userProfilePageType | null
     status: string
-    thunkUpdateStatus: (status:string)=>void
+    updateStatusTC: (status: string) => void
 }
-export const Profile: React.FC<PropsType> = (
+export const Profile: React.FC<PropsType> = React.memo((
     {
         profileUserData,
         status,
-        thunkUpdateStatus,
+        updateStatusTC,
     }) => {
     return (
         <div className={classes.profile}>
             <ProfileInfo
                 profileUserData={profileUserData}
                 status={status}
-                thunkUpdateStatus={thunkUpdateStatus}/>
-            <MyPostsConteiner/>
+                updateStatusTC={updateStatusTC}/>
+            <MyPostsContainer/>
         </div>
     )
-}
+})

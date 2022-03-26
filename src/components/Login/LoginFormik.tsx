@@ -16,7 +16,7 @@ type valuesType = {
     password: string,
     rememberMe: boolean
 }
-const LoginFormik: React.FC<LoginType> = ({ThunkLogIn, isAuth}) => {
+const LoginFormik: React.FC<LoginType> = React.memo(({ThunkLogIn, isAuth}) => {
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
@@ -62,7 +62,7 @@ const LoginFormik: React.FC<LoginType> = ({ThunkLogIn, isAuth}) => {
             <button type={"submit"}>Войти</button>
         </form>
     </div>
-}
+})
 
 
 //----------------------------------------connect

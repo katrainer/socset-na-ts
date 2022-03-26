@@ -1,29 +1,27 @@
-import React from "react";
+import React from 'react';
 import s from './Sitebar.module.css'
 
-type propsType={
-    sitebar: Array<sitebarOb>
+type propsType = {
+    sidebar: Array<{
+        id: string
+        img: string
+        name: string
+    }>
 }
-type sitebarOb={
-    id: string
-    img: string
-    name: string
-}
-
-export const Sitebar=(props: propsType)=>{
-    let sitebarBlock = props.sitebar.map((t)=>{
+export const Sidebar = (props: propsType) => {
+    const sidebarBlock = props.sidebar.map((t) => {
         return (
             <div key={t.id} className={s.SitebarBlock}>
-            <div><img src={t.img}/></div>
-            <div>{t.name}</div>
-        </div>
+                <div><img src={t.img} alt='изображение того, чего нету'/></div>
+                <div>{t.name}</div>
+            </div>
         )
     })
 
-    return(
+    return (
         <div className={s.Siterbar}>
             <h1>Friends</h1>
-            {sitebarBlock}
+            {sidebarBlock}
         </div>
     )
 }

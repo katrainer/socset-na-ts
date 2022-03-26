@@ -1,13 +1,12 @@
 import React from 'react';
-import s from "./Message.module.css";
+import s from './Message.module.css';
 
-type propsType={
+type propsType = {
     message: string
-    id: string
 }
 
-export const Message=(props: propsType)=>{
-    return(
-        <div className={s.message}>{props.message}</div>
+export const Message: React.FC<propsType> = React.memo(({message}) => {
+    return (
+        <div className={s.message}>{message}</div>
     )
-}
+})

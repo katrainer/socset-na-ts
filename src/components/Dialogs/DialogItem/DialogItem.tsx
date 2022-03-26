@@ -1,6 +1,6 @@
 import React from 'react';
-import s from "./DialogItem.module.css";
-import {NavLink} from "react-router-dom";
+import s from './DialogItem.module.css';
+import {NavLink} from 'react-router-dom';
 
 type propsType = {
     name: string
@@ -8,12 +8,12 @@ type propsType = {
     img: string
 }
 
-export const DialogItem = (props: propsType) => {
+export const DialogItem: React.FC<propsType> = React.memo(({name, id, img}) => {
     return (
         <div className={s.dialog}>
-            <NavLink to={'/dialogs/' + props.id}>
-                <img src={props.img}/> {props.name}
+            <NavLink to={'/dialogs/' + id}>
+                <img src={img} alt='изображение того, чего нету'/> {name}
             </NavLink>
         </div>
     )
-}
+})

@@ -1,15 +1,13 @@
-import React from "react";
-import s from "./Header.module.css";
-import {NavLink} from "react-router-dom";
-import {loginAPI} from "../../API";
-import {logOutTC} from "../../redux/reducer/authReducer";
+import React from 'react';
+import s from './Header.module.css';
+import {NavLink} from 'react-router-dom';
 
 type PropsType = {
     isAuth: boolean
     ThunkLogOut: ()=>void
 }
 
-export const Header: React.FC<PropsType> = ({isAuth,ThunkLogOut}) => {
+export const Header: React.FC<PropsType> = React.memo(({isAuth,ThunkLogOut}) => {
     const outLogin = ()=>{
         ThunkLogOut()
     }
@@ -21,4 +19,4 @@ export const Header: React.FC<PropsType> = ({isAuth,ThunkLogOut}) => {
         </header>
 
     )
-}
+})

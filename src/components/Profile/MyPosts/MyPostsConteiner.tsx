@@ -1,8 +1,7 @@
-import React from "react";
-import {AppRootStateType} from "../../../redux/store";
-import {MyPostsFormik} from "./MyPostsFormik";
-import {connect} from "react-redux";
-import {PostDataProps, setNewPostClickAC} from "../../../redux/reducer/profilePageReducer";
+import {AppRootStateType} from '../../../redux/store';
+import {MyPostsFormik} from './MyPostsFormik';
+import {connect} from 'react-redux';
+import {PostDataProps, setNewPostClickAC} from '../../../redux/reducer/profilePageReducer';
 
 type MapStateToPropsType = {
     postsData: PostDataProps[]
@@ -16,6 +15,6 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
         postsData: state.profile.postsData,
     }
 }
-export const MyPostsConteiner = connect(mapStateToProps,
+export const MyPostsContainer = connect(mapStateToProps,
     {setNewPostClick: setNewPostClickAC}
 )(MyPostsFormik)

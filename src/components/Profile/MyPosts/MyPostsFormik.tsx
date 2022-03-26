@@ -1,20 +1,20 @@
-import React from "react";
-import s from "./MyPost.module.css"
-import {MyPostsType} from "./MyPostsConteiner";
-import {Post} from "./Post/Post";
-import {useDispatch} from "react-redux";
-import {useFormik} from "formik";
+import React from 'react';
+import s from './MyPost.module.css'
+import {MyPostsType} from './MyPostsConteiner';
+import {Post} from './Post/Post';
+import {useDispatch} from 'react-redux';
+import {useFormik} from 'formik';
 
 type valuesType = {
     messages: string,
 }
 export const MyPostsFormik: React.FC<MyPostsType> =
-    ({
-         postsData,
-         setNewPostClick
-     }) => {
+    React.memo(({
+                    postsData,
+                    setNewPostClick
+                }) => {
         const dispatch = useDispatch()
-        const posts = postsData.map(p => <Post id={p.id} message={p.message} likeCount={p.likeCount}/>)
+        const posts = postsData.map(p => <Post key={p.id} message={p.message} likeCount={p.likeCount}/>)
         const formik = useFormik({
             initialValues: {
                 messages: '',
@@ -30,15 +30,15 @@ export const MyPostsFormik: React.FC<MyPostsType> =
                     <textarea
                         name="messages"
                         id="messages"
-                        placeholder='write'
+                        placeholder="write"
                         onChange={formik.handleChange}
                         value={formik.values.messages}
                     />
-                    <button type={"submit"}>dd message</button>
+                    <button type={'submit'}>dd message</button>
                 </form>
                 <div className={s.posts}>
                     {posts}
                 </div>
             </div>
         )
-    }
+    })

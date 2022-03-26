@@ -23,7 +23,7 @@ export const initializedSuccess = () => {
     return {type: EnumAppActionType.initializedSuccess}
 }
 
-//thunk
+// thunk
 export const initializeTC = (): AppThunk => async dispatch => {
     const res = await dispatch(setAuthDataTC())
     dispatch(initializedSuccess())

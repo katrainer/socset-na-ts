@@ -1,30 +1,29 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useState} from 'react';
 
 type ProfileStatusType = {
     value: string
-    thunkUpdateStatus: (status: string) => void
+    updateStatusTC: (status: string) => void
 }
 
-export const ProfileStatus: React.FC<ProfileStatusType> = (
+export const ProfileStatus: React.FC<ProfileStatusType> = React.memo((
     {
         value,
-        thunkUpdateStatus,
+        updateStatusTC,
     }) => {
 
     const [editMode, setEditMode] = useState(false)
     const [status, setStatus] = useState(value)
     const onBlurHandler = () => {
-        thunkUpdateStatus(status)
+        updateStatusTC(status)
         setEditMode(false)
     }
     const onDoubleClickHandler = () => setEditMode(true)
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setStatus(e.currentTarget.value)
-
     return <>
         {editMode
             ? <div>
                 <input value={status} autoFocus onBlur={onBlurHandler} onChange={onChangeHandler}/>
             </div>
-            : <span onDoubleClick={onDoubleClickHandler}>{value||'NO STATUS'}</span>}
+            : <span onDoubleClick={onDoubleClickHandler}>{value || 'NO STATUS'}</span>}
     </>
-}
+})

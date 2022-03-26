@@ -1,8 +1,8 @@
-import s from "./Users.module.css";
-import userAvatar from "../../assets/img/null_avatar.png";
-import React from "react";
-import {NavLink} from "react-router-dom";
-import {UserType} from "../../API";
+import s from './Users.module.css';
+import userAvatar from '../../assets/img/null_avatar.png';
+import React from 'react';
+import {NavLink} from 'react-router-dom';
+import {UserType} from '../../API';
 
 type UsersFnType = {
     thunkChangeCurrentPage: (currentPage: number, pageSize: number) => void
@@ -15,7 +15,7 @@ type UsersFnType = {
     followingInProgress: Array<null | string>
 }
 
-export const Users: React.FC<UsersFnType> = (
+export const Users: React.FC<UsersFnType> = React.memo((
     {
         thunkChangeCurrentPage,
         totalUsersCount,
@@ -51,7 +51,7 @@ export const Users: React.FC<UsersFnType> = (
                             <img
                                 src={t.photos.small === null
                                     ? userAvatar
-                                    : t.photos.small} alt='аватарка пользователей'
+                                    : t.photos.small} alt="аватарка пользователей"
                             />
                             </NavLink>
                         </div>
@@ -59,7 +59,7 @@ export const Users: React.FC<UsersFnType> = (
                                     disabled={followingInProgress.some(id => id === t.id
                                     )}
                                     onClick={() => onClickUnSubHandler(t.id)}>
-                                    unsubscrib
+                                    unsubscribe
                                 </button> :
                                 <button
                                     disabled={followingInProgress.some(id => id === t.id)}
@@ -71,4 +71,4 @@ export const Users: React.FC<UsersFnType> = (
             )
         })}
     </>
-}
+})

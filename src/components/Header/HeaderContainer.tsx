@@ -4,7 +4,7 @@ import {Header} from './Header';
 import {logOutTC} from '../../redux/reducer/authReducer';
 import {AppRootStateType} from '../../redux/store';
 
-class HeaderContainer extends React.Component<HeaderContainerType> {
+class HeaderContainer extends React.PureComponent<HeaderContainerType> {
     // componentDidMount() {
     //     this.props.thunkSetAuthData()
     // }

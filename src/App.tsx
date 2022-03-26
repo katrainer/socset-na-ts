@@ -16,7 +16,7 @@ import {compose} from 'redux';
 import {initializeTC} from './redux/reducer/appReducer';
 import {Preloader} from './common/Preloader/Preloader';
 
-class App extends React.Component<AppPropsType> {
+class App extends React.PureComponent<AppPropsType> {
     componentDidMount() {
         this.props.initializeTC()
     }
@@ -26,7 +26,7 @@ class App extends React.Component<AppPropsType> {
         return (
             <div className="app-wrapper">
                 <HeaderContainer/>
-                <Navbar sitebar={this.props.sidebar}/>
+                <Navbar sidebar={this.props.sidebar}/>
                 <div className="app-wrapper-content">
                     <Route path="/dialogs" render={() => <DialogsContainer/>}/>
                     <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>

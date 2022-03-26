@@ -1,23 +1,23 @@
 import React from 'react';
 import {DialogItem} from './DialogItem/DialogItem';
-import classes from "./Dialogs.module.css";
+import classes from './Dialogs.module.css';
 import {DialogsType} from './DialogsContainer';
 import {Message} from './Message/Message';
-import {useFormik} from "formik";
-import {useDispatch} from "react-redux";
+import {useFormik} from 'formik';
+import {useDispatch} from 'react-redux';
 
 type valuesType = {
     messages: string,
 }
-export const DialogsFormik: React.FC<DialogsType> = (
+export const DialogsFormik: React.FC<DialogsType> = React.memo((
     {
         dialogsData,
         messagesData,
         setNewMessageText,
     }) => {
     const dispatch = useDispatch()
-    const dialogs = dialogsData.map(d => <DialogItem img={d.img} name={d.name} id={d.id}/>)
-    const messages = messagesData.map(m => <Message message={m.message} id={m.id}/>)
+    const dialogs = dialogsData.map(d => <DialogItem key={d.id} img={d.img} name={d.name} id={d.id}/>)
+    const messages = messagesData.map(m => <Message key={m.id} message={m.message}/>)
     const formik = useFormik({
         initialValues: {
             messages: '',
@@ -37,13 +37,13 @@ export const DialogsFormik: React.FC<DialogsType> = (
                     <textarea
                         name="messages"
                         id="messages"
-                        placeholder='write'
+                        placeholder="write"
                         onChange={formik.handleChange}
                         value={formik.values.messages}
                     />
-                    <button type={"submit"}>dd message</button>
+                    <button type={'submit'}>dd message</button>
                 </form>
             </div>
         </div>
     )
-}
+})
