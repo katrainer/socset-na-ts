@@ -4,7 +4,6 @@ import {NavLink, Redirect} from 'react-router-dom';
 import React, {useEffect} from 'react';
 import {UserType} from '../../api/userApi';
 import {setUsersTC, subscribeTC, unSubscribeTC} from '../../redux/reducer/usersPageReducer';
-import userAvatar from '../../assets/img/null_avatar.png';
 import s from './Friends.module.css'
 
 export const Friends = () => {
@@ -29,7 +28,7 @@ export const Friends = () => {
                         <NavLink to={'/profile/' + t.id}>
                             <img
                                 src={t.photos.small === null
-                                    ? userAvatar
+                                    ? 'https://sun1-17.userapi.com/s/v1/if1/pvTi5V3csQH8-oqUnfesELwgtLWyEePqE6Hz5SdqoVZxItBnm_XwfAiDMfANJPjpj7jtW_O5.jpg?size=200x200&quality=96&crop=0,0,979,979&ava=1'
                                     : t.photos.small} alt="аватарка пользователей"
                             />
                         </NavLink>

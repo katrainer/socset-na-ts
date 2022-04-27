@@ -1,20 +1,18 @@
 import React from 'react';
 import {DialogItem} from './DialogItem/DialogItem';
 import classes from './Dialogs.module.css';
-import {DialogsType} from './DialogsContainer';
 import {Message} from './Message/Message';
 import {useFormik} from 'formik';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {DialogsDataProps, MessagesDataProps, setNewMessageTextAC} from '../../redux/reducer/messagesPageReducer';
+import {AppRootStateType} from '../../redux/store';
 
 type valuesType = {
     messages: string,
 }
-export const DialogsFormik: React.FC<DialogsType> = React.memo((
-    {
-        dialogsData,
-        messagesData,
-        setNewMessageText,
-    }) => {
+export const DialogsFormik = () => {
+    const dialogsData = useSelector<AppRootStateType, DialogsDataProps[]>(state => state.messages.dialogsData)
+    const messagesData = useSelector<AppRootStateType, MessagesDataProps[]>(state => state.messages.messagesData)
     const dispatch = useDispatch()
     const dialogs = dialogsData.map(d => <DialogItem key={d.id} img={d.img} name={d.name} id={d.id}/>)
     const messages = messagesData.map(m => <Message key={m.id} message={m.message}/>)
@@ -23,7 +21,7 @@ export const DialogsFormik: React.FC<DialogsType> = React.memo((
             messages: '',
         },
         onSubmit: (values: valuesType) => {
-            dispatch(setNewMessageText(values.messages))
+            dispatch(setNewMessageTextAC(values.messages))
         },
     })
     return (
@@ -46,4 +44,4 @@ export const DialogsFormik: React.FC<DialogsType> = React.memo((
             </div>
         </div>
     )
-})
+}

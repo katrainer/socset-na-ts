@@ -1,6 +1,6 @@
-import {authAPI} from '../../api/authApi';
 import {AppThunk} from '../store';
 import {errorResponse} from '../../utils/util-error';
+import {authAPI} from '../../api/authApi';
 
 export enum enumAuthActionType {
     setAuthData = 'AUTH/PROFILE/SET-NEW-POST-CLICK',

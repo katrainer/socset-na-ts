@@ -7,11 +7,11 @@ import {
     getStatusTC,
     setProfileUserDataTC,
     updateStatusTC,
-    userProfilePageType
 } from '../../redux/reducer/profilePageReducer';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {compose} from 'redux';
 import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
+import {ProfileDataType} from '../../api/profileApi';
 
 class ProfileContainer extends React.PureComponent<PropsType> {
     componentDidMount() {
@@ -35,7 +35,7 @@ type PathParamsType = {
 }
 type MapStateToPropsType = {
     preloader: boolean
-    userProfilePage: userProfilePageType | null
+    userProfilePage: ProfileDataType
     status: string
 }
 type MapDispatchToPropsType = {

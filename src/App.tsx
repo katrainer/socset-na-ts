@@ -4,7 +4,6 @@ import {Navbar} from './components/Navbar/Navbar';
 import {Route, withRouter} from 'react-router-dom';
 import {AppRootStateType} from './redux/store';
 import ProfileContainer from './components/Profile/ProfileConteiner';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Login from './components/Login/Login';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
@@ -13,6 +12,7 @@ import {Preloader} from './common/Preloader/Preloader';
 import {Header} from './components/Header/Header';
 import {Friends} from './components/Friends/Friends';
 import {Users} from './components/Users/Users';
+import {DialogsFormik} from './components/Dialogs/DialogsFormik';
 
 class App extends React.PureComponent<AppPropsType> {
     componentDidMount() {
@@ -27,7 +27,7 @@ class App extends React.PureComponent<AppPropsType> {
                 <div className={s.mainContainer}>
                     <Navbar/>
                     <div className={s.contentContainer}>
-                        <Route path="/dialogs" render={() => <DialogsContainer/>}/>
+                        <Route path="/dialogs" render={() => <DialogsFormik/>}/>
                         <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
                         <Route path="/users" render={() => <Users/>}/>
                         <Route path="/login" render={() => <Login/>}/>
@@ -49,5 +49,4 @@ const mapStateToProps = (state: AppRootStateType) => {
     }
 }
 
-// export default connect(mapStateToProps, {})(App);
 export default compose<React.ComponentType>(connect(mapStateToProps, {initializeTC}), withRouter)(App);

@@ -1,7 +1,6 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import {MessageActionType, messagesPageReducer} from './reducer/messagesPageReducer';
 import {ProfileActionType, profilePageReducer} from './reducer/profilePageReducer';
-import {sidebarPageReducer} from './reducer/sidebarPageReducer';
 import {UserPageActionType, usersPageReducer} from './reducer/usersPageReducer';
 import {authReducer, LoginActionType} from './reducer/authReducer';
 import thunk, {ThunkAction} from 'redux-thunk';
@@ -12,7 +11,6 @@ import {AppReducer, AppReducerActionType} from './reducer/appReducer';
 export const rootReducer = combineReducers({
     messages: messagesPageReducer,
     profile: profilePageReducer,
-    sidebar: sidebarPageReducer,
     userPage: usersPageReducer,
     login: authReducer,
     common: commonReducer,
