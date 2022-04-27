@@ -25,7 +25,7 @@ class ProfileContainer extends React.PureComponent<PropsType> {
             <Profile
                 profileUserData={this.props.userProfilePage}
                 status={this.props.status}
-                updateStatusTC={this.props.updateStatusTC}/>;
+                updateStatusTC={this.props.updateStatusTC}/>
         </>
     }
 }

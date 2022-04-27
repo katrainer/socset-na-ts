@@ -1,39 +1,41 @@
-import {v1} from "uuid";
-import {AppThunk} from "../store";
-import {headerAPI, profileAPI} from '../../API';
-import {changePreloaderAC, enumCommonActionType, preloaderACType} from "../../common/commonReducer";
+import {v1} from 'uuid';
+import {AppThunk} from '../store';
+import {profileAPI, ProfileDataType} from '../../api/profileApi';
+import {changePreloaderAC, enumCommonActionType, preloaderACType} from '../../common/commonReducer';
+import {errorResponse} from '../../utils/util-error';
 
 export enum enumProfileActionType {
     setNewPostClick = 'PROFILE/SET-NEW-POST-CLICK',
     setProfileUserData = 'PROFILE/SET-PROFILE-USER-DATA',
     setStatus = 'PROFILE/SET-STATUS',
+    updatePhotos = 'PROFILE/UPDATE-PHOTOS'
 }
 
-const initialState: ProfilePageType = {
+const initialState = {
     postsData: [
-        {id: v1(), message: 'yo', likeCount: 12},
-        {id: v1(), message: 'yoyo', likeCount: 212},
-        {id: v1(), message: 'yoyo', likeCount: 212},
+        {id: v1(), message: 'Memento mori', likeCount: 12},
+        {id: v1(), message: 'How are you guys?', likeCount: 212},
+        {id: v1(), message: 'Hello world!', likeCount: 1212},
     ],
-    userProfilePage: null,
+    userProfilePage: {} as ProfileDataType,
     preloader: false,
     status: ''
 }
-export const profilePageReducer = (state: ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
+export const profilePageReducer = (state: initialStateType = initialState, action: ProfileActionType): initialStateType => {
     switch (action.type) {
         case enumProfileActionType.setNewPostClick:
             return {
-                ...state, postsData: [{...action.payload},
-                    ...state.postsData]
+                ...state,
+                postsData: [action.payload, ...state.postsData]
             }
         case enumProfileActionType.setProfileUserData:
-            return {...state, ...action.payload}
         case enumCommonActionType.changePreloader:
-            return {...state, ...action.payload}
         case enumProfileActionType.setStatus:
             return {...state, ...action.payload}
+        case enumProfileActionType.updatePhotos:
+            return {...state, userProfilePage: {...state.userProfilePage, ...action.payload.photos}}
         default :
-            return {...state}
+            return state
     }
 }
 
@@ -44,7 +46,7 @@ export const setNewPostClickAC = (message: string) => {
         payload: {message, likeCount: 0, id: v1()},
     } as const
 }
-export const setProfileUserDataAC = (userProfilePage: userProfilePageType) => {
+export const setProfileUserDataAC = (userProfilePage: ProfileDataType) => {
     return {
         type: enumProfileActionType.setProfileUserData,
         payload: {userProfilePage}
@@ -56,72 +58,64 @@ export const setStatusAC = (status: string) => {
         payload: {status},
     } as const
 }
+const updatePhotosAC = (photos: { small: string, large: string }) => {
+    return {
+        type: enumProfileActionType.updatePhotos,
+        payload: {photos}
+    } as const
+}
+
 
 //thunk
 export const setProfileUserDataTC = (param: any): AppThunk =>
-    async (dispatch) => {
+    async (dispatch, getState) => {
         dispatch(changePreloaderAC(true))
         let userId = param.match.params.userId
         if (!userId) {
-            const res = await headerAPI.setAuthData()
-            const {id,} = res.data.data
+            const id = getState().login.id
             userId = id
         }
-        const res = await profileAPI.getProfileUserData(userId)
-        dispatch(setProfileUserDataAC(res.data))
-        dispatch(changePreloaderAC(false))
+        try {
+            const res = await profileAPI.getProfileUserData(userId)
+            dispatch(setProfileUserDataAC(res.data))
+            dispatch(changePreloaderAC(false))
+        } catch (e) {
+            errorResponse(e)
+        }
     }
 export const getStatusTC = (param: any): AppThunk =>
-    async (dispatch) => {
+    async (dispatch, getState) => {
         let userId = param.match.params.userId
         if (!userId) {
-            const res = await headerAPI.setAuthData()
-            const {id,} = res.data.data
+            const id = getState().login.id
             userId = id
         }
-        const res = await profileAPI.getProfileStatus(userId)
-        dispatch(setStatusAC(res.data))
+        try {
+            const res = await profileAPI.getProfileStatus(userId)
+            dispatch(setStatusAC(res.data))
+        } catch (e) {
+            errorResponse(e)
+        }
+
     }
 export const updateStatusTC = (status: string): AppThunk =>
-    async (dispatch) => {
+    async dispatch => {
         const res = await profileAPI.updateProfileStatus(status)
         if (res.data.resultCode === 0) dispatch(setStatusAC(status))
     }
+export const updatePhotosTC = (photo: File): AppThunk => async dispatch => {
+    try {
+        const res = await profileAPI.updateProfilePhoto(photo)
+        dispatch(updatePhotosAC(res.data.data))
+    } catch (e) {
+        errorResponse(e)
+    }
+}
 
 //type
-export type ProfilePageType = {
-    postsData: PostDataProps[]
-    userProfilePage: userProfilePageType | null
-    preloader: boolean
-    status: string
-}
-export type PostDataProps = {
-    id: string
-    message: string
-    likeCount: number
-}
-export type userProfilePageType = {
-    aboutMe: string | null
-    contacts: {
-        facebook: string | null
-        website: string | null
-        vk: string | null
-        twitter: string | null
-        instagram: string | null
-        youtube: string | null
-        github: string | null
-        mainLink: string | null
-    }
-    lookingForAJob: boolean
-    lookingForAJobDescription: string | null
-    fullName: string
-    userId: number
-    photos: {
-        small: string | undefined
-        large: string | undefined
-    }
-}
+type initialStateType = typeof initialState
 export type ProfileActionType = ReturnType<typeof setNewPostClickAC>
     | ReturnType<typeof setProfileUserDataAC>
     | preloaderACType
     | ReturnType<typeof setStatusAC>
+    | ReturnType<typeof updatePhotosAC>

@@ -1,0 +1,46 @@
+.mainContainer {
+    margin-top: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.friendContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px;
+    background-color: white;
+    border-radius: 10px;
+    min-width: 150px;
+}
+
+.imgContainer {
+    margin: 5px;
+}
+
+.imgContainer img {
+    width: 90px;
+}
+
+.textContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.friendContainer button {
+    margin: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    border-color: #0e6dfd;
+    background-color: white;
+    color: #0e6dfd;
+    min-width: 50%
+}
+
+.friendContainer button:hover {
+    background-color: #0e6dfd;
+    color: white;
+    cursor: pointer;
+}

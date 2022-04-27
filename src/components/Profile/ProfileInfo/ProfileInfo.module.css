@@ -1,3 +1,21 @@
-.descriptionBlock{
-    padding: 10px;
+.mainContainer {
+    border: 1px solid black;
+    width: 70%;
+
+}
+
+.mainContainer img {
+    width: 150px;
+    border-radius: 50%;
+}
+
+.profileImgContainer {
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+}
+.nameContainer{
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
 }

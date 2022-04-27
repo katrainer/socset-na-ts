@@ -19,11 +19,11 @@ export const ProfileStatus: React.FC<ProfileStatusType> = React.memo((
     }
     const onDoubleClickHandler = () => setEditMode(true)
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setStatus(e.currentTarget.value)
-    return <>
+    return <div>
         {editMode
             ? <div>
                 <input value={status} autoFocus onBlur={onBlurHandler} onChange={onChangeHandler}/>
             </div>
-            : <span onDoubleClick={onDoubleClickHandler}>{value || 'NO STATUS'}</span>}
-    </>
+            : <span style={{fontSize:16, wordBreak: 'break-word'}} onDoubleClick={onDoubleClickHandler}>{value || 'NO STATUS'}</span>}
+    </div>
 })

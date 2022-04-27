@@ -8,25 +8,26 @@ import {useFormik} from 'formik';
 type valuesType = {
     messages: string,
 }
-export const MyPostsFormik: React.FC<MyPostsType> =
+export const MyPosts: React.FC<MyPostsType> =
     React.memo(({
                     postsData,
-                    setNewPostClick
+                    setNewPostClickAC
                 }) => {
-        const dispatch = useDispatch()
         const posts = postsData.map(p => <Post key={p.id} message={p.message} likeCount={p.likeCount}/>)
         const formik = useFormik({
             initialValues: {
                 messages: '',
             },
             onSubmit: (values: valuesType) => {
-                dispatch(setNewPostClick(values.messages))
+                setNewPostClickAC(values.messages)
+                formik.resetForm()
             },
         })
         return (
-            <div className={s.postBlock}>
-                <h3>My posts</h3>
-                <form onSubmit={formik.handleSubmit}>
+            <div className={s.mainContainer}>
+                <div className={s.newPostContainer}>
+                    <span>My posts</span>
+                    <form onSubmit={formik.handleSubmit} className={s.formContainer}>
                     <textarea
                         name="messages"
                         id="messages"
@@ -34,8 +35,9 @@ export const MyPostsFormik: React.FC<MyPostsType> =
                         onChange={formik.handleChange}
                         value={formik.values.messages}
                     />
-                    <button type={'submit'}>dd message</button>
-                </form>
+                        <button type={'submit'}>Add new post</button>
+                    </form>
+                </div>
                 <div className={s.posts}>
                     {posts}
                 </div>

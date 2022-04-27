@@ -1,40 +1,26 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import s from './Navbar.module.css';
-import {Sidebar} from '../Sitebar/Sitebar';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppRootStateType} from '../../redux/store';
+import {SiActigraph, SiMessenger} from 'react-icons/si'
+import {TiBusinessCard} from 'react-icons/ti';
+import {GiThreeFriends} from 'react-icons/gi';
+import {logOutTC} from '../../redux/reducer/authReducer';
 
-type propsType = {
-    sidebar: Array<{
-        id: string
-        img: string
-        name: string
-    }>
-}
-
-export const Navbar: React.FC<propsType> = React.memo(({sidebar}) => {
+export const Navbar = () => {
+    const isAuth = useSelector<AppRootStateType, boolean>(state => state.login.isAuth)
+    const dispatch = useDispatch()
+    const logOutHandler = () => {
+        dispatch(logOutTC())
+    }
     return (
         <nav className={s.navbar}>
-            <div className={s.item}>
-                <div>
-                    <NavLink to="/profile" activeClassName={s.active}>Profile</NavLink>
-                </div>
-                <div>
-                    <NavLink to="/dialogs" activeClassName={s.active}>Message</NavLink>
-                </div>
-                <div>
-                    <NavLink to="/news" activeClassName={s.active}>News</NavLink>
-                </div>
-                <div>
-                    <NavLink to="/music" activeClassName={s.active}>Music</NavLink>
-                </div>
-                <div>
-                    <NavLink to="/settings" activeClassName={s.active}>Settings</NavLink>
-                </div>
-                <div>
-                    <NavLink to="/users" activeClassName={s.active}>Users</NavLink>
-                </div>
-                <Sidebar sidebar={sidebar}/>
-            </div>
+            <NavLink to="/profile" activeClassName={s.active}><TiBusinessCard/>Profile</NavLink>
+            <NavLink to="/dialogs" activeClassName={s.active}><SiMessenger/>Message</NavLink>
+            <NavLink to="/friends" activeClassName={s.active}><GiThreeFriends/>Friends</NavLink>
+            <NavLink to="/users" activeClassName={s.active}><SiActigraph/>Users</NavLink>
+            {isAuth && <button onClick={logOutHandler}>Log Out</button>}
         </nav>
     )
-})
+}

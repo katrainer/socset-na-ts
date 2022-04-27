@@ -1,0 +1,19 @@
+.pages {
+    margin: 40px 0;
+    cursor: pointer;
+    user-select: none;
+}
+
+.currentPage {
+    background-color: #0e6dfd;
+    color: white;
+    align-items: center;
+    border-radius: 100%;
+    /*font-weight: 700;*/
+}
+
+.page:hover {
+    background-color: #0e6dfd;
+    color: white;
+    border-radius: 100%;
+}

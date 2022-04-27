@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './Profile.module.css';
+import s from './Profile.module.css';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPostsContainer} from './MyPosts/MyPostsConteiner';
 import {userProfilePageType} from '../../redux/reducer/profilePageReducer';
@@ -16,7 +16,7 @@ export const Profile: React.FC<PropsType> = React.memo((
         updateStatusTC,
     }) => {
     return (
-        <div className={classes.profile}>
+        <div className={s.mainContainer}>
             <ProfileInfo
                 profileUserData={profileUserData}
                 status={status}

@@ -1,7 +1,59 @@
-.conteiner img{
-    width: 30px;
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.selectedPage{
-    font-weight: bold;
+.containerUsers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.containerUser {
+    border: black 1px solid;
+    margin: 15px;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.containerUser div {
+    margin: 6px;
+}
+
+.imgAndName {
+    display: flex;
+}
+
+.statusAndName {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.containerUser button {
+    border-radius: 10px;
+    font-size: 20px;
+    border-color: #0e6dfd;
+    background-color: white;
+    color: #0e6dfd;
+    min-width: 10%;
+    margin-right: 10px;
+}
+
+.containerUser button:hover {
+    background-color: #0e6dfd;
+    color: white;
+    cursor: pointer;
+}
+
+.containerUser img {
+    width: 70px;
+    display: flex;
 }

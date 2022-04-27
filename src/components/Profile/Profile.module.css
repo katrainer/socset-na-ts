@@ -1,8 +1,7 @@
-.item{
-    color: green;
+.mainContainer {
+    width: 100%;
+    margin-top: 60px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-around;
 }
-
-.content img {
-    width: 1000px
-}
-

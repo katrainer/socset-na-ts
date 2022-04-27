@@ -1,5 +1,6 @@
 import {AppThunk} from '../store';
 import {setAuthDataTC} from './authReducer';
+import {errorResponse} from '../../utils/util-error';
 
 export enum EnumAppActionType {
     initializedSuccess = 'APP/INITIALIZED-SUCCESS'
@@ -25,8 +26,12 @@ export const initializedSuccess = () => {
 
 // thunk
 export const initializeTC = (): AppThunk => async dispatch => {
-    const res = await dispatch(setAuthDataTC())
-    dispatch(initializedSuccess())
+    try {
+        await dispatch(setAuthDataTC())
+        dispatch(initializedSuccess())
+    } catch (e) {
+        errorResponse(e)
+    }
 }
 
 //type

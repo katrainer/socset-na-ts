@@ -1,13 +1,13 @@
 import {AppRootStateType} from '../../../redux/store';
-import {MyPostsFormik} from './MyPostsFormik';
+import {MyPosts} from './MyPosts';
 import {connect} from 'react-redux';
-import {PostDataProps, setNewPostClickAC} from '../../../redux/reducer/profilePageReducer';
+import {setNewPostClickAC} from '../../../redux/reducer/profilePageReducer';
 
 type MapStateToPropsType = {
-    postsData: PostDataProps[]
+    postsData: PostDataType[]
 }
 type MapDispatchToPropsType = {
-    setNewPostClick: (e: string) => void
+    setNewPostClickAC: (e: string) => void
 }
 export type MyPostsType = MapStateToPropsType & MapDispatchToPropsType
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
@@ -16,5 +16,11 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     }
 }
 export const MyPostsContainer = connect(mapStateToProps,
-    {setNewPostClick: setNewPostClickAC}
-)(MyPostsFormik)
+    {setNewPostClickAC}
+)(MyPosts)
+
+export type PostDataType = {
+    id: string
+    message: string
+    likeCount: number
+}

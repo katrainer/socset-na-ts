@@ -1,9 +1,10 @@
-import React from "react";
-import {logInTC} from "../../redux/reducer/authReducer";
-import {connect, useDispatch} from "react-redux";
-import {Redirect} from "react-router-dom";
-import {AppRootStateType} from "../../redux/store";
-import {useFormik} from "formik";
+import React from 'react';
+import {logInTC} from '../../redux/reducer/authReducer';
+import {connect, useDispatch} from 'react-redux';
+import {Redirect} from 'react-router-dom';
+import {AppRootStateType} from '../../redux/store';
+import {useFormik} from 'formik';
+import s from './Login.module.css'
 
 
 type LoginType = {
@@ -16,7 +17,7 @@ type valuesType = {
     password: string,
     rememberMe: boolean
 }
-const LoginFormik: React.FC<LoginType> = React.memo(({ThunkLogIn, isAuth}) => {
+const Login: React.FC<LoginType> = React.memo(({ThunkLogIn, isAuth}) => {
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
@@ -38,28 +39,38 @@ const LoginFormik: React.FC<LoginType> = React.memo(({ThunkLogIn, isAuth}) => {
             dispatch(ThunkLogIn(values.email, values.password, values.rememberMe))
         },
     })
-    if (isAuth) return <Redirect to='/profile'/>
-    return <div>
-        <h1>LOGIN</h1>
+    if (isAuth) return <Redirect to="/profile"/>
+    return <div className={s.allContainer}>
+        <span>Log In</span>
+        <div>
+            <p>To log in get registered
+                <a href={'https://social-network.samuraijs.com/'}
+                   target={'_blank'}> here
+                </a>
+            </p>
+            <p>or use common test account credentials:</p>
+            <p>Email: free@samuraijs.com</p>
+            <p>Password: free</p>
+        </div>
         <form onSubmit={formik.handleSubmit}>
             <input id={'email'}
                    type={'email'}
                    placeholder={'email'}
                    {...formik.getFieldProps('email')}/>
             {formik.touched.email && formik.errors.email &&
-                <div style={{color: "red"}}>{formik.errors.email}</div>}<br/>
+                <div style={{color: 'red'}}>{formik.errors.email}</div>}<br/>
             <input id={'password'}
                    type={'password'}
                    placeholder={'password'}
                    {...formik.getFieldProps('password')}/>
             {formik.touched.password && formik.errors.password &&
-                <div style={{color: "red"}}>{formik.errors.password}</div>}<br/>
+                <div style={{color: 'red'}}>{formik.errors.password}</div>}<br/>
             <input id={'check'}
                    type={'checkbox'}
                    checked={formik.values.rememberMe}
                    {...formik.getFieldProps('rememberMe')}
-            /> Запомнить<br/>
-            <button type={"submit"}>Войти</button>
+            /> Remember Me<br/>
+            <button type={'submit'}>Log In</button>
         </form>
     </div>
 })
@@ -71,7 +82,7 @@ const pstp = (state: AppRootStateType) => {
         isAuth: state.login.isAuth
     }
 }
-export default connect(pstp, {ThunkLogIn: logInTC})(LoginFormik)
+export default connect(pstp, {ThunkLogIn: logInTC})(Login)
 
 //type
 type FormikErrorType = {

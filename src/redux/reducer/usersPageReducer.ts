@@ -1,6 +1,7 @@
-import {usersAPI, UserType} from "../../API";
-import {AppThunk} from "../store";
-import {changePreloaderAC, enumCommonActionType, preloaderACType} from "../../common/commonReducer";
+import {AppThunk} from '../store';
+import {changePreloaderAC, enumCommonActionType, preloaderACType} from '../../common/commonReducer';
+import {usersAPI, UserType} from '../../api/userApi';
+import {errorResponse} from '../../utils/util-error';
 
 export enum enumUsersPageActionType {
     subscribe = 'USERSPAGE/SUBSCRIBE',
@@ -11,16 +12,16 @@ export enum enumUsersPageActionType {
     toggleFollowingInProgress = 'USERSPAGE/TOGGLE-FOLLOWING-IN-PROGRESS',
 }
 
-const initialState: UsersType = {
-    users: [],
+const initialState = {
+    users: [] as UserType[],
     pageSize: 20,
     totalUsersCount: 0,
     currentPage: 1,
     preloader: false,
-    followingInProgress: [],
+    followingInProgress: [] as Array<null | string>,
 }
 
-export const usersPageReducer = (state: UsersType = initialState, action: UserPageActionType): UsersType => {
+export const usersPageReducer = (state: initialStateType = initialState, action: UserPageActionType): initialStateType => {
     switch (action.type) {
         case enumUsersPageActionType.subscribe:
             return {
@@ -33,11 +34,8 @@ export const usersPageReducer = (state: UsersType = initialState, action: UserPa
                     ? {...t, followed: false} : {...t})
             }
         case enumUsersPageActionType.setUsers:
-            return {...state, ...action.payload}
         case enumUsersPageActionType.setTotalUsersCount:
-            return {...state, ...action.payload}
         case enumUsersPageActionType.changeCurrentPage:
-            return {...state, ...action.payload}
         case enumCommonActionType.changePreloader:
             return {...state, ...action.payload}
         case enumUsersPageActionType.toggleFollowingInProgress:
@@ -89,45 +87,42 @@ export const toggleFollowingInProgressAC = (isFetching: boolean, userId: string)
 }
 
 //thunk
-export const setUsersTC = (currentPage: number, pageSize: number): AppThunk =>
-    async (dispatch) => {
+export const setUsersTC = (count: number = 10, friend: boolean = false, term: string = ''): AppThunk =>
+    async (dispatch, getState) => {
+        const page = getState().userPage.currentPage
         dispatch(changePreloaderAC(true))
-        const res = await usersAPI.setUsers(currentPage, pageSize)
-        dispatch(setUsersAC(res.data.items))
-        dispatch(setTotalUsersCountAC(res.data.totalCount))
+        try {
+            const res = await usersAPI.setUsers(page, count, friend, term)
+            dispatch(setUsersAC(res.data.items))
+            dispatch(setTotalUsersCountAC(res.data.totalCount))
+        } catch (e) {
+            errorResponse(e)
+        }
         dispatch(changePreloaderAC(false))
     }
-export const changeCurrentPageTC =
-    (currentPage: number, pageSize: number): AppThunk =>
-        async (dispatch) => {
-            dispatch(changePreloaderAC(true))
-            dispatch(changeCurrentPageAC(currentPage))
-            const res = await usersAPI.setUsers(currentPage, pageSize)
-            dispatch(setUsersAC(res.data.items))
-            dispatch(changePreloaderAC(false))
-        }
-export const unSubscribeTC = (id: string): AppThunk => async (dispatch) => {
+export const unSubscribeTC = (id: string): AppThunk => async dispatch => {
     dispatch(toggleFollowingInProgressAC(true, id))
-    const res = await usersAPI.unSubscribeAPI(id)
-    if (res.data.resultCode === 0) dispatch(unSubscribeAC(id))
+    try {
+        const res = await usersAPI.unSubscribeAPI(id)
+        if (res.data.resultCode === 0) dispatch(unSubscribeAC(id))
+    } catch (e) {
+        errorResponse(e)
+    }
     dispatch(toggleFollowingInProgressAC(false, id))
 }
-export const subscribeTC = (id: string): AppThunk => async (dispatch) => {
+export const subscribeTC = (id: string): AppThunk => async dispatch => {
     dispatch(toggleFollowingInProgressAC(true, id))
-    const res = await usersAPI.subscribe(id)
-    if (res.data.resultCode === 0) dispatch(subscribeAC(id))
+    try {
+        const res = await usersAPI.subscribe(id)
+        if (res.data.resultCode === 0) dispatch(subscribeAC(id))
+    } catch (e) {
+        errorResponse(e)
+    }
     dispatch(toggleFollowingInProgressAC(false, id))
 }
 
 //type
-export type UsersType = {
-    users: Array<UserType>
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    preloader: boolean
-    followingInProgress: Array<null | string>
-}
+type initialStateType = typeof initialState
 export type UserPageActionType = ReturnType<typeof subscribeAC>
     | ReturnType<typeof unSubscribeAC>
     | ReturnType<typeof setUsersAC>

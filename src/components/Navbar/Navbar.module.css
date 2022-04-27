@@ -1,15 +1,42 @@
 .navbar {
-    grid-area: nav;
-    background-color: green;
-    padding: 10px;
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    border: 1px solid;
 }
 
-.item a {
-    color: white;
+.navbar a {
+    margin-top: 20px;
+    padding-left: 15px;
+    border: 1px solid black;
+    border-radius: 10px;
     text-decoration: none;
-}
-
-.item a.active{
     color: black;
+    opacity: 0.7;
 }
 
+.navbar button {
+    margin-top: 40px;
+    border-radius: 10px;
+    font-size: 20px;
+    border-color: #0e6dfd;
+    background-color: #0e6dfd;
+    color: white;
+}
+
+.navbar button:hover {
+    background-color: blue;
+    cursor: pointer;
+}
+
+.navbar a.active {
+    background-color: white;
+    opacity: 1;
+}
+
+.navbar a:hover {
+    background-color: white;
+    opacity: 1;
+    cursor: pointer;
+}

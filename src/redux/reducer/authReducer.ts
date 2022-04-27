@@ -1,18 +1,19 @@
-import {headerAPI, loginAPI} from "../../API";
-import {AppThunk} from "../store";
+import {authAPI} from '../../api/authApi';
+import {AppThunk} from '../store';
+import {errorResponse} from '../../utils/util-error';
 
 export enum enumAuthActionType {
     setAuthData = 'AUTH/PROFILE/SET-NEW-POST-CLICK',
 }
 
-const initialState: authReducerType = {
-    id: null,
-    email: null,
-    login: null,
+const initialState = {
+    id: 0,
+    email: '',
+    login: '',
     isAuth: false,
 }
 
-export const authReducer = (state: authReducerType = initialState, action: LoginActionType): authReducerType => {
+export const authReducer = (state: initialStateType = initialState, action: LoginActionType): initialStateType => {
     switch (action.type) {
         case enumAuthActionType.setAuthData:
             return {...state, ...action.payload}
@@ -22,7 +23,7 @@ export const authReducer = (state: authReducerType = initialState, action: Login
 }
 
 //action
-export const setAuthDataAC = (data: authReducerType) => {
+export const setAuthDataAC = (data: initialStateType) => {
     return {
         type: enumAuthActionType.setAuthData,
         payload: {...data}
@@ -30,30 +31,36 @@ export const setAuthDataAC = (data: authReducerType) => {
 }
 
 //thunk
-export const setAuthDataTC = (): AppThunk => async (dispatch) => {
-    const res = await headerAPI.setAuthData()
-    const {id, email, login} = res.data.data
-    if (id) dispatch(setAuthDataAC({id, email, login, isAuth: true}))
-    return 'aaa'
+export const setAuthDataTC = (): AppThunk => async dispatch => {
+    try {
+        const res = await authAPI.setAuthData()
+        const {id, email, login} = res.data.data
+        if (id) dispatch(setAuthDataAC({id, email, login, isAuth: true}))
+        return 'aaa'
+    } catch (e) {
+        errorResponse(e)
+    }
 }
 export const logInTC = (email: string, password: string, rememberMe: boolean): AppThunk =>
-    async (dispatch) => {
-        const res = await loginAPI.setLogin(email, password, rememberMe)
-        if (res.data.resultCode === 0) dispatch(setAuthDataTC())
+    async dispatch => {
+        try {
+            const res = await authAPI.setLogin(email, password, rememberMe)
+            if (res.data.resultCode === 0) dispatch(setAuthDataTC())
+        } catch (e) {
+            errorResponse(e)
+        }
     }
-export const logOutTC = (): AppThunk =>
-    async (dispatch) => {
-        const res = await loginAPI.outLogin()
-        if (res.data.resultCode === 0) dispatch(setAuthDataAC({id: null, email: null, login: null, isAuth: false}))
+export const logOutTC = (): AppThunk => async dispatch => {
+    try {
+        const res = await authAPI.outLogin()
+        if (res.data.resultCode === 0) dispatch(setAuthDataAC({id: 0, email: '', login: '', isAuth: false}))
+    } catch (e) {
+        errorResponse(e)
     }
+}
 
 //type
-export type authReducerType = {
-    id: number | null
-    email: string | null
-    login: string | null
-    isAuth: boolean
-}
+type initialStateType = typeof initialState
 export type LoginActionType = ReturnType<typeof setAuthDataAC>
 
 
