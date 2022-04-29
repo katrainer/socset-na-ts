@@ -86,13 +86,26 @@ export const toggleFollowingInProgressAC = (isFetching: boolean, userId: string)
     } as const
 }
 
+
 //thunk
 export const setUsersTC = (count: number = 10, friend: boolean = false, term: string = ''): AppThunk =>
     async (dispatch, getState) => {
         const page = getState().userPage.currentPage
         dispatch(changePreloaderAC(true))
         try {
-            const res = await usersAPI.setUsers(page, count, friend, term)
+            const res = await usersAPI.setUsers(page, count, term)
+            dispatch(setUsersAC(res.data.items))
+            dispatch(setTotalUsersCountAC(res.data.totalCount))
+        } catch (e) {
+            errorResponse(e)
+        }
+        dispatch(changePreloaderAC(false))
+    }
+export const setFriendsTC = (): AppThunk =>
+    async dispatch => {
+        dispatch(changePreloaderAC(true))
+        try {
+            const res = await usersAPI.setFriends()
             dispatch(setUsersAC(res.data.items))
             dispatch(setTotalUsersCountAC(res.data.totalCount))
         } catch (e) {

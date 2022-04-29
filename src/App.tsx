@@ -12,7 +12,7 @@ import {Preloader} from './common/Preloader/Preloader';
 import {Header} from './components/Header/Header';
 import {Friends} from './components/Friends/Friends';
 import {Users} from './components/Users/Users';
-import {DialogsFormik} from './components/Dialogs/DialogsFormik';
+import {Dialogs} from './components/Dialogs/Dialogs';
 
 class App extends React.PureComponent<AppPropsType> {
     componentDidMount() {
@@ -27,7 +27,7 @@ class App extends React.PureComponent<AppPropsType> {
                 <div className={s.mainContainer}>
                     <Navbar/>
                     <div className={s.contentContainer}>
-                        <Route path="/dialogs" render={() => <DialogsFormik/>}/>
+                        <Route path="/dialogs" render={() => <Dialogs/>}/>
                         <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
                         <Route path="/users" render={() => <Users/>}/>
                         <Route path="/login" render={() => <Login/>}/>

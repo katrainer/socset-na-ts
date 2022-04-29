@@ -1,21 +1,31 @@
-.dialogs {
-    display: grid;
-    grid-template-columns: 2fr 10fr;
-
+.mainContainer{
+    width: 95%;
+    margin-left: 10px;
+    margin-top: 60px;
+    display: flex;
 }
-
-.dialogsItem .active{
-    color: black;
+.contentContainer{
+    background-color: white;
+    border-radius: 10px;
+    width: 250px;
 }
-
-.dialog {
-    padding: 10px;
+.imgContainer{
+    display: flex;
+    align-items: start;
+    padding-top: 5px;
 }
-
-.messages {
-
+.imgContainer img{
+    border-radius: 50%;
 }
-
-.message {
-    padding: 10px;
+.timeContainer{
+    display: flex;
+    justify-content: center;
+}
+.textContainer{
+    margin-left: 10px;
+    background-color: white;
+    border-radius: 10px;
+    width: 100%;
+    padding-top: 5px;
+    padding-left: 5px;
 }

@@ -7,11 +7,16 @@ export const usersAPI = {
     subscribe(id: string) {
         return instance.post<ResponseType>('follow/' + id)
     },
-    setUsers(page: number, count: number, friend: boolean = false, term: string = '') {
-        const par = {page, count, friend, term}
+    setUsers(page: number, count: number, term: string = '') {
+        const par = {page, count, term}
         return instance.get<ResponseGetUsersType>
         ('users', {params: par})
     },
+    setFriends() {
+        const par = {page: 1, count: 100, friend: true}
+        return instance.get<ResponseGetUsersType>
+        ('users', {params: par})
+    }
 }
 
 type ResponseType<D = {}> = {

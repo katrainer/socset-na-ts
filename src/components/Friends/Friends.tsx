@@ -3,7 +3,7 @@ import {AppRootStateType} from '../../redux/store';
 import {NavLink, Redirect} from 'react-router-dom';
 import React, {useEffect} from 'react';
 import {UserType} from '../../api/userApi';
-import {setUsersTC, subscribeTC, unSubscribeTC} from '../../redux/reducer/usersPageReducer';
+import {setFriendsTC, setUsersTC, subscribeTC, unSubscribeTC} from '../../redux/reducer/usersPageReducer';
 import s from './Friends.module.css'
 
 export const Friends = () => {
@@ -17,7 +17,7 @@ export const Friends = () => {
         dispatch(subscribeTC(id))
     }
     useEffect(() => {
-        dispatch(setUsersTC(100, true))
+        dispatch(setFriendsTC())
     }, [])
     if (!isAuth) return <Redirect to="/login"/>
     return <div className={s.mainContainer}>

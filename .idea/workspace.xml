@@ -22,22 +22,20 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16d3b35d-9c6b-4895-8fc3-69c90a65540c" name="Default Changelist" comment="add changes">
-      <change afterPath="$PROJECT_DIR$/src/api/apiConfig/apiConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/authApi.ts" afterDir="false" />
+    <list default="true" id="16d3b35d-9c6b-4895-8fc3-69c90a65540c" name="Default Changelist" comment="baf fix">
+      <change afterPath="$PROJECT_DIR$/src/components/Dialogs/Dialogs.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/API.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dialogs/DialogsFormik.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dialogs/DialogsFormik.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/userApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/userApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dialogs/DialogItem/DialogItem.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dialogs/DialogItem/DialogItem.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dialogs/Dialogs.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dialogs/Dialogs.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dialogs/DialogsFormik.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dialogs/Message/Message.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dialogs/Message/Message.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Friends/Friends.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Friends/Friends.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Profile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile/ProfileConteiner.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/ProfileConteiner.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sitebar/Sitebar.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sitebar/Sitebar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Users/Users.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Users/Users.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/reducer/authReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducer/authReducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/reducer/sidebarPageReducer.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducer/messagesPageReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducer/messagesPageReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducer/usersPageReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducer/usersPageReducer.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +50,9 @@
         <option value="TypeScript File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/test" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -235,6 +236,7 @@
       <workItem from="1651000880035" duration="2844000" />
       <workItem from="1651073633400" duration="8633000" />
       <workItem from="1651089807399" duration="1353000" />
+      <workItem from="1651239894244" duration="1608000" />
     </task>
     <task id="LOCAL-00001" summary="lesson 45&#10;used connect()()">
       <created>1638016749135</created>
