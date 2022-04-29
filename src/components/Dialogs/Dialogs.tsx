@@ -15,7 +15,7 @@ export const Dialogs = () => {
         usersForDialogs[i] = {...usersForDialogs[i], message: messages[i].message, time: messages[i].time}
     }
 
-
+//dsds
     useEffect(() => {
         dispatch(setFriendsTC())
     })
