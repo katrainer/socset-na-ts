@@ -1,10 +1,10 @@
 .mainContainer {
-    border: 1px solid black;
     width: 70%;
 
 }
 
 .mainContainer img {
+    padding: 5px;
     width: 150px;
     border-radius: 50%;
 }
@@ -14,8 +14,41 @@
     background-color: white;
     border-radius: 10px;
 }
-.nameContainer{
+
+.nameContainer {
     margin-left: 20px;
     display: flex;
     flex-direction: column;
+}
+
+.fileInput {
+    margin-top: 5px;
+    border-radius: 10px;
+    font-size: 14px;
+    border-color: #0e6dfd;
+    background-color: #0e6dfd;
+    color: white;
+    padding: 0 5px;
+    max-width: 70px;
+}
+
+.fileInput:hover {
+    background-color: blue;
+    cursor: pointer;
+}
+.button {
+    margin-top: 5px;
+    border-radius: 10px;
+    font-size: 14px;
+    border-color: #0e6dfd;
+    background-color: #0e6dfd;
+    color: white;
+    padding: 0 5px;
+    max-width: 80px;
+    margin-bottom: 5px;
+}
+
+.button:hover {
+    background-color: blue;
+    cursor: pointer;
 }

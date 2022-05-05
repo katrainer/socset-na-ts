@@ -9,6 +9,7 @@
     color: white;
     align-items: center;
     border-radius: 100%;
+    padding: 3px;
     /*font-weight: 700;*/
 }
 
@@ -16,4 +17,5 @@
     background-color: #0e6dfd;
     color: white;
     border-radius: 100%;
+    padding: 3px;
 }

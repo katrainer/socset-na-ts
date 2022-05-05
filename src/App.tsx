@@ -28,6 +28,7 @@ class App extends React.PureComponent<AppPropsType> {
                     <Navbar/>
                     <div className={s.contentContainer}>
                         <Route path="/dialogs" render={() => <Dialogs/>}/>
+                        <Route exact path="/" render={() => <ProfileContainer/>}/>
                         <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
                         <Route path="/users" render={() => <Users/>}/>
                         <Route path="/login" render={() => <Login/>}/>

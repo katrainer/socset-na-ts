@@ -1,6 +1,6 @@
 import {v1} from 'uuid';
 import {AppThunk} from '../store';
-import {profileAPI, ProfileDataType} from '../../api/profileApi';
+import {profileAPI, ProfileDataType, updateProfileInfoType} from '../../api/profileApi';
 import {changePreloaderAC, enumCommonActionType, preloaderACType} from '../../common/commonReducer';
 import {errorResponse} from '../../utils/util-error';
 
@@ -8,7 +8,8 @@ export enum enumProfileActionType {
     setNewPostClick = 'PROFILE/SET-NEW-POST-CLICK',
     setProfileUserData = 'PROFILE/SET-PROFILE-USER-DATA',
     setStatus = 'PROFILE/SET-STATUS',
-    updatePhotos = 'PROFILE/UPDATE-PHOTOS'
+    updatePhotos = 'PROFILE/UPDATE-PHOTOS',
+    updateProfileInfo = 'PROFILE/UPDATE-PROFILE-INFO',
 }
 
 const initialState = {
@@ -19,7 +20,7 @@ const initialState = {
     ],
     userProfilePage: {} as ProfileDataType,
     preloader: false,
-    status: ''
+    status: '',
 }
 export const profilePageReducer = (state: initialStateType = initialState, action: ProfileActionType): initialStateType => {
     switch (action.type) {
@@ -78,13 +79,14 @@ export const setProfileUserDataTC = (param: any): AppThunk =>
         try {
             const res = await profileAPI.getProfileUserData(userId)
             dispatch(setProfileUserDataAC(res.data))
-            dispatch(changePreloaderAC(false))
         } catch (e) {
             errorResponse(e)
         }
+        dispatch(changePreloaderAC(false))
     }
 export const getStatusTC = (param: any): AppThunk =>
     async (dispatch, getState) => {
+        dispatch(changePreloaderAC(true))
         let userId = param.match.params.userId
         if (!userId) {
             const id = getState().login.id
@@ -96,20 +98,24 @@ export const getStatusTC = (param: any): AppThunk =>
         } catch (e) {
             errorResponse(e)
         }
-
+        dispatch(changePreloaderAC(false))
     }
 export const updateStatusTC = (status: string): AppThunk =>
     async dispatch => {
+        dispatch(changePreloaderAC(true))
         const res = await profileAPI.updateProfileStatus(status)
         if (res.data.resultCode === 0) dispatch(setStatusAC(status))
+        dispatch(changePreloaderAC(false))
     }
 export const updatePhotosTC = (photo: File): AppThunk => async dispatch => {
+    dispatch(changePreloaderAC(true))
     try {
         const res = await profileAPI.updateProfilePhoto(photo)
         dispatch(updatePhotosAC(res.data.data))
     } catch (e) {
         errorResponse(e)
     }
+    dispatch(changePreloaderAC(false))
 }
 
 //type

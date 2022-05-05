@@ -3,7 +3,7 @@ import {AppRootStateType} from '../../redux/store';
 import {NavLink, Redirect} from 'react-router-dom';
 import React, {useEffect} from 'react';
 import {UserType} from '../../api/userApi';
-import {setFriendsTC, setUsersTC, subscribeTC, unSubscribeTC} from '../../redux/reducer/usersPageReducer';
+import {setFriendsTC, subscribeTC, unSubscribeTC} from '../../redux/reducer/usersPageReducer';
 import s from './Friends.module.css'
 
 export const Friends = () => {

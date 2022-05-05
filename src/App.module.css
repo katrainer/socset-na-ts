@@ -7,11 +7,9 @@
 .mainContainer {
     display: flex;
     width: 85%;
-    border: 1px solid;
 }
 .contentContainer{
     width: 100%;
-    border: 1px solid;
     display: flex;
     align-items: center;
     flex-direction: column;

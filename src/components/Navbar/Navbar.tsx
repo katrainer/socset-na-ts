@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import s from './Navbar.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../redux/store';
@@ -16,11 +16,12 @@ export const Navbar = () => {
     }
     return (
         <nav className={s.navbar}>
-            <NavLink to="/profile" activeClassName={s.active}><TiBusinessCard/>Profile</NavLink>
+            <NavLink exact to="/" activeClassName={s.active}><TiBusinessCard/>My profile</NavLink>
             <NavLink to="/dialogs" activeClassName={s.active}><SiMessenger/>Message</NavLink>
             <NavLink to="/friends" activeClassName={s.active}><GiThreeFriends/>Friends</NavLink>
             <NavLink to="/users" activeClassName={s.active}><SiActigraph/>Users</NavLink>
-            {isAuth && <button onClick={logOutHandler}>Log Out</button>}
+            {isAuth &&
+                <button onClick={logOutHandler}>Log Out<Link style={{display: 'none'}} to={''}/></button>}
         </nav>
     )
 }

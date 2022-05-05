@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setFriendsTC} from '../../redux/reducer/usersPageReducer';
 import {AppRootStateType} from '../../redux/store';
 import {UserType} from '../../api/userApi';
+import {NavLink} from 'react-router-dom';
 
 
 export const Dialogs = () => {
@@ -15,28 +16,25 @@ export const Dialogs = () => {
         usersForDialogs[i] = {...usersForDialogs[i], message: messages[i].message, time: messages[i].time}
     }
 
-//dsds
     useEffect(() => {
         dispatch(setFriendsTC())
-    })
+    },[])
 
     return (
         <>
             {usersForDialogs.map(t => {
-                return (<div className={s.mainContainer}>
+                return (<div className={s.mainContainer} key={t.id}>
                     <div className={s.contentContainer}>
                         <div className={s.imgContainer}>
-                            <img
+                            <NavLink to={'/profile/' + t.id}><img
                                 src={t.photos?.small ? t.photos.small : 'https://sun1-17.userapi.com/s/v1/if1/pvTi5V3csQH8-oqUnfesELwgtLWyEePqE6Hz5SdqoVZxItBnm_XwfAiDMfANJPjpj7jtW_O5.jpg?size=200x200&quality=96&crop=0,0,979,979&ava=1'}
-                                alt="Photo uf user"/>
+                                alt="Photo uf user"/></NavLink>
                             <span>{t.name}</span>
-                        </div>
-                        <div className={s.timeContainer}>
-                            {t.time}
                         </div>
                     </div>
                     <div className={s.textContainer}>
-                        {t.message}
+                        <span>{t.message}</span>
+                        <span className={s.time}>{t.time}</span>
                     </div>
                 </div>)
             })}

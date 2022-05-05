@@ -3,6 +3,8 @@ import s from './Profile.module.css';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPostsContainer} from './MyPosts/MyPostsConteiner';
 import {ProfileDataType} from '../../api/profileApi';
+import {useSelector} from 'react-redux';
+import {AppRootStateType} from '../../redux/store';
 
 
 type PropsType = {
@@ -16,13 +18,15 @@ export const Profile: React.FC<PropsType> = React.memo((
         status,
         updateStatusTC,
     }) => {
+    const ownerPage = useSelector<AppRootStateType, number | undefined>(state => state.profile.userProfilePage?.userId)
+    const owner = useSelector<AppRootStateType, number>(state => state.login.id)
     return (
         <div className={s.mainContainer}>
             <ProfileInfo
                 profileUserData={profileUserData}
                 status={status}
                 updateStatusTC={updateStatusTC}/>
-            <MyPostsContainer/>
+            {ownerPage === owner && <MyPostsContainer/>}
         </div>
     )
 })

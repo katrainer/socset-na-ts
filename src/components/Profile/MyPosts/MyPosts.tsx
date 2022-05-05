@@ -2,7 +2,6 @@ import React from 'react';
 import s from './MyPost.module.css'
 import {MyPostsType} from './MyPostsConteiner';
 import {Post} from './Post/Post';
-import {useDispatch} from 'react-redux';
 import {useFormik} from 'formik';
 
 type valuesType = {
