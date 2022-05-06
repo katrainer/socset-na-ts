@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "bac45fa6cce01320cc9b0d5c27f798c5",
+    "revision": "da17f70fadf5db5d79f0bfac382b53ca",
     "url": "/socset-na-ts/index.html"
   },
   {
-    "revision": "4f05fae8e8496702395e",
+    "revision": "5d6db6d56502886e2594",
     "url": "/socset-na-ts/static/css/main.56125995.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/socset-na-ts/static/js/3.5d44fe4c.chunk.js"
   },
   {
-    "revision": "4f05fae8e8496702395e",
-    "url": "/socset-na-ts/static/js/main.385d5ed5.chunk.js"
+    "revision": "5d6db6d56502886e2594",
+    "url": "/socset-na-ts/static/js/main.693caa98.chunk.js"
   },
   {
     "revision": "a60b9b763f13b959ca81",
