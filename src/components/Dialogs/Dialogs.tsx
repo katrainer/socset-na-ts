@@ -4,11 +4,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setFriendsTC} from '../../redux/reducer/usersPageReducer';
 import {AppRootStateType} from '../../redux/store';
 import {UserType} from '../../api/userApi';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 
 
 export const Dialogs = () => {
     const dispatch = useDispatch()
+    const isAuth = useSelector<AppRootStateType, boolean>(state => state.login.isAuth)
     const users = useSelector<AppRootStateType, UserType[]>(state => state.userPage.users)
     let usersForDialogs: UserTypeMessage[] = users.slice(0, 6)
     const messages = useSelector<AppRootStateType, { message: string, time: string }[]>(state => state.messages.messagesData)
@@ -19,7 +20,7 @@ export const Dialogs = () => {
     useEffect(() => {
         dispatch(setFriendsTC())
     }, [])
-
+    if (!isAuth) return <Redirect to="/login"/>
     return (
         <>
             {usersForDialogs.map(t => {
