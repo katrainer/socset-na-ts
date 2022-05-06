@@ -13,6 +13,8 @@
     text-decoration: none;
     color: black;
     opacity: 0.7;
+    display: flex;
+    align-items: center;
 }
 
 .navbar button {
@@ -38,4 +40,7 @@
     background-color: white;
     opacity: 1;
     cursor: pointer;
+}
+.navbar span{
+    margin-left: 5px;
 }

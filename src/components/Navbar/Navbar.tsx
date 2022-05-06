@@ -16,10 +16,10 @@ export const Navbar = () => {
     }
     return (
         <nav className={s.navbar}>
-            <NavLink exact to="/" activeClassName={s.active}><TiBusinessCard/>My profile</NavLink>
-            <NavLink to="/dialogs" activeClassName={s.active}><SiMessenger/>Message</NavLink>
-            <NavLink to="/friends" activeClassName={s.active}><GiThreeFriends/>Friends</NavLink>
-            <NavLink to="/users" activeClassName={s.active}><SiActigraph/>Users</NavLink>
+            <NavLink exact to="/" activeClassName={s.active}><TiBusinessCard/><span>My profile</span></NavLink>
+            <NavLink to="/dialogs" activeClassName={s.active}><SiMessenger/><span>Message</span></NavLink>
+            <NavLink to="/friends" activeClassName={s.active}><GiThreeFriends/><span>Friends</span></NavLink>
+            <NavLink to="/users" activeClassName={s.active}><SiActigraph/><span>Users</span></NavLink>
             {isAuth &&
                 <button onClick={logOutHandler}>Log Out<Link style={{display: 'none'}} to={''}/></button>}
         </nav>

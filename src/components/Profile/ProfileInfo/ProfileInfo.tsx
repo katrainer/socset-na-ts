@@ -21,7 +21,7 @@ export const ProfileInfo: React.FC<PropsType> = React.memo((
         updateStatusTC,
     }) => {
 
-    const [hide, setHide] = useState(true)
+    const [hide, setHide] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -40,7 +40,7 @@ export const ProfileInfo: React.FC<PropsType> = React.memo((
                     src={profileUserData.photos?.small ? profileUserData.photos.large : 'https://i.pinimg.com/736x/75/24/87/752487a0b94808fe215c2dbf3f3f18b7.jpg'}
                     alt="изображение того, чего нету"/>
                 <div className={s.nameContainer}>
-                    <p>{profileUserData.fullName}</p>
+                    <p><b>{profileUserData.fullName}</b></p>
                     <ProfileStatus
                         value={status}
                         updateStatusTC={updateStatusTC}/>
@@ -52,16 +52,11 @@ export const ProfileInfo: React.FC<PropsType> = React.memo((
                             onChange={savePhotoHandler}
                             style={{display: 'none'}}/>
                         <label className={s.fileInput} htmlFor="file-type">Изменить аватарку</label>
-                        <button
-                            className={s.button}
-                            onClick={() => setHide(!hide)}>
-                            Изменить данные
-                        </button>
                     </>}
                 </div>
             </div>
-            <Contacts/>
-            {hide && ownerPage === owner && <Settings/>}
+            <Contacts hide={hide} setHide={setHide}/>
+            {hide && ownerPage === owner && <Settings setHide={setHide}/>}
         </div>
     )
 })

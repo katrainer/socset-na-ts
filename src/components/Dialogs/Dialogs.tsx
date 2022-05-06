@@ -18,7 +18,7 @@ export const Dialogs = () => {
 
     useEffect(() => {
         dispatch(setFriendsTC())
-    },[])
+    }, [])
 
     return (
         <>
@@ -29,7 +29,7 @@ export const Dialogs = () => {
                             <NavLink to={'/profile/' + t.id}><img
                                 src={t.photos?.small ? t.photos.small : 'https://sun1-17.userapi.com/s/v1/if1/pvTi5V3csQH8-oqUnfesELwgtLWyEePqE6Hz5SdqoVZxItBnm_XwfAiDMfANJPjpj7jtW_O5.jpg?size=200x200&quality=96&crop=0,0,979,979&ava=1'}
                                 alt="Photo uf user"/></NavLink>
-                            <span>{t.name}</span>
+                            <span style={{wordBreak: 'break-all'}}>{t.name}</span>
                         </div>
                     </div>
                     <div className={s.textContainer}>

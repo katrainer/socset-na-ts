@@ -4,21 +4,33 @@ import {AppRootStateType} from '../../../../redux/store';
 import {ProfileDataType} from '../../../../api/profileApi';
 import s from './Contacts.module.css'
 
-export const Contacts = () => {
+type ContactsPropsType = {
+    hide: boolean
+    setHide: (hide: boolean) => void
+}
+
+export const Contacts: React.FC<ContactsPropsType> = ({hide, setHide}) => {
     const profileUserData = useSelector<AppRootStateType, ProfileDataType>(state => state.profile.userProfilePage)
     return <div className={s.mainContainer}>
-       <div>About me:{' '}{profileUserData.aboutMe?profileUserData.aboutMe: 'no info'}</div>
+        <div className={s.buttonContainer}>
+            <button
+                className={s.button}
+                onClick={() => setHide(!hide)}>
+                Изменить данные
+            </button>
+        </div>
+        <div><b>About me</b>:{' '}{profileUserData.aboutMe ? profileUserData.aboutMe : 'no info'}</div>
         {profileUserData.contacts &&
             <div className={s.infoContainer}>
                 <div>
-                    <p>GitHub:{' '}{profileUserData.contacts.github ? profileUserData.contacts.github : 'soon'}</p>
-                    <p>VK:{' '}{profileUserData.contacts.vk ? profileUserData.contacts.vk : 'soon'}</p>
-                    <p>Instagram:{' '}{profileUserData.contacts.instagram ? profileUserData.contacts.instagram : 'soon'}</p>
+                    <p><b>GitHub</b>:{' '}{profileUserData.contacts.github ? profileUserData.contacts.github : 'soon'}</p>
+                    <p><b>VK</b>:{' '}{profileUserData.contacts.vk ? profileUserData.contacts.vk : 'soon'}</p>
+                    <p><b>Instagram</b>:{' '}{profileUserData.contacts.instagram ? profileUserData.contacts.instagram : 'soon'}</p>
                 </div>
                 <div>
-                    <p>Website:{' '}{profileUserData.contacts.website ? profileUserData.contacts.website : 'soon'}</p>
-                    <p>Facebook:{' '}{profileUserData.contacts.facebook ? profileUserData.contacts.facebook : 'soon'}</p>
-                    <p>Twitter:{' '}{profileUserData.contacts.twitter ? profileUserData.contacts.twitter : 'soon'}</p>
+                    <p><b>Website</b>:{' '}{profileUserData.contacts.website ? profileUserData.contacts.website : 'soon'}</p>
+                    <p><b>Facebook</b>:{' '}{profileUserData.contacts.facebook ? profileUserData.contacts.facebook : 'soon'}</p>
+                    <p><b>Twitter</b>:{' '}{profileUserData.contacts.twitter ? profileUserData.contacts.twitter : 'soon'}</p>
                 </div>
             </div>
         }

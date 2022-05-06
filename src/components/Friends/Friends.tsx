@@ -34,7 +34,7 @@ export const Friends = () => {
                         </NavLink>
                     </div>
                     <div className={s.textContainer}>
-                        <span>{t.name}</span>
+                        <span style={{wordBreak: 'break-all'}}>{t.name}</span>
                         <span style={{fontSize: 16}}>
                                     {t.status ? t.status : 'no status'}
                                 </span>

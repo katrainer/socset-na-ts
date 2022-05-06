@@ -19,8 +19,8 @@ export const profileAPI = {
             }
         })
     },
-    updateProfileInfo(data: updateProfileInfoType) {
-        return instance.get('profile')
+    updateProfileInfo(data: ProfileDataType) {
+        return instance.put('profile', data).then(res => res.data)
     },
 }
 

@@ -1,6 +1,6 @@
 import {v1} from 'uuid';
 import {AppThunk} from '../store';
-import {profileAPI, ProfileDataType, updateProfileInfoType} from '../../api/profileApi';
+import {profileAPI, ProfileDataType} from '../../api/profileApi';
 import {changePreloaderAC, enumCommonActionType, preloaderACType} from '../../common/commonReducer';
 import {errorResponse} from '../../utils/util-error';
 
@@ -9,7 +9,6 @@ export enum enumProfileActionType {
     setProfileUserData = 'PROFILE/SET-PROFILE-USER-DATA',
     setStatus = 'PROFILE/SET-STATUS',
     updatePhotos = 'PROFILE/UPDATE-PHOTOS',
-    updateProfileInfo = 'PROFILE/UPDATE-PROFILE-INFO',
 }
 
 const initialState = {
@@ -118,6 +117,31 @@ export const updatePhotosTC = (photo: File): AppThunk => async dispatch => {
     dispatch(changePreloaderAC(false))
 }
 
+export const updateProfileInfoTC = (mainData: mainDataType, contacts: contactsDataType): AppThunk => async (dispatch, getState) => {
+    let profileData = getState().profile.userProfilePage
+    profileData = {
+        ...profileData,
+        ...mainData,
+        contacts: {
+            ...profileData.contacts,
+            ...contacts
+        }
+    }
+    // debugger
+    profileData.lookingForAJobDescription = 'aaa'
+    try {
+        const res = await profileAPI.updateProfileInfo(profileData)
+        if (res.resultCode === 1) {
+            alert(res.messages[0])
+        }else {
+            dispatch(setProfileUserDataAC(profileData))
+        }
+    } catch (e) {
+        errorResponse(e)
+    }
+    dispatch(changePreloaderAC(false))
+}
+
 //type
 type initialStateType = typeof initialState
 export type ProfileActionType = ReturnType<typeof setNewPostClickAC>
@@ -125,3 +149,15 @@ export type ProfileActionType = ReturnType<typeof setNewPostClickAC>
     | preloaderACType
     | ReturnType<typeof setStatusAC>
     | ReturnType<typeof updatePhotosAC>
+type mainDataType = {
+    fullName: string
+    aboutMe: string | null
+}
+type contactsDataType = {
+    vk: string | null
+    twitter: string | null
+    facebook: string | null
+    website: string | null
+    instagram: string | null
+    github: string | null
+}
